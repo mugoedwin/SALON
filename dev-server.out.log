@@ -1,0 +1,22 @@
+
+> ivonne-orchard@1.0.0 dev
+> vite --host 127.0.0.1 --port 5173
+
+
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m411[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5173[22m/[39m
+[2m13:13:21[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Contact.jsx, /src/assets/styles.css[22m
+[2m13:13:23[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Contact.jsx, /src/assets/styles.css[22m
+[2m13:15:33[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Contact.jsx, /src/assets/styles.css[22m
+[2m13:17:31[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/layout/Footer.jsx, /src/assets/styles.css[22m
+[2m13:17:31[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Contact.jsx, /src/assets/styles.css[22m
+[2m13:18:04[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/layout/Footer.jsx, /src/assets/styles.css[22m
+[2m13:18:49[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Gallery.jsx, /src/assets/styles.css[22m
+[2m13:20:02[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Gallery.jsx, /src/assets/styles.css[22m
+[2m13:23:18[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Gallery.jsx, /src/assets/styles.css[22m
+[2m13:25:26[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Gallery.jsx, /src/assets/styles.css[22m
+[2m13:25:44[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Gallery.jsx, /src/assets/styles.css[22m
+[2m13:27:15[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Gallery.jsx, /src/assets/styles.css[22m
+[2m13:30:20[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Services.jsx, /src/assets/styles.css[22m
+[2m13:39:08[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/assets/styles.css, /src/components/layout/Navbar.jsx, /src/components/layout/Footer.jsx, /src/pages/Dashboard/UserDashboard.jsx, /src/pages/Contact.jsx, /src/pages/Gallery.jsx, /src/pages/Services.jsx, /src/pages/Home.jsx, /src/pages/Booking.jsx[22m

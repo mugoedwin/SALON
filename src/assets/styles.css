@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-cream: 255 251 252;
+    --color-sand: 252 241 245;
+    --color-rose: 225 91 121;
+    --color-blush: 255 232 237;
+    --color-ink: 89 56 64;
+    --color-copy: 126 91 100;
+    --color-muted: 164 126 136;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-screen antialiased;
+    font-family: "Manrope", sans-serif;
+    color: rgb(var(--color-copy));
+    background-color: rgb(255 255 255);
+  }
+
+  ::selection {
+    background: rgba(225, 91, 121, 0.22);
+  }
+
+  a {
+    @apply transition-all duration-300;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Cormorant Garamond", serif;
+    letter-spacing: -0.02em;
+    color: rgb(var(--color-ink));
+  }
+
+  ::-webkit-scrollbar {
+    width: 0.8rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.45);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border: 3px solid rgba(255, 255, 255, 0.7);
+    border-radius: 999px;
+    background: rgba(225, 91, 121, 0.45);
+  }
+}
+
+@layer components {
+  .app-shell {
+    @apply relative overflow-hidden bg-white;
+  }
+
+  .section-surface {
+    @apply relative overflow-hidden bg-white;
+    border: 1px solid rgba(251, 207, 232, 0.8);
+    border-radius: 1.5rem;
+  }
+
+  .luxury-card {
+    border: 1px solid rgba(251, 207, 232, 0.7);
+    border-top-width: 2px;
+    border-top-color: rgba(225, 91, 121, 0.42);
+    background-color: rgba(255, 255, 255, 0.96);
+  }
+
+  .glass-panel {
+    border: 1px solid rgba(251, 207, 232, 0.75);
+    background-color: rgba(255, 255, 255, 0.92);
+  }
+
+  .eyebrow-label {
+    @apply inline-flex items-center gap-2 px-3 py-1.5 text-[0.68rem] font-semibold uppercase;
+    border: 1px solid rgba(254, 205, 211, 0.8);
+    border-radius: 999px;
+    background-color: rgba(255, 239, 243, 0.92);
+    color: rgb(190 24 93);
+    letter-spacing: 0.24em;
+  }
+
+  .glow-ring {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.78),
+      0 0 0 10px rgba(225, 91, 121, 0.05);
+  }
+
+  .text-salon-strong {
+    color: rgb(var(--color-ink));
+  }
+
+  .text-salon-copy {
+    color: rgb(var(--color-copy));
+  }
+
+  .text-salon-muted {
+    color: rgb(var(--color-muted));
+  }
+
+  .navbar-logo {
+    display: block;
+    height: 50px;
+    width: auto;
+    max-width: 240px;
+    object-fit: contain;
+    border-radius: 0;
+  }
+}
