@@ -278,8 +278,7 @@ function Home() {
                 Need a quick answer before you book?
               </h2>
               <p className="mt-4 max-w-md text-base leading-8 text-salon-copy">
-                you can reach us on +971 589 178 814
-
+                You can reach us on {salonInfo.phone}.
               </p>
             </div>
 
