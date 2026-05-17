@@ -4,38 +4,37 @@ import { heroImage, salonInfo } from "../../data/siteData";
 const mainHeroImageSrc =
   "https://res.cloudinary.com/dp7w9g89g/image/upload/v1715946800/salon_interior.jpg";
 
-function Sparkle({ className = "", style }) {
+function FloatingMark({ className = "", children }) {
   return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      fill="none"
-      className={`pointer-events-none absolute ${className}`}
-      style={style}
+    <div className={`pointer-events-none absolute ${className}`}>{children}</div>
+  );
+}
+
+function ToolIcon({ className = "", children }) {
+  return (
+    <div
+      className={`pointer-events-none absolute flex items-center justify-center ${className}`}
     >
-      <path
-        d="M12 1.5 14.9 9.1 22.5 12 14.9 14.9 12 22.5 9.1 14.9 1.5 12 9.1 9.1 12 1.5Z"
-        fill="currentColor"
-      />
-    </svg>
+      {children}
+    </div>
   );
 }
 
 function LuxuryRadiantHero() {
   return (
-    <section className="flex min-h-screen w-full items-center justify-center bg-[#110204] p-4 text-white antialiased font-sans md:p-8 lg:p-12">
+    <section className="flex min-h-screen w-full items-center justify-center bg-[#F7F4F0] p-4 text-white antialiased selection:bg-[#E6C387]/30 font-sans sm:p-6 md:p-8 lg:p-12">
       <div
-        className="relative w-full max-w-[1400px] overflow-hidden rounded-[2.5rem] border border-white/5 bg-[#1a0508] p-8 shadow-[0_25px_60px_rgba(0,0,0,0.6)] md:p-12 lg:p-16"
+        className="relative w-full max-w-[1400px] overflow-hidden rounded-[2.5rem] border border-white/5 bg-[#1a0508] p-8 shadow-[0_35px_80px_rgba(26,5,8,0.25)] md:p-12 lg:p-16"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 30% 20%, #4a1521 0%, #26070e 45%, #1a0508 100%)",
+            "radial-gradient(circle at 25% 30%, #4c121c 0%, #22060a 50%, #160204 100%)",
         }}
       >
         <div className="pointer-events-none absolute inset-0 z-0 mix-blend-color-dodge opacity-[0.03]">
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern
-                id="velocityGrid"
+                id="luxuryMatrix"
                 width="100"
                 height="100"
                 patternUnits="userSpaceOnUse"
@@ -48,20 +47,67 @@ function LuxuryRadiantHero() {
                 />
               </pattern>
             </defs>
-            <rect width="100%" height="100%" fill="url(#velocityGrid)" />
+            <rect width="100%" height="100%" fill="url(#luxuryMatrix)" />
           </svg>
         </div>
 
         <div
-          className="pointer-events-none absolute left-[20%] top-[-10%] z-0 h-[450px] w-[450px] rounded-full bg-[#E6C387] opacity-10"
-          style={{ filter: "blur(100px)" }}
+          className="pointer-events-none absolute left-[15%] top-[-10%] z-0 h-[500px] w-[500px] rounded-full bg-[#E6C387] opacity-[0.12]"
+          style={{ filter: "blur(120px)" }}
         />
 
-        <Sparkle className="left-[28%] top-[22%] z-0 h-5 w-5 animate-pulse text-[#E6C387]/40" />
-        <Sparkle
-          className="bottom-[30%] left-[45%] z-0 h-3 w-3 animate-pulse text-[#E6C387]/20"
-          style={{ animationDelay: "1s" }}
-        />
+        <ToolIcon className="left-[6%] top-[12%] z-0 h-12 w-12 -rotate-12 text-[#E6C387]/15 transition duration-500 hover:scale-110">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="6" cy="6" r="3" />
+            <circle cx="6" cy="18" r="3" />
+            <line x1="9.8" y1="8.2" x2="21" y2="19" />
+            <line x1="9.8" y1="15.8" x2="21" y2="5" />
+          </svg>
+        </ToolIcon>
+        <ToolIcon className="bottom-[20%] left-[3%] z-0 h-14 w-14 rotate-[45deg] text-[#E6C387]/10">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+            aria-hidden="true"
+          >
+            <path d="M2 4h20v4H2zM5 8v8M9 8v8M13 8v8M17 8v8M21 8v8" />
+          </svg>
+        </ToolIcon>
+        <ToolIcon className="bottom-[35%] left-[45%] z-0 h-10 w-10 -rotate-12 text-[#E6C387]/15">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+            aria-hidden="true"
+          >
+            <path d="M8 9h8v11a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V9zM10 9V3h4v6" />
+          </svg>
+        </ToolIcon>
+
+        <FloatingMark className="left-[28%] top-[22%] z-0 text-xl text-[#E6C387]/40">
+          ✦
+        </FloatingMark>
+        <FloatingMark className="bottom-[12%] left-[35%] z-0 text-sm text-[#E6C387]/20">
+          ✦
+        </FloatingMark>
+        <FloatingMark className="right-[48%] top-[8%] z-0 text-base text-[#E6C387]/30">
+          ✦
+        </FloatingMark>
+        <FloatingMark className="bottom-[8%] right-[4%] z-0 text-lg text-[#E6C387]/20">
+          ✦
+        </FloatingMark>
 
         <div className="relative z-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="space-y-7 text-left lg:col-span-6">
@@ -90,14 +136,14 @@ function LuxuryRadiantHero() {
             <div className="flex flex-wrap gap-4 pt-2">
               <ActionLink
                 to="/booking"
-                className="rounded-full bg-[#e62a52] px-8 py-3.5 text-xs font-semibold uppercase tracking-wider text-white shadow-md transition duration-300 hover:bg-[#c21f42]"
+                className="rounded-full bg-[#e62a52] px-8 py-3.5 text-xs font-semibold uppercase tracking-wider text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c21f42]"
               >
                 Book Appointment
               </ActionLink>
               <ActionLink
                 to="/services"
                 variant="subtle"
-                className="rounded-full border border-white/10 bg-white/5 px-8 py-3.5 text-xs font-semibold uppercase tracking-wider text-white transition duration-300 hover:bg-white/10"
+                className="rounded-full border border-white/10 bg-white/5 px-8 py-3.5 text-xs font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10"
               >
                 Explore Catalogue
               </ActionLink>
@@ -106,16 +152,15 @@ function LuxuryRadiantHero() {
 
           <div className="w-full lg:col-span-6">
             <div className="relative w-full rounded-[2rem] border border-white/10 bg-[#240a0e]/60 p-3.5 shadow-2xl backdrop-blur-sm">
-              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[1.5rem]">
+              <div className="w-full aspect-[16/10] rounded-[1.5rem] overflow-hidden">
                 <img
                   src={mainHeroImageSrc}
                   alt="Ivonne Orchard Salon Luxury View"
-                  className="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.03]"
+                  className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
                   onError={(event) => {
                     event.currentTarget.src = heroImage.src;
                   }}
                 />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#110204]/35 via-transparent to-transparent" />
               </div>
             </div>
 
@@ -137,9 +182,7 @@ function LuxuryRadiantHero() {
                 </span>
                 <div className="space-y-1.5 text-xs text-white/70">
                   <div className="border-b border-white/5 pb-1">| Braids</div>
-                  <div className="border-b border-white/5 pb-1">
-                    | Manicures
-                  </div>
+                  <div className="border-b border-white/5 pb-1">| Manicures</div>
                   <div>| Chignons</div>
                 </div>
               </div>
