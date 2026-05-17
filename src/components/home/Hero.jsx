@@ -21,63 +21,57 @@ function Sparkle({ className = "", style }) {
   );
 }
 
-function OrganicLuxuryHero() {
+function LuxuryRadiantHero() {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[#160205] px-6 py-12 text-white antialiased font-sans md:px-12 lg:px-20 xl:px-24">
-      <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.03] mix-blend-overlay">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern
-              id="diamondGrid"
-              width="140"
-              height="140"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M70 0 L140 70 L70 140 L0 70 Z"
-                fill="none"
-                stroke="#ffffff"
-                strokeWidth="0.5"
-              />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#diamondGrid)" />
-        </svg>
-      </div>
-
+    <section className="flex min-h-screen w-full items-center justify-center bg-[#110204] p-4 text-white antialiased font-sans md:p-8 lg:p-12">
       <div
-        className="pointer-events-none absolute right-[8%] top-[-12%] z-0 h-[560px] w-[560px] rounded-full bg-[#E6C387] opacity-10"
-        style={{ filter: "blur(120px)" }}
-      />
-      <div
-        className="pointer-events-none absolute bottom-[-12%] left-[-8%] z-0 h-[420px] w-[420px] rounded-full bg-[#5C1329] opacity-30"
-        style={{ filter: "blur(100px)" }}
-      />
+        className="relative w-full max-w-[1400px] overflow-hidden rounded-[2.5rem] border border-white/5 bg-[#1a0508] p-8 shadow-[0_25px_60px_rgba(0,0,0,0.6)] md:p-12 lg:p-16"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 30% 20%, #4a1521 0%, #26070e 45%, #1a0508 100%)",
+        }}
+      >
+        <div className="pointer-events-none absolute inset-0 z-0 mix-blend-color-dodge opacity-[0.03]">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern
+                id="velocityGrid"
+                width="100"
+                height="100"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M50 0 L100 50 L50 100 L0 50 Z"
+                  fill="none"
+                  stroke="#ffffff"
+                  strokeWidth="0.5"
+                />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#velocityGrid)" />
+          </svg>
+        </div>
 
-      <Sparkle className="left-[18%] top-[12%] z-0 h-6 w-6 animate-pulse text-[#E6C387]/25" />
-      <Sparkle
-        className="left-[42%] bottom-[20%] z-0 h-5 w-5 animate-pulse text-[#E6C387]/20"
-        style={{ animationDelay: "1s" }}
-      />
-      <Sparkle
-        className="right-[10%] top-[24%] z-0 h-4 w-4 animate-pulse text-[#E6C387]/20"
-        style={{ animationDelay: "1.8s" }}
-      />
-      <Sparkle
-        className="bottom-[8%] right-[4%] z-0 h-4 w-4 animate-pulse text-[#E6C387]/20"
-        style={{ animationDelay: "2.6s" }}
-      />
+        <div
+          className="pointer-events-none absolute left-[20%] top-[-10%] z-0 h-[450px] w-[450px] rounded-full bg-[#E6C387] opacity-10"
+          style={{ filter: "blur(100px)" }}
+        />
 
-      <div className="relative z-10 mx-auto flex min-h-[80vh] max-w-7xl items-center">
-        <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="space-y-8 lg:col-span-5">
-            <div className="inline-block">
-              <span className="rounded-full border border-[#E6C387]/20 bg-[#E6C387]/5 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#E6C387] md:text-xs">
+        <Sparkle className="left-[28%] top-[22%] z-0 h-5 w-5 animate-pulse text-[#E6C387]/40" />
+        <Sparkle
+          className="bottom-[30%] left-[45%] z-0 h-3 w-3 animate-pulse text-[#E6C387]/20"
+          style={{ animationDelay: "1s" }}
+        />
+
+        <div className="relative z-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="space-y-7 text-left lg:col-span-6">
+            <div>
+              <span className="rounded-full border border-[#E6C387]/30 bg-[#E6C387]/5 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#E6C387] backdrop-blur-sm md:text-xs">
                 Dubai Beauty Atelier
               </span>
             </div>
 
-            <h1 className="max-w-2xl font-serif text-4xl font-light leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl xl:text-7xl">
+            <h1 className="font-serif text-4xl font-normal leading-[1.12] tracking-tight text-white sm:text-5xl md:text-6xl">
               Beauty care with <br />
               a{" "}
               <span className="font-normal italic tracking-wide text-[#E6C387]">
@@ -87,64 +81,67 @@ function OrganicLuxuryHero() {
               and a calmer experience.
             </h1>
 
-            <p className="max-w-xl text-sm font-light leading-relaxed tracking-wide text-white/60 md:text-base">
+            <p className="max-w-lg text-sm font-light leading-relaxed tracking-wide text-white/60 md:text-base">
               {salonInfo.name} brings premium hair, nails, makeup, and bridal
               care together in one polished salon experience built around clear
-              booking and intentional service choices.
+              booking, intentional service choices, and a refined finish.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2">
               <ActionLink
                 to="/booking"
-                className="rounded-full bg-[#E6C387] px-8 py-3.5 text-xs font-semibold uppercase tracking-wider text-[#160205] shadow-xl transition-all duration-300 hover:bg-white"
+                className="rounded-full bg-[#e62a52] px-8 py-3.5 text-xs font-semibold uppercase tracking-wider text-white shadow-md transition duration-300 hover:bg-[#c21f42]"
               >
                 Book Appointment
               </ActionLink>
               <ActionLink
                 to="/services"
                 variant="subtle"
-                className="rounded-full border border-white/10 bg-white/5 px-8 py-3.5 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-sm transition duration-300 hover:border-white/25 hover:bg-white/10"
+                className="rounded-full border border-white/10 bg-white/5 px-8 py-3.5 text-xs font-semibold uppercase tracking-wider text-white transition duration-300 hover:bg-white/10"
               >
                 Explore Catalogue
               </ActionLink>
             </div>
           </div>
 
-          <div className="relative lg:col-span-7">
-            <div className="relative mx-auto w-full max-w-[760px] rounded-[2.5rem] border border-white/10 bg-[#240a0e]/60 p-4 shadow-[0_40px_90px_-15px_rgba(0,0,0,0.8)] backdrop-blur-sm transition-transform duration-500 hover:scale-[1.01]">
-              <div className="relative aspect-[16/11] overflow-hidden rounded-[1.8rem]">
+          <div className="w-full lg:col-span-6">
+            <div className="relative w-full rounded-[2rem] border border-white/10 bg-[#240a0e]/60 p-3.5 shadow-2xl backdrop-blur-sm">
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[1.5rem]">
                 <img
                   src={mainHeroImageSrc}
-                  alt="Ivonne Orchard Luxury Interior Atelier"
-                  className="h-full w-full object-cover transition duration-700 hover:scale-105"
+                  alt="Ivonne Orchard Salon Luxury View"
+                  className="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.03]"
                   onError={(event) => {
                     event.currentTarget.src = heroImage.src;
                   }}
                 />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#160205]/45 via-transparent to-transparent" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#110204]/35 via-transparent to-transparent" />
+              </div>
+            </div>
+
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-2xl border border-white/5 bg-[#240a0e]/40 p-5 backdrop-blur-sm">
+                <span className="block text-[10px] font-bold uppercase tracking-widest text-[#E6C387]">
+                  Concierge
+                </span>
+                <h4 className="text-sm font-semibold text-white">Easy WhatsApp</h4>
+                <p className="text-xs leading-relaxed text-white/50">
+                  {salonInfo.name} brings premium hair, nails, makeup, and
+                  bridal care in one polished salon experience.
+                </p>
               </div>
 
-              <div className="absolute bottom-6 left-6 hidden w-64 rounded-2xl border border-white/10 bg-[#160205]/88 p-5 shadow-2xl backdrop-blur-md xl:block">
-                <span className="mb-1 block text-[9px] font-bold uppercase tracking-widest text-[#E6C387]">
-                  Live From The Salon
+              <div className="rounded-2xl border border-white/5 bg-[#240a0e]/40 p-5 backdrop-blur-sm">
+                <span className="block text-[10px] font-bold uppercase tracking-widest text-[#E6C387]">
+                  Today&apos;s Edit
                 </span>
-                <h4 className="text-xs font-semibold text-white/90">
-                  Today&apos;s Active Edits
-                </h4>
-                <ul className="mt-2 space-y-1.5 text-[11px] text-white/60">
-                  <li className="flex gap-2">
-                    <span className="text-[#E6C387]">-</span>
-                    <span>Silk Press &amp; Braids</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-[#E6C387]">-</span>
-                    <span>Parisian Chignons</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-[#E6C387]">-</span>
-                    <span>Luxury Moroccan Bath</span>
-                  </li>
-                </ul>
+                <div className="space-y-1.5 text-xs text-white/70">
+                  <div className="border-b border-white/5 pb-1">| Braids</div>
+                  <div className="border-b border-white/5 pb-1">
+                    | Manicures
+                  </div>
+                  <div>| Chignons</div>
+                </div>
               </div>
             </div>
           </div>
@@ -154,4 +151,4 @@ function OrganicLuxuryHero() {
   );
 }
 
-export default OrganicLuxuryHero;
+export default LuxuryRadiantHero;
