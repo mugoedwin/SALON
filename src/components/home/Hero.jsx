@@ -2,6 +2,18 @@ import { Link } from "react-router-dom";
 import ActionLink from "../ui/ActionLink";
 import { heroImage, salonInfo } from "../../data/siteData";
 
+function Sparkle({ className = "" }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={`h-full w-full fill-current ${className}`.trim()}
+    >
+      <path d="M12 0 14.7 9.3 24 12l-9.3 2.7L12 24l-2.7-9.3L0 12l9.3-2.7Z" />
+    </svg>
+  );
+}
+
 function Hero() {
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-[#ecdcd3]/40 p-4 font-sans antialiased md:p-8">
@@ -18,11 +30,11 @@ function Hero() {
         <div className="animate-fluid pointer-events-none absolute left-[20%] top-[-20%] z-0 h-[400px] w-[400px] rounded-full bg-[#d6b580]/10 blur-[100px]" />
         <div className="animate-fluid pointer-events-none absolute bottom-[-10%] right-[10%] z-0 h-[350px] w-[350px] rounded-full bg-[#d6b580]/5 blur-[90px]" />
 
-        <div className="animate-float-icon pointer-events-none absolute left-[28%] top-[12%] z-0 text-2xl font-serif text-[#d6b580]/30">
-          ✦
+        <div className="animate-float-icon pointer-events-none absolute left-[28%] top-[12%] z-0 h-6 w-6 text-[#d6b580]/30">
+          <Sparkle />
         </div>
-        <div className="animate-float-icon pointer-events-none absolute left-[45%] bottom-[35%] z-0 text-xl font-serif text-[#d6b580]/20">
-          ✦
+        <div className="animate-float-icon pointer-events-none absolute left-[45%] bottom-[35%] z-0 h-5 w-5 text-[#d6b580]/20">
+          <Sparkle />
         </div>
 
         <div className="relative z-10 grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16">
@@ -117,8 +129,8 @@ function Hero() {
           </div>
         </div>
 
-        <div className="animate-float-icon absolute bottom-6 right-8 hidden text-xl text-white/10 lg:block">
-          ✦
+        <div className="animate-float-icon absolute bottom-6 right-8 hidden h-5 w-5 text-white/10 lg:block">
+          <Sparkle />
         </div>
       </section>
     </div>
