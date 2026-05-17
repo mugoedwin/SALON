@@ -5,6 +5,32 @@
 @tailwind utilities;
 
 @layer base {
+  @keyframes fluid-blob {
+    0%,
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+
+    33% {
+      transform: translate(40px, -60px) scale(1.15);
+    }
+
+    66% {
+      transform: translate(-30px, 20px) scale(0.9);
+    }
+  }
+
+  @keyframes slow-float {
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+      transform: translateY(-15px) rotate(4deg);
+    }
+  }
+
   :root {
     --color-cream: 255 251 252;
     --color-sand: 252 241 245;
@@ -71,6 +97,14 @@
     border: 3px solid rgba(255, 255, 255, 0.7);
     border-radius: 999px;
     background: rgba(197, 164, 110, 0.55);
+  }
+
+  .animate-fluid {
+    animation: fluid-blob 18s ease-in-out infinite;
+  }
+
+  .animate-float-icon {
+    animation: slow-float 8s ease-in-out infinite;
   }
 }
 

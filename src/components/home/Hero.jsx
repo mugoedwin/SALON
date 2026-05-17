@@ -15,13 +15,13 @@ function Hero() {
           }}
         />
 
-        <div className="pointer-events-none absolute left-[20%] top-[-20%] z-0 h-[400px] w-[400px] rounded-full bg-[#d6b580]/10 blur-[100px]" />
-        <div className="pointer-events-none absolute bottom-[-10%] right-[10%] z-0 h-[350px] w-[350px] rounded-full bg-[#d6b580]/5 blur-[90px]" />
+        <div className="animate-fluid pointer-events-none absolute left-[20%] top-[-20%] z-0 h-[400px] w-[400px] rounded-full bg-[#d6b580]/10 blur-[100px]" />
+        <div className="animate-fluid pointer-events-none absolute bottom-[-10%] right-[10%] z-0 h-[350px] w-[350px] rounded-full bg-[#d6b580]/5 blur-[90px]" />
 
-        <div className="pointer-events-none absolute left-[28%] top-[12%] z-0 text-2xl font-serif text-[#d6b580]/30 animate-pulse">
+        <div className="animate-float-icon pointer-events-none absolute left-[28%] top-[12%] z-0 text-2xl font-serif text-[#d6b580]/30">
           ✦
         </div>
-        <div className="pointer-events-none absolute left-[45%] bottom-[35%] z-0 text-xl font-serif text-[#d6b580]/20 animate-bounce">
+        <div className="animate-float-icon pointer-events-none absolute left-[45%] bottom-[35%] z-0 text-xl font-serif text-[#d6b580]/20">
           ✦
         </div>
 
@@ -94,9 +94,7 @@ function Hero() {
                 <span className="block text-[10px] font-semibold uppercase tracking-widest text-[#d6b580]">
                   Concierge
                 </span>
-                <h4 className="text-sm font-semibold text-white">
-                  Easy WhatsApp
-                </h4>
+                <h4 className="text-sm font-semibold text-white">Easy WhatsApp</h4>
                 <p className="text-xs leading-relaxed text-white/50">
                   {salonInfo.name} brings premium hair, nails, makeup, and bridal
                   care in one polished salon experience.
@@ -119,7 +117,7 @@ function Hero() {
           </div>
         </div>
 
-        <div className="absolute bottom-6 right-8 hidden text-xl text-white/10 lg:block">
+        <div className="animate-float-icon absolute bottom-6 right-8 hidden text-xl text-white/10 lg:block">
           ✦
         </div>
       </section>
