@@ -1,12 +1,10 @@
-import SectionGrid from "../components/common/SectionGrid";
 import ActionLink from "../components/ui/ActionLink";
 import TestimonialCarousel from "../components/ui/TestimonialCarousel";
+import Hero from "../components/home/Hero";
 import { servicesData } from "../data/servicesData";
 import {
   contactSupportChannels,
   galleryImages,
-  heroImage,
-  homeStats,
   homeTestimonials,
   homeValueHighlights,
   salonInfo,
@@ -18,100 +16,7 @@ const galleryPreview = galleryImages.slice(0, 3);
 function Home() {
   return (
     <div className="pb-16 sm:pb-20">
-      <section className="px-4 pb-14 pt-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid gap-10 border-b border-rose-100 pb-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-            <div className="max-w-3xl">
-              <div className="flex items-center gap-4">
-                <span className="h-px w-12 bg-rose-300" />
-                <p className="eyebrow-label">Dubai Beauty Atelier</p>
-              </div>
-
-              <h1 className="mt-6 text-4xl font-semibold leading-none text-salon-strong sm:text-5xl lg:text-[4.4rem]">
-                Beauty care with a sharper finish and a calmer experience.
-              </h1>
-              <p className="mt-6 max-w-2xl text-base leading-8 text-salon-copy sm:text-lg">
-                {salonInfo.name} brings premium hair, nails, makeup, and bridal
-                care together in one polished salon experience built around clear
-                booking, intentional service choices, and a refined finish.
-              </p>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <ActionLink to="/booking">Book Appointment</ActionLink>
-                <ActionLink to="/services" variant="secondary">
-                  Explore Catalogue
-                </ActionLink>
-              </div>
-
-              <div className="mt-8 flex flex-wrap gap-6 border-t border-rose-100 pt-6">
-                {homeStats.map((item) => (
-                  <div key={item.label} className="min-w-[120px]">
-                    <p className="text-3xl font-semibold text-salon-strong">
-                      {item.value}
-                    </p>
-                    <p className="mt-1 text-xs uppercase tracking-[0.18em] text-salon-muted">
-                      {item.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid gap-4">
-              <div className="relative">
-                <div className="absolute bottom-0 left-0 top-6 w-[78%] rounded-[1.75rem] bg-rose-100" />
-                <img
-                  src={heroImage.src}
-                  alt={heroImage.alt}
-                  className="relative ml-auto aspect-[4/5] w-full max-w-[23rem] rounded-[1.75rem] object-cover"
-                  fetchPriority="high"
-                />
-              </div>
-
-              <div className="grid gap-0 overflow-hidden rounded-[1.5rem] border border-rose-100 bg-white sm:grid-cols-[1fr_1fr]">
-                <div className="border-b border-rose-100 px-5 py-5 sm:border-b-0 sm:border-r">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
-                    Concierge
-                  </p>
-                  <p className="mt-2 text-xl font-semibold text-salon-strong">
-                    Easy WhatsApp confirmations
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-salon-copy">
-                    Share inspiration, ask prep questions, and confirm your time
-                    without friction.
-                  </p>
-                </div>
-
-                <div className="px-5 py-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
-                    Today&apos;s edit
-                  </p>
-                  <div className="mt-3 space-y-3">
-                    {featuredServices.slice(0, 2).map((service) => (
-                      <div
-                        key={service.name}
-                        className="flex items-center justify-between gap-3 border-l-2 border-rose-200 pl-3"
-                      >
-                        <div className="min-w-0">
-                          <p className="truncate text-sm font-semibold text-salon-strong">
-                            {service.name}
-                          </p>
-                          <p className="truncate text-[0.72rem] uppercase tracking-[0.16em] text-salon-muted">
-                            {service.category}
-                          </p>
-                        </div>
-                        <span className="text-[0.72rem] font-semibold text-rose-700">
-                          {service.duration}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Hero />
 
       <section className="px-4 py-14">
         <div className="mx-auto max-w-6xl">
