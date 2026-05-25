@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "env": {
+    "DEBUG": "0"
+  },
+  "builds": [
+    {
+      "src": "luxsalon/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "luxsalon/wsgi.py"
+    }
+  ]
+}

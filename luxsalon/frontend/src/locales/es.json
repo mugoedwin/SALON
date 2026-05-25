@@ -1,0 +1,18 @@
+{
+  "locale_name": "Español",
+  "welcome_user": "¡Bienvenido, {{name}}!",
+  "welcome_admin": "Bienvenido, Administrador {{name}}.",
+  "welcome_back_user": "¡Bienvenido de nuevo, {{name}}!",
+  "welcome_back_admin": "¡Bienvenido de nuevo, Administrador {{name}}. El sistema está estable.",
+  "morning_user": "¡Buenos días, {{name}}!",
+  "morning_admin": "¡Buenos días, Administrador {{name}}.",
+  "afternoon_user": "¡Buenas tardes, {{name}}!",
+  "afternoon_admin": "¡Buenas tardes, Administrador {{name}}.",
+  "evening_user": "¡Buenas noches, {{name}}!",
+  "evening_admin": "¡Buenas noches, Administrador {{name}}.",
+  "night_user": "¡Buenas noches, {{name}}!",
+  "night_admin": "¡Buenas noches, Administrador {{name}}.",
+  "first_visit_label": "Primera visita de hoy",
+  "returning_label": "Cliente recurrente",
+  "logout": "Cerrar sesión"
+}

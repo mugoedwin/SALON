@@ -1,0 +1,18 @@
+{
+  "locale_name": "English",
+  "welcome_user": "Welcome, {{name}}!",
+  "welcome_admin": "Welcome, Admin {{name}}.",
+  "welcome_back_user": "Welcome back, {{name}}!",
+  "welcome_back_admin": "Welcome back, Admin {{name}}. System looks stable.",
+  "morning_user": "Good morning, {{name}}!",
+  "morning_admin": "Good morning, Admin {{name}}.",
+  "afternoon_user": "Good afternoon, {{name}}!",
+  "afternoon_admin": "Good afternoon, Admin {{name}}.",
+  "evening_user": "Good evening, {{name}}!",
+  "evening_admin": "Good evening, Admin {{name}}.",
+  "night_user": "Good evening, {{name}}!",
+  "night_admin": "Good evening, Admin {{name}}.",
+  "first_visit_label": "First visit today",
+  "returning_label": "Returning client",
+  "logout": "Log Out"
+}

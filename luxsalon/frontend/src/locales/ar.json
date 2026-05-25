@@ -1,0 +1,18 @@
+{
+  "locale_name": "العربية",
+  "welcome_user": "مرحبًا، {{name}}!",
+  "welcome_admin": "مرحبًا، أيها المسؤول {{name}}.",
+  "welcome_back_user": "مرحبًا بعودتك، {{name}}!",
+  "welcome_back_admin": "مرحبًا بعودتك، أيها المسؤول {{name}}. يبدو النظام مستقرًا.",
+  "morning_user": "صباح الخير، {{name}}!",
+  "morning_admin": "صباح الخير، أيها المسؤول {{name}}.",
+  "afternoon_user": "مساء الخير، {{name}}!",
+  "afternoon_admin": "مساء الخير، أيها المسؤول {{name}}.",
+  "evening_user": "مساء الخير، {{name}}!",
+  "evening_admin": "مساء الخير، أيها المسؤول {{name}}.",
+  "night_user": "مساء الخير، {{name}}!",
+  "night_admin": "مساء الخير، أيها المسؤول {{name}}.",
+  "first_visit_label": "الزيارة الأولى اليوم",
+  "returning_label": "عميل عائد",
+  "logout": "تسجيل الخروج"
+}
