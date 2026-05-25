@@ -126,7 +126,7 @@ function ManageBookings() {
                     onClick={() => setBookingStatus(booking.id, status)}
                     className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
                       booking.status === status
-                        ? "bg-rose-600 text-white"
+                        ? "bg-[#E11D48] text-white"
                         : "border border-rose-200 bg-white text-rose-700 hover:bg-rose-50"
                     }`}
                   >

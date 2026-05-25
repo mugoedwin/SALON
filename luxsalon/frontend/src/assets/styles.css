@@ -34,8 +34,8 @@
   :root {
     --color-cream: 255 251 252;
     --color-sand: 252 241 245;
-    --color-rose: 225 91 121;
-    --color-blush: 255 232 237;
+    --color-rose: 74 14 23;
+    --color-blush: 247 236 232;
     --color-maroon-deep: 48 7 12;
     --color-maroon-dark: 74 14 23;
     --color-gold-light: 230 195 135;
@@ -145,35 +145,35 @@
 
   .section-surface {
     @apply relative overflow-hidden bg-white;
-    border: 1px solid rgba(251, 207, 232, 0.8);
+    border: 1px solid rgba(223, 188, 184, 0.72);
     border-radius: 1.5rem;
   }
 
   .luxury-card {
-    border: 1px solid rgba(251, 207, 232, 0.7);
+    border: 1px solid rgba(223, 188, 184, 0.62);
     border-top-width: 2px;
-    border-top-color: rgba(225, 91, 121, 0.42);
+    border-top-color: rgba(197, 164, 110, 0.62);
     background-color: rgba(255, 255, 255, 0.96);
   }
 
   .glass-panel {
-    border: 1px solid rgba(251, 207, 232, 0.75);
+    border: 1px solid rgba(223, 188, 184, 0.72);
     background-color: rgba(255, 255, 255, 0.92);
   }
 
   .eyebrow-label {
     @apply inline-flex items-center gap-2 px-3 py-1.5 text-[0.68rem] font-semibold uppercase;
-    border: 1px solid rgba(197, 164, 110, 0.45);
+    border: 1px solid #e11d48;
     border-radius: 999px;
-    background-color: rgba(48, 7, 12, 0.94);
-    color: rgb(var(--color-gold-light));
+    background-color: #e11d48;
+    color: #fff;
     letter-spacing: 0.24em;
   }
 
   .glow-ring {
     box-shadow:
       0 0 0 1px rgba(255, 255, 255, 0.78),
-      0 0 0 10px rgba(225, 91, 121, 0.05);
+      0 0 0 10px rgba(74, 14, 23, 0.05);
   }
 
   .text-salon-strong {

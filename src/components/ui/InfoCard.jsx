@@ -1,9 +1,9 @@
 const toneClasses = {
   default: "luxury-card text-salon-strong",
   accent:
-    "border border-rose-200 bg-rose-600 text-white",
+    "border border-gold-muted/35 bg-maroon-dark text-white",
   muted:
-    "border border-rose-100 bg-rose-50/70 text-salon-strong",
+    "border border-rose-100 bg-[#F7ECE8] text-salon-strong",
 };
 
 const paddingClasses = {
@@ -12,9 +12,9 @@ const paddingClasses = {
 };
 
 const badgeClasses = {
-  default: "bg-rose-50 text-rose-600",
-  accent: "bg-white/15 text-white",
-  muted: "bg-white text-rose-700",
+  default: "bg-[#F7ECE8] text-maroon-dark",
+  accent: "bg-gold-light/20 text-gold-light",
+  muted: "bg-white text-maroon-deep",
 };
 
 function InfoCard({
@@ -30,7 +30,7 @@ function InfoCard({
   const toneClassName = toneClasses[tone] ?? toneClasses.default;
   const paddingClassName = paddingClasses[padding] ?? paddingClasses.default;
   const descriptionClassName =
-    tone === "accent" ? "text-rose-50" : "text-salon-copy";
+    tone === "accent" ? "text-[#F7ECE8]" : "text-salon-copy";
 
   return (
     <div

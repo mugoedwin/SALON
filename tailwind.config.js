@@ -8,6 +8,18 @@ export default {
         serif: ["Playfair Display", "Georgia", "serif"],
       },
       colors: {
+        rose: {
+          50: "#FBF3F2",
+          100: "#F7DDE4",
+          200: "#F3B4C4",
+          300: "#EE85A0",
+          400: "#E9517B",
+          500: "#E11D48",
+          600: "#4A0E17",
+          700: "#E11D48",
+          800: "#BE123C",
+          900: "#881337",
+        },
         maroon: {
           deep: "#30070C",
           dark: "#4A0E17",

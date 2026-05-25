@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -34,8 +34,8 @@
   :root {
     --color-cream: 255 251 252;
     --color-sand: 252 241 245;
-    --color-rose: 225 91 121;
-    --color-blush: 255 232 237;
+    --color-rose: 74 14 23;
+    --color-blush: 247 236 232;
     --color-maroon-deep: 48 7 12;
     --color-maroon-dark: 74 14 23;
     --color-gold-light: 230 195 135;
@@ -55,15 +55,6 @@
     font-family: "Plus Jakarta Sans", sans-serif;
     color: rgb(var(--color-copy));
     background-color: rgb(var(--color-cashmere));
-    background-image:
-      linear-gradient(
-        180deg,
-        rgb(var(--color-maroon-deep) / 0.96) 0%,
-        rgb(var(--color-maroon-dark) / 0.88) 18rem,
-        rgb(var(--color-cashmere) / 0.98) 33rem,
-        rgb(var(--color-cashmere)) 100%
-      );
-    background-repeat: no-repeat;
   }
 
   ::selection {
@@ -114,66 +105,37 @@
     isolation: isolate;
   }
 
-  .app-shell::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(
-        circle at 14% 0%,
-        rgba(230, 195, 135, 0.22) 0%,
-        rgba(230, 195, 135, 0) 34%
-      ),
-      linear-gradient(
-        180deg,
-        rgba(48, 7, 12, 0.18) 0%,
-        rgba(48, 7, 12, 0) 14rem
-      ),
-      linear-gradient(
-        135deg,
-        rgba(74, 14, 23, 0.07) 0%,
-        rgba(251, 249, 246, 0) 42%
-      );
-    z-index: 0;
-  }
-
-  .app-shell > * {
-    position: relative;
-    z-index: 1;
-  }
-
   .section-surface {
     @apply relative overflow-hidden bg-white;
-    border: 1px solid rgba(251, 207, 232, 0.8);
+    border: 1px solid rgba(223, 188, 184, 0.72);
     border-radius: 1.5rem;
   }
 
   .luxury-card {
-    border: 1px solid rgba(251, 207, 232, 0.7);
+    border: 1px solid rgba(223, 188, 184, 0.62);
     border-top-width: 2px;
-    border-top-color: rgba(225, 91, 121, 0.42);
+    border-top-color: rgba(197, 164, 110, 0.62);
     background-color: rgba(255, 255, 255, 0.96);
   }
 
   .glass-panel {
-    border: 1px solid rgba(251, 207, 232, 0.75);
+    border: 1px solid rgba(223, 188, 184, 0.72);
     background-color: rgba(255, 255, 255, 0.92);
   }
 
   .eyebrow-label {
     @apply inline-flex items-center gap-2 px-3 py-1.5 text-[0.68rem] font-semibold uppercase;
-    border: 1px solid rgba(197, 164, 110, 0.45);
+    border: 1px solid #e11d48;
     border-radius: 999px;
-    background-color: rgba(48, 7, 12, 0.94);
-    color: rgb(var(--color-gold-light));
+    background-color: #e11d48;
+    color: #fff;
     letter-spacing: 0.24em;
   }
 
   .glow-ring {
     box-shadow:
       0 0 0 1px rgba(255, 255, 255, 0.78),
-      0 0 0 10px rgba(225, 91, 121, 0.05);
+      0 0 0 10px rgba(74, 14, 23, 0.05);
   }
 
   .text-salon-strong {
@@ -201,5 +163,314 @@
     background-color: #1a0508;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 L100 50 L50 100 L0 50 Z' fill='none' stroke='%23ffffff' stroke-width='0.5' stroke-opacity='0.03'/%3E%3C/svg%3E");
     background-size: 140px 140px;
+  }
+
+  .salon-hero {
+    min-height: calc(100svh - 1.5rem);
+    max-height: none;
+    width: 100%;
+    perspective: 1000px;
+    background: #000;
+  }
+
+  .salon-hero__image {
+    z-index: 0;
+    transform: scale(1.1);
+    animation: salon-hero-zoom 60s linear infinite;
+    object-position: 54% center;
+  }
+
+  .salon-hero__shade {
+    z-index: 1;
+    background:
+      radial-gradient(circle at 50% 45%, rgba(255, 232, 237, 0.12), transparent 34%),
+      linear-gradient(
+        180deg,
+        rgba(20, 2, 6, 0.18) 0%,
+        rgba(20, 2, 6, 0.2) 44%,
+        rgba(48, 7, 12, 0.44) 100%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.24) 0%,
+        rgba(0, 0, 0, 0.04) 42%,
+        rgba(0, 0, 0, 0.16) 100%
+      );
+  }
+
+  .salon-hero__mist {
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .salon-hero__mist span {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 999px;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.07) 0%,
+      rgba(255, 255, 255, 0) 78%
+    );
+    filter: blur(50px);
+    animation: salon-hero-drift 80s linear infinite;
+  }
+
+  .salon-hero__mist span:nth-child(1) {
+    left: 15%;
+    top: 10%;
+    animation-duration: 70s;
+  }
+
+  .salon-hero__mist span:nth-child(2) {
+    left: 70%;
+    top: 50%;
+    animation-duration: 90s;
+  }
+
+  .salon-hero__mist span:nth-child(3) {
+    left: 30%;
+    top: 70%;
+    animation-duration: 100s;
+  }
+
+  .salon-hero__content {
+    animation: salon-hero-rise 1.8s ease forwards;
+    max-width: min(64rem, calc(100vw - 2rem));
+    min-width: 0;
+    overflow-wrap: break-word;
+    transform-style: preserve-3d;
+  }
+
+  .salon-hero__title {
+    position: relative;
+    overflow: hidden;
+    color: #fff8f1;
+    font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+    font-size: clamp(2.75rem, 6.2vw, 5.6rem);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: 0.025em;
+    text-shadow:
+      0 0 16px rgba(255, 248, 241, 0.26),
+      0 4px 34px rgba(0, 0, 0, 0.82);
+  }
+
+  .salon-hero__title::after {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 -100%;
+    width: 100%;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0) 70%
+    );
+    transform: skewX(-25deg);
+    animation: salon-hero-shimmer 5.6s infinite;
+  }
+
+  .salon-hero__title span {
+    display: block;
+  }
+
+  .salon-hero__title-accent {
+    margin-top: 0.1em;
+    color: rgb(var(--color-gold-light));
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: 0.015em;
+    text-shadow:
+      0 0 20px rgba(230, 195, 135, 0.38),
+      0 4px 30px rgba(0, 0, 0, 0.82);
+  }
+
+  .salon-hero__title .salon-hero__title-mobile {
+    display: none;
+  }
+
+  .salon-hero__subtitle {
+    color: rgba(255, 248, 241, 0.94);
+    font-size: clamp(1.16rem, 2.1vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.55;
+    max-width: min(44rem, calc(100vw - 2rem));
+    overflow-wrap: break-word;
+    text-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.86),
+      0 10px 28px rgba(0, 0, 0, 0.64);
+  }
+
+  .salon-hero__button {
+    border-radius: 999px;
+    padding: 0.9rem 2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition:
+      transform 0.35s ease,
+      box-shadow 0.35s ease,
+      background-color 0.35s ease,
+      color 0.35s ease;
+  }
+
+  .salon-hero__button--primary {
+    background: #e11d48;
+    color: #fff;
+    box-shadow: 0 12px 32px rgba(225, 29, 72, 0.26);
+  }
+
+  .salon-hero__button--primary:hover {
+    background: #f43f5e;
+    transform: translateY(-3px);
+    box-shadow: 0 18px 44px rgba(225, 29, 72, 0.38);
+  }
+
+  .salon-hero__button--secondary {
+    border: 1px solid rgba(255, 232, 237, 0.74);
+    background: rgba(48, 7, 12, 0.22);
+    color: rgb(var(--color-blush));
+    backdrop-filter: blur(12px);
+  }
+
+  .salon-hero__button--secondary:hover {
+    background: rgb(var(--color-blush));
+    color: rgb(var(--color-maroon-deep));
+    transform: translateY(-3px);
+    box-shadow: 0 18px 44px rgba(48, 7, 12, 0.34);
+  }
+
+  .salon-hero__particles {
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .salon-hero__particles span {
+    position: absolute;
+    bottom: -12px;
+    left: calc(8% + (var(--i) * 9%));
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: #e11d48;
+    box-shadow: 0 0 14px rgba(225, 29, 72, 0.72);
+    opacity: 0.58;
+    animation: salon-hero-float 12s linear infinite;
+    animation-delay: calc(var(--i) * 0.5s);
+  }
+
+  @keyframes salon-hero-float {
+    0% {
+      opacity: 0.55;
+      transform: translateY(0) translateX(0) scale(1);
+    }
+
+    50% {
+      opacity: 1;
+      transform: translateY(-250px) translateX(50px) scale(1.2);
+    }
+
+    100% {
+      opacity: 0;
+      transform: translateY(-500px) translateX(0) scale(1);
+    }
+  }
+
+  @keyframes salon-hero-rise {
+    0% {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes salon-hero-zoom {
+    0%,
+    100% {
+      transform: scale(1.1);
+    }
+
+    50% {
+      transform: scale(1.12);
+    }
+  }
+
+  @keyframes salon-hero-shimmer {
+    0% {
+      left: -100%;
+    }
+
+    50%,
+    100% {
+      left: 100%;
+    }
+  }
+
+  @keyframes salon-hero-drift {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+      transform: translate(60px, -30px) scale(1.2);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .salon-hero {
+      min-height: calc(100svh - 1rem);
+      max-height: none;
+    }
+
+    .salon-hero__image {
+      object-position: 35% center;
+    }
+
+    .salon-hero__title {
+      font-size: clamp(2.35rem, 11.5vw, 3.2rem);
+      letter-spacing: 0.025em;
+      line-height: 1.04;
+    }
+
+    .salon-hero__title .salon-hero__title-desktop {
+      display: none;
+    }
+
+    .salon-hero__title .salon-hero__title-mobile {
+      display: block;
+    }
+
+    .salon-hero__subtitle {
+      max-width: min(21rem, calc(100vw - 2rem));
+      font-size: 1.12rem;
+      line-height: 1.55;
+    }
+
+    .salon-hero__button {
+      padding-inline: 1.4rem;
+      font-size: 0.78rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .salon-hero__image,
+    .salon-hero__content,
+    .salon-hero__title::after,
+    .salon-hero__mist span,
+    .salon-hero__particles span {
+      animation: none;
+    }
+
+    .salon-hero__image {
+      transform: scale(1.05);
+    }
   }
 }

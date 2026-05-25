@@ -22,8 +22,32 @@ export const servicesData = [
     features: ["Full-body exfoliation", "Steam cleanse", "Moisture finish"],
     popular: true,
     image:
-      "https://images.pexels.com/photos/3993465/pexels-photo-3993465.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/9475401/pexels-photo-9475401.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Spa treatment session in a calm beauty salon",
+  },
+  {
+    name: "Body Scrub Ritual",
+    price: "AED 130",
+    duration: "1 hr",
+    category: "Spa Treatments",
+    description: "A smoothing exfoliation ritual finished with light moisture care.",
+    benefit: "Leaves skin feeling soft, refreshed, and polished.",
+    features: ["Body exfoliation", "Warm rinse", "Moisture finish"],
+    image:
+      "https://images.pexels.com/photos/9589404/pexels-photo-9589404.jpeg?auto=compress&cs=tinysrgb&w=900",
+    imageAlt: "Relaxing body scrub treatment in a spa room",
+  },
+  {
+    name: "Relaxing Body Massage",
+    price: "AED 180",
+    duration: "1 hr",
+    category: "Spa Treatments",
+    description: "A calming massage focused on relaxation, circulation, and tension release.",
+    benefit: "Perfect when you want a softer reset before or after beauty services.",
+    features: ["Relaxation massage", "Aromatherapy", "Tension relief"],
+    image:
+      "https://images.pexels.com/photos/6187656/pexels-photo-6187656.jpeg?auto=compress&cs=tinysrgb&w=900",
+    imageAlt: "Calm massage and spa treatment setup",
   },
   {
     name: "Facial",
@@ -34,8 +58,32 @@ export const servicesData = [
     benefit: "A simple reset for fresh, healthy-looking skin.",
     features: ["Cleanse", "Exfoliation", "Hydrating mask"],
     image:
-      "https://images.pexels.com/photos/3992877/pexels-photo-3992877.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/30809943/pexels-photo-30809943.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Skin care treatment being performed in a salon",
+  },
+  {
+    name: "Hydrating Facial",
+    price: "AED 140",
+    duration: "1 hr",
+    category: "Skin Care",
+    description: "A moisture-focused facial with gentle cleansing, mask care, and hydration.",
+    benefit: "Great for tired or dry-looking skin that needs a fresh glow.",
+    features: ["Gentle cleanse", "Hydrating mask", "Glow finish"],
+    image:
+      "https://images.pexels.com/photos/34930099/pexels-photo-34930099.jpeg?auto=compress&cs=tinysrgb&w=900",
+    imageAlt: "Hydrating facial treatment in a salon",
+  },
+  {
+    name: "Deep Cleansing Facial",
+    price: "AED 160",
+    duration: "1 hr 10 min",
+    category: "Skin Care",
+    description: "A deeper cleanse with exfoliation and mask care for clearer-looking skin.",
+    benefit: "Helps skin feel balanced, clean, and ready for makeup or daily care.",
+    features: ["Deep cleanse", "Exfoliation", "Balancing mask"],
+    image:
+      "https://images.pexels.com/photos/37273224/pexels-photo-37273224.jpeg?auto=compress&cs=tinysrgb&w=900",
+    imageAlt: "Deep cleansing facial skin care appointment",
   },
   {
     name: "Full Body Waxing",
@@ -46,8 +94,32 @@ export const servicesData = [
     benefit: "Quick, clean hair removal with a polished result.",
     features: ["Skin prep", "Full-body wax", "Aftercare guidance"],
     image:
-      "https://images.pexels.com/photos/2113855/pexels-photo-2113855.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/35103884/pexels-photo-35103884.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Salon beauty treatment with a clean professional finish",
+  },
+  {
+    name: "Half Body Waxing",
+    price: "AED 90",
+    duration: "40 min",
+    category: "Waxing",
+    description: "Targeted waxing for arms, legs, or selected areas with careful skin prep.",
+    benefit: "A quick smoothing service when you do not need a full-body appointment.",
+    features: ["Area prep", "Smooth removal", "Aftercare finish"],
+    image:
+      "https://images.pexels.com/photos/35496498/pexels-photo-35496498.jpeg?auto=compress&cs=tinysrgb&w=900",
+    imageAlt: "Professional waxing service in a beauty salon",
+  },
+  {
+    name: "Brow & Face Waxing",
+    price: "AED 60",
+    duration: "25 min",
+    category: "Waxing",
+    description: "Gentle facial waxing for brows, upper lip, or face-framing cleanup.",
+    benefit: "Keeps facial details neat with a clean, polished finish.",
+    features: ["Brow shaping", "Face cleanup", "Soothing finish"],
+    image:
+      "https://images.pexels.com/photos/15577126/pexels-photo-15577126.jpeg?auto=compress&cs=tinysrgb&w=900",
+    imageAlt: "Face waxing and brow shaping beauty service",
   },
   {
     name: "Cornrows",
@@ -59,7 +131,7 @@ export const servicesData = [
     features: ["Precision parting", "Neat braid lines", "Edge finish"],
     popular: true,
     image:
-      "https://images.pexels.com/photos/7755518/pexels-photo-7755518.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/7607808/pexels-photo-7607808.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Cornrow hairstyle styled neatly in a salon",
   },
   {
@@ -71,8 +143,32 @@ export const servicesData = [
     benefit: "A lightweight enhancement for everyday or event wear.",
     features: ["Custom placement", "Soft finish", "Quick application"],
     image:
-      "https://images.pexels.com/photos/34049570/pexels-photo-34049570.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/7755531/pexels-photo-7755531.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Beauty application work for a polished lash result",
+  },
+  {
+    name: "Classic Lash Extensions",
+    price: "AED 180",
+    duration: "1 hr 30 min",
+    category: "Lashes",
+    description: "Soft classic lash extensions for natural definition and everyday polish.",
+    benefit: "Adds length and shape while keeping the look clean and wearable.",
+    features: ["Classic set", "Custom mapping", "Natural finish"],
+    image:
+      "https://images.pexels.com/photos/33723106/pexels-photo-33723106.jpeg?auto=compress&cs=tinysrgb&w=900",
+    imageAlt: "Classic lash extension application",
+  },
+  {
+    name: "Lash Lift & Tint",
+    price: "AED 120",
+    duration: "50 min",
+    category: "Lashes",
+    description: "A lift and tint service that curls and defines natural lashes.",
+    benefit: "Ideal for low-maintenance definition without extensions.",
+    features: ["Lash lift", "Tint finish", "Natural curl"],
+    image:
+      "https://images.pexels.com/photos/34930118/pexels-photo-34930118.jpeg?auto=compress&cs=tinysrgb&w=900",
+    imageAlt: "Lash lift and tint beauty appointment",
   },
   {
     name: "Gel Builder Nails",
@@ -83,7 +179,7 @@ export const servicesData = [
     benefit: "Ideal when you want extra structure and durability.",
     features: ["Nail prep", "Builder overlay", "Shape refinement"],
     image:
-      "https://images.pexels.com/photos/6135675/pexels-photo-6135675.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/34132695/pexels-photo-34132695.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Glossy salon nails with a smooth finish",
   },
   {
@@ -95,7 +191,7 @@ export const servicesData = [
     benefit: "A strong, long-lasting option with room for styling.",
     features: ["Acrylic overlay", "Shape refinement", "Finish polish"],
     image:
-      "https://images.pexels.com/photos/6135675/pexels-photo-6135675.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/6135680/pexels-photo-6135680.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Nail service with a polished salon finish",
   },
   {
@@ -107,7 +203,7 @@ export const servicesData = [
     benefit: "Fast color with a neat, durable result.",
     features: ["Prep", "Gel color", "Gloss finish"],
     image:
-      "https://images.pexels.com/photos/6135675/pexels-photo-6135675.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/35103938/pexels-photo-35103938.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Glossy gel polish finish in a salon",
   },
   {
@@ -120,7 +216,7 @@ export const servicesData = [
     features: ["Hand care", "Foot care", "Polish finish"],
     popular: true,
     image:
-      "https://images.pexels.com/photos/3997388/pexels-photo-3997388.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/7755665/pexels-photo-7755665.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Manicure and pedicure treatment in a clean salon",
   },
   {
@@ -137,6 +233,18 @@ export const servicesData = [
     imageAlt: "Fresh silk press hairstyle in a modern salon",
   },
   {
+    name: "Wash & Style",
+    price: "AED 120",
+    duration: "1 hr",
+    category: "Hair Styling",
+    description: "A fresh wash followed by simple styling for a neat salon finish.",
+    benefit: "Perfect for a quick refresh before work, dinner, or weekend plans.",
+    features: ["Hair wash", "Light styling", "Smooth finish"],
+    image:
+      "https://images.pexels.com/photos/7750115/pexels-photo-7750115.jpeg?auto=compress&cs=tinysrgb&w=900",
+    imageAlt: "Fresh wash and hair styling in a salon",
+  },
+  {
     name: "Knotless Braids",
     price: "AED 220",
     duration: "3 hrs",
@@ -146,7 +254,7 @@ export const servicesData = [
     features: ["Custom parting", "Edge refinement", "Styling mousse finish"],
     popular: true,
     image:
-      "https://images.pexels.com/photos/36441633/pexels-photo-36441633.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/9942664/pexels-photo-9942664.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Knotless braids hairstyle prepared in a professional salon",
   },
   {
@@ -158,7 +266,7 @@ export const servicesData = [
     benefit: "Perfect for a glossy, chip-resistant finish that lasts.",
     features: ["Cuticle tidy", "Nail shaping", "Gloss or nude finish"],
     image:
-      "https://images.pexels.com/photos/6135675/pexels-photo-6135675.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/22668324/pexels-photo-22668324.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Glossy gel manicure with a neat salon finish",
   },
   {
@@ -171,7 +279,7 @@ export const servicesData = [
     features: ["Skin prep", "Lashes included", "Mini touch-up kit"],
     popular: true,
     image:
-      "https://images.pexels.com/photos/34049570/pexels-photo-34049570.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/34025154/pexels-photo-34025154.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Bridal makeup and hairstyling for a wedding appointment",
   },
   {
@@ -195,7 +303,7 @@ export const servicesData = [
     benefit: "A refined protective look with salon-level blending.",
     features: ["Braid-down prep", "Melted hairline", "Soft curls or sleek finish"],
     image:
-      "https://images.pexels.com/photos/13004170/pexels-photo-13004170.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/6923437/pexels-photo-6923437.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Professional wig install and sleek styling in a salon chair",
   },
   {
@@ -231,7 +339,7 @@ export const servicesData = [
     benefit: "Brings faded color back to life without a dull look.",
     features: ["Tone balancing", "Gloss mask", "Finish styling"],
     image:
-      "https://images.pexels.com/photos/8467965/pexels-photo-8467965.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/20894394/pexels-photo-20894394.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Hair color refresh service with glossy salon results",
   },
   {
@@ -255,7 +363,7 @@ export const servicesData = [
     benefit: "A relaxing care ritual that leaves feet polished and renewed.",
     features: ["Warm soak", "Heel smoothing", "Massage and polish"],
     image:
-      "https://images.pexels.com/photos/3997388/pexels-photo-3997388.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/34930101/pexels-photo-34930101.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Spa pedicure with polish and foot care treatment",
   },
   {
@@ -279,7 +387,7 @@ export const servicesData = [
     benefit: "Keeps the whole bridal suite cohesive, timely, and beautifully finished.",
     features: ["Shared timeline", "Team touch-ups", "Style coordination"],
     image:
-      "https://images.pexels.com/photos/2253842/pexels-photo-2253842.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "https://images.pexels.com/photos/33494149/pexels-photo-33494149.jpeg?auto=compress&cs=tinysrgb&w=900",
     imageAlt: "Bridal party salon styling session before an event",
   },
 ];

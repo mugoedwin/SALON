@@ -6,7 +6,7 @@ function PageShell({ eyebrow, title, description, actions, children }) {
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl">
               <div className="flex items-center gap-4">
-                <span className="h-px w-10 bg-rose-300" />
+                <span className="h-px w-10 bg-rose-500" />
                 {eyebrow ? <p className="eyebrow-label">{eyebrow}</p> : null}
               </div>
               <h1 className="mt-5 text-4xl font-semibold tracking-tight text-salon-strong sm:text-5xl lg:text-6xl">

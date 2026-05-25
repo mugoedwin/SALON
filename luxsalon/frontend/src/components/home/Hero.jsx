@@ -1,9 +1,6 @@
 import ActionLink from "../ui/ActionLink";
 import { heroImage, salonInfo } from "../../data/siteData";
 
-const mainHeroImageSrc =
-  "https://res.cloudinary.com/dp7w9g89g/image/upload/v1715946800/salon_interior.jpg";
-
 function FloatingMark({ className = "", children }) {
   return (
     <div className={`pointer-events-none absolute ${className}`}>{children}</div>
@@ -136,7 +133,7 @@ function LuxuryRadiantHero() {
             <div className="flex flex-wrap gap-4 pt-2">
               <ActionLink
                 to="/booking"
-                className="rounded-full bg-[#e62a52] px-8 py-3.5 text-xs font-semibold uppercase tracking-wider text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c21f42]"
+                className="rounded-full bg-[#4A0E17] px-8 py-3.5 text-xs font-semibold uppercase tracking-wider text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#30070C]"
               >
                 Book Appointment
               </ActionLink>
@@ -154,8 +151,10 @@ function LuxuryRadiantHero() {
             <div className="relative w-full rounded-[2rem] border border-white/10 bg-[#240a0e]/60 p-3.5 shadow-2xl backdrop-blur-sm">
               <div className="w-full aspect-[16/10] rounded-[1.5rem] overflow-hidden">
                 <img
-                  src={mainHeroImageSrc}
-                  alt="Ivonne Orchard Salon Luxury View"
+                  src={heroImage.src}
+                  srcSet={heroImage.srcSet}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  alt={heroImage.alt}
                   className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
                   onError={(event) => {
                     event.currentTarget.src = heroImage.src;

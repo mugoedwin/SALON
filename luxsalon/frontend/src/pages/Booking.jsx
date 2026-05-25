@@ -110,7 +110,7 @@ function ServiceOption({ service, isSelected, onSelect }) {
           <span
             className={`inline-flex rounded-full px-4 py-2 text-sm font-semibold ${
               isSelected
-                ? "bg-rose-600 text-white"
+                ? "bg-[#E11D48] text-white"
                 : "border border-rose-200 bg-white text-rose-700"
             }`}
           >
@@ -287,7 +287,7 @@ function Booking() {
                       onClick={() => setBookingTime(slot)}
                       className={`rounded-full px-4 py-3 text-sm font-semibold transition-colors duration-200 ${
                         isSelected
-                          ? "bg-rose-600 text-white"
+                          ? "bg-[#E11D48] text-white"
                           : "border border-rose-200 bg-white text-salon-copy hover:border-rose-300 hover:bg-rose-50"
                       }`}
                     >

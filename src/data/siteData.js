@@ -22,8 +22,11 @@ export const salonInfo = {
 };
 
 export const heroImage = {
-  src: "/images/hero-image.jpg",
-  alt: "Ivonne Orchard Salon Service",
+  src: "https://images.pexels.com/photos/7750124/pexels-photo-7750124.jpeg?auto=compress&cs=tinysrgb&w=2400",
+  srcSet:
+    "https://images.pexels.com/photos/7750124/pexels-photo-7750124.jpeg?auto=compress&cs=tinysrgb&w=1200 1200w, https://images.pexels.com/photos/7750124/pexels-photo-7750124.jpeg?auto=compress&cs=tinysrgb&w=1800 1800w, https://images.pexels.com/photos/7750124/pexels-photo-7750124.jpeg?auto=compress&cs=tinysrgb&w=2400 2400w",
+  sizes: "100vw",
+  alt: "Luxury beauty salon interior with illuminated mirrors and styling chairs",
 };
 
 export const homeValueHighlights = [
@@ -152,76 +155,76 @@ export const galleryImages = [
 
 export const homeTestimonials = [
   {
-    name: "Brenda Wanjiku",
+    name: "Aisha Al Mansoori",
     detail: "Downtown Dubai",
     review:
       "The booking process was quick on my phone and the silk press came out clean, glossy, and lasting through the whole week.",
     avatar:
       "https://images.pexels.com/photos/30371813/pexels-photo-30371813.jpeg?auto=compress&cs=tinysrgb&w=240",
-    avatarAlt: "Portrait of Brenda Wanjiku smiling",
+    avatarAlt: "Portrait of Aisha Al Mansoori smiling",
   },
   {
-    name: "Sharon Akinyi",
+    name: "Leila Haddad",
     detail: "Dubai Marina",
     review:
       "I loved how easy it was to confirm my appointment on WhatsApp and the team was warm, calm, and very professional.",
     avatar:
       "https://images.pexels.com/photos/34221950/pexels-photo-34221950.jpeg?auto=compress&cs=tinysrgb&w=240",
-    avatarAlt: "Portrait of Sharon Akinyi after a salon visit",
+    avatarAlt: "Portrait of Leila Haddad after a salon visit",
   },
   {
-    name: "Mercy Njeri",
+    name: "Priya Nair",
     detail: "Business Bay",
     review:
       "Good prices, neat service, and a salon experience that feels reliable every time I visit.",
     avatar:
       "https://images.pexels.com/photos/8560506/pexels-photo-8560506.jpeg?auto=compress&cs=tinysrgb&w=240",
-    avatarAlt: "Portrait of Mercy Njeri with a polished beauty look",
+    avatarAlt: "Portrait of Priya Nair with a polished beauty look",
   },
   {
-    name: "Winnie Atieno",
+    name: "Sara Khan",
     detail: "Jumeirah",
     review:
       "My knotless braids were light, neat, and exactly the length I asked for. The finish felt premium.",
     avatar:
       "https://images.pexels.com/photos/2681751/pexels-photo-2681751.jpeg?auto=compress&cs=tinysrgb&w=240",
-    avatarAlt: "Portrait of Winnie Atieno smiling after a salon visit",
+    avatarAlt: "Portrait of Sara Khan smiling after a salon visit",
   },
   {
-    name: "Purity Wairimu",
+    name: "Nour El-Sayed",
     detail: "Palm Jumeirah",
     review:
       "The contact page details helped me plan my visit fast, and the team kept me updated beautifully before arrival.",
     avatar:
       "https://images.pexels.com/photos/3775156/pexels-photo-3775156.jpeg?auto=compress&cs=tinysrgb&w=240",
-    avatarAlt: "Portrait of Purity Wairimu in natural light",
+    avatarAlt: "Portrait of Nour El-Sayed in natural light",
   },
   {
-    name: "Daisy Naliaka",
+    name: "Maria Santos",
     detail: "Al Barsha",
     review:
       "I booked soft glam for an event and the makeup looked expensive, soft, and photogenic from day to night.",
     avatar:
       "https://images.pexels.com/photos/1065084/pexels-photo-1065084.jpeg?auto=compress&cs=tinysrgb&w=240",
-    avatarAlt: "Portrait of Daisy Naliaka with a glam beauty look",
+    avatarAlt: "Portrait of Maria Santos with a glam beauty look",
   },
   {
-    name: "Faith Muthoni",
+    name: "Fatima Al Zahra",
     detail: "City Walk",
     review:
       "The manicure and pedicure felt like an actual self-care ritual, not just a quick service. I will be back.",
     avatar:
       "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=240",
-    avatarAlt: "Portrait of Faith Muthoni smiling gently",
+    avatarAlt: "Portrait of Fatima Al Zahra smiling gently",
   },
   {
-    name: "Cynthia Jepkorir",
+    name: "Amira Hassan",
     detail: "Arabian Ranches",
     review:
       "Their bridal prep was so organized. Everyone in our group looked cohesive and there was zero chaos on the morning.",
     avatar:
       "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=240",
-    avatarAlt: "Portrait of Cynthia Jepkorir looking elegant",
+    avatarAlt: "Portrait of Amira Hassan looking elegant",
   },
 ];
 

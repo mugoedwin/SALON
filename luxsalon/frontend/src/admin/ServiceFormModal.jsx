@@ -315,7 +315,7 @@ function ServiceFormModal({ currentService, onClose, refreshData, onSuccess }) {
                   id="service-image"
                   type="file"
                   accept="image/*"
-                  className="block w-full rounded-[1rem] border border-rose-200 bg-white px-4 py-3 text-sm text-salon-copy file:mr-4 file:rounded-full file:border-0 file:bg-rose-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-rose-500"
+                  className="block w-full rounded-[1rem] border border-rose-200 bg-white px-4 py-3 text-sm text-salon-copy file:mr-4 file:rounded-full file:border-0 file:bg-[#E11D48] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-[#F43F5E]"
                   onChange={(event) => setImageFile(event.target.files?.[0] ?? null)}
                 />
                 <p className="mt-2 text-xs leading-6 text-salon-muted">

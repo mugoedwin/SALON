@@ -60,74 +60,77 @@ function SummaryRow({ label, value }) {
   );
 }
 
-function ServiceOption({ service, isSelected, onSelect }) {
+function ServiceOption({ service, isSelected, onSelect, onRemove }) {
   return (
-    <button
-      type="button"
-      onClick={onSelect}
-      aria-pressed={isSelected}
-      className={`group w-full border-t-2 pt-4 text-left transition-colors duration-300 ${
-        isSelected
-          ? "border-rose-500"
-          : "border-rose-100 hover:border-rose-300"
+    <article
+      className={`group flex h-full flex-col rounded-[1.25rem] border p-2 shadow-[0_10px_24px_rgba(126,91,100,0.08)] transition duration-300 hover:-translate-y-1 hover:border-rose-300 hover:shadow-[0_18px_42px_rgba(74,14,23,0.16)] ${
+        isSelected ? "border-rose-500 bg-[#F7ECE8]" : "border-rose-100 bg-white"
       }`}
     >
-      <div className="grid gap-4 sm:grid-cols-[160px_minmax(0,1fr)_auto] sm:items-start">
-        <div className="overflow-hidden rounded-[1.35rem] bg-rose-50">
-          <img
-            src={service.image}
-            alt={service.imageAlt}
-            loading="lazy"
-            className={`aspect-[4/3] h-full w-full object-cover transition duration-700 ${
-              isSelected ? "scale-[1.03]" : "group-hover:scale-[1.03]"
-            }`}
-          />
-        </div>
+      <div className="aspect-[5/3] overflow-hidden rounded-[1rem] bg-rose-50">
+        <img
+          src={service.image}
+          alt={service.imageAlt}
+          loading="lazy"
+          className={`h-full w-full object-cover transition duration-700 ${
+            isSelected ? "scale-105 brightness-110" : "group-hover:scale-105"
+          }`}
+        />
+      </div>
 
-        <div className="min-w-0">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
-            {service.category}
-          </p>
-          <div className="mt-2 flex flex-wrap items-baseline gap-3">
-            <h3 className="text-2xl font-semibold text-salon-strong">{service.name}</h3>
-            <span className="text-sm font-semibold text-salon-muted">
-              {service.duration}
-            </span>
+      <div className="flex flex-1 flex-col p-2">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-rose-700">
+              {service.category}
+            </p>
+            <h3 className="mt-1.5 text-xl font-semibold text-salon-strong">
+              {service.name}
+            </h3>
           </div>
-          <p className="mt-3 text-sm leading-7 text-salon-copy">
-            {service.description}
-          </p>
-          <p className="mt-3 text-sm leading-7 text-salon-muted">{service.benefit}</p>
+          <div className="shrink-0 text-right">
+            <p className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-rose-700">
+              {service.price}
+            </p>
+            <p className="mt-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-salon-muted">
+              {service.duration}
+            </p>
+          </div>
         </div>
 
-        <div className="flex items-center justify-between gap-4 sm:flex-col sm:items-end">
-          <span
-            className={`inline-flex rounded-full px-4 py-2 text-sm font-semibold ${
-              isSelected
-                ? "bg-rose-600 text-white"
-                : "border border-rose-200 bg-white text-rose-700"
-            }`}
-          >
-            {service.price}
-          </span>
-          <span
-            className={`text-sm font-semibold ${
-              isSelected
-                ? "text-rose-700"
-                : "text-salon-muted group-hover:text-rose-700"
-            }`}
-          >
-            {isSelected ? "Selected" : "Select service"}
-          </span>
+        <p className="mt-2 max-h-12 overflow-hidden text-sm leading-6 text-salon-copy">
+          {service.description}
+        </p>
+
+        <div className="mt-auto pt-4">
+          {isSelected ? (
+            <button
+              type="button"
+              onClick={onRemove}
+              className="w-full rounded-full border border-rose-300 bg-white px-4 py-2.5 text-sm font-semibold text-rose-700 transition-colors duration-200 hover:bg-rose-50"
+            >
+              Remove service
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onSelect}
+              className="w-full rounded-full bg-[#E11D48] px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#F43F5E]"
+            >
+              Select service
+            </button>
+          )}
         </div>
       </div>
-    </button>
+    </article>
   );
 }
 
 function Booking() {
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedServiceName, setSelectedServiceName] = useState("");
+  const [serviceSearch, setServiceSearch] = useState("");
+  const [serviceCategory, setServiceCategory] = useState("Most Popular");
   const [bookingDate, setBookingDate] = useState("");
   const [bookingTime, setBookingTime] = useState("");
   const [customerName, setCustomerName] = useState("");
@@ -139,12 +142,38 @@ function Booking() {
 
   const today = new Date().toISOString().split("T")[0];
 
+  const serviceCategories = useMemo(
+    () => ["Most Popular", ...new Set(servicesData.map((service) => service.category))],
+    [],
+  );
   const selectedService = useMemo(
     () =>
       servicesData.find((service) => service.name === selectedServiceName) ??
       null,
     [selectedServiceName],
   );
+  const filteredServices = useMemo(() => {
+    const normalizedSearch = serviceSearch.trim().toLowerCase();
+
+    const matches = servicesData.filter((service) => {
+      const matchesCategory =
+        serviceCategory === "Most Popular"
+          ? service.popular
+          : service.category === serviceCategory;
+      const matchesSearch =
+        !normalizedSearch ||
+        [service.name, service.category, service.description, service.benefit]
+          .join(" ")
+          .toLowerCase()
+          .includes(normalizedSearch);
+
+      return matchesCategory && matchesSearch;
+    });
+
+    return serviceCategory === "Most Popular" && !normalizedSearch
+      ? matches.slice(0, 6)
+      : matches;
+  }, [serviceCategory, serviceSearch]);
 
   const canContinue =
     (currentStep === 0 && Boolean(selectedServiceName)) ||
@@ -211,18 +240,92 @@ function Booking() {
     setIsSubmitting(false);
   }
 
+  function clearSelectedService() {
+    setSelectedServiceName("");
+  }
+
   function renderStepContent() {
     if (currentStep === 0) {
       return (
         <div className="space-y-5">
-          {servicesData.map((service) => (
-            <ServiceOption
-              key={service.name}
-              service={service}
-              isSelected={service.name === selectedServiceName}
-              onSelect={() => setSelectedServiceName(service.name)}
+          <div className="rounded-[1.5rem] border border-rose-100 bg-[#F7ECE8] p-3">
+            <label htmlFor="service-search" className="sr-only">
+              Search services
+            </label>
+            <input
+              id="service-search"
+              type="search"
+              value={serviceSearch}
+              onChange={(event) => setServiceSearch(event.target.value)}
+              placeholder="Search braids, nails, facial..."
+              className="w-full rounded-full border border-rose-100 bg-white px-4 py-3 text-sm font-semibold text-salon-strong outline-none transition duration-300 placeholder:text-salon-muted focus:border-rose-300 focus:ring-4 focus:ring-rose-100"
             />
-          ))}
+
+            <div
+              className="mt-3 grid gap-2 sm:grid-cols-3 lg:grid-cols-4"
+              role="tablist"
+              aria-label="Booking service categories"
+            >
+              {serviceCategories.map((category) => {
+                const isSelected = category === serviceCategory;
+
+                return (
+                  <button
+                    key={category}
+                    type="button"
+                    role="tab"
+                    aria-selected={isSelected}
+                    onClick={() => setServiceCategory(category)}
+                    className={`rounded-full px-3 py-2 text-xs font-semibold transition duration-300 ${
+                      isSelected
+                        ? "bg-[#E11D48] text-white shadow-[0_12px_28px_rgba(225,29,72,0.22)]"
+                        : "bg-white/78 text-salon-copy hover:bg-white hover:text-rose-700"
+                    }`}
+                  >
+                    {category}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {selectedService ? (
+            <div className="flex flex-col gap-3 rounded-[1.25rem] border border-rose-200 bg-rose-50 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-sm font-semibold text-salon-strong">
+                Selected: <span className="text-rose-700">{selectedService.name}</span>
+              </p>
+              <button
+                type="button"
+                onClick={() => setSelectedServiceName("")}
+                className="rounded-full border border-rose-200 bg-white px-4 py-2 text-sm font-semibold text-rose-700 transition-colors duration-200 hover:bg-rose-50"
+              >
+                Remove
+              </button>
+            </div>
+          ) : null}
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {filteredServices.map((service) => (
+              <ServiceOption
+                key={service.name}
+                service={service}
+                isSelected={service.name === selectedServiceName}
+                onSelect={() => setSelectedServiceName(service.name)}
+                onRemove={() => setSelectedServiceName("")}
+              />
+            ))}
+          </div>
+
+          {filteredServices.length === 0 ? (
+            <div className="rounded-[1.5rem] border border-rose-100 bg-white px-5 py-8 text-center">
+              <p className="text-lg font-semibold text-salon-strong">
+                No services found.
+              </p>
+              <p className="mt-2 text-sm leading-7 text-salon-copy">
+                Try another search term or choose a different category.
+              </p>
+            </div>
+          ) : null}
         </div>
       );
     }
@@ -264,7 +367,7 @@ function Booking() {
                       onClick={() => setBookingTime(slot)}
                       className={`rounded-full px-4 py-3 text-sm font-semibold transition-colors duration-200 ${
                         isSelected
-                          ? "bg-rose-600 text-white"
+                          ? "bg-[#E11D48] text-white"
                           : "border border-rose-200 bg-white text-salon-copy hover:border-rose-300 hover:bg-rose-50"
                       }`}
                     >
@@ -479,7 +582,11 @@ function Booking() {
         ))}
       </div>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_310px]">
+      <div
+        className={`mt-10 grid gap-10 ${
+          currentStep === 0 ? "" : "lg:grid-cols-[minmax(0,1fr)_310px]"
+        }`}
+      >
         <section className="min-w-0 border-t-2 border-rose-500 pt-6">
           <div className="flex flex-col gap-4 border-b border-rose-100 pb-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -542,59 +649,61 @@ function Booking() {
           ) : null}
         </section>
 
-        <aside className="space-y-6 self-start lg:sticky lg:top-28">
-          <div className="border border-rose-100 bg-rose-50/70 px-5 py-5 sm:px-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
-              Booking Summary
-            </p>
-            <dl className="mt-4">
-              <SummaryRow
-                label="Service"
-                value={selectedService?.name ?? "Not selected"}
-              />
-              <SummaryRow
-                label="Price"
-                value={selectedService?.price ?? "AED --"}
-              />
-              <SummaryRow
-                label="Duration"
-                value={selectedService?.duration ?? "Not selected"}
-              />
-              <SummaryRow label="Date" value={formatBookingDate(bookingDate)} />
-              <SummaryRow label="Time" value={bookingTime || "Not selected"} />
-              <SummaryRow
-                label="Client"
-                value={customerName.trim() || "Add your details in step 3"}
-              />
-            </dl>
+        {currentStep > 0 ? (
+          <aside className="space-y-6 self-start lg:sticky lg:top-28">
+            <div className="border border-rose-100 bg-rose-50/70 px-5 py-5 sm:px-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
+                Booking Summary
+              </p>
+              <dl className="mt-4">
+                <SummaryRow
+                  label="Service"
+                  value={selectedService?.name ?? "Not selected"}
+                />
+                <SummaryRow
+                  label="Price"
+                  value={selectedService?.price ?? "AED --"}
+                />
+                <SummaryRow
+                  label="Duration"
+                  value={selectedService?.duration ?? "Not selected"}
+                />
+                <SummaryRow label="Date" value={formatBookingDate(bookingDate)} />
+                <SummaryRow label="Time" value={bookingTime || "Not selected"} />
+                <SummaryRow
+                  label="Client"
+                  value={customerName.trim() || "Add your details in step 3"}
+                />
+              </dl>
 
-            {selectedService ? (
-              <div className="mt-5 border-t border-rose-100 pt-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-salon-muted">
-                  Service note
-                </p>
-                <p className="mt-3 text-sm leading-7 text-salon-copy">
-                  {selectedService.benefit}
-                </p>
-              </div>
-            ) : null}
-          </div>
-
-          <div className="border-t border-rose-100 pt-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
-              Need a faster answer?
-            </p>
-            <p className="mt-3 text-sm leading-7 text-salon-copy">
-              Use WhatsApp for prep questions, bridal timing, or help choosing
-              the right service before you confirm.
-            </p>
-            <div className="mt-4">
-              <ActionLink href={salonInfo.whatsappHref} variant="secondary">
-                Chat on WhatsApp
-              </ActionLink>
+              {selectedService ? (
+                <div className="mt-5 border-t border-rose-100 pt-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-salon-muted">
+                    Service note
+                  </p>
+                  <p className="mt-3 text-sm leading-7 text-salon-copy">
+                    {selectedService.benefit}
+                  </p>
+                </div>
+              ) : null}
             </div>
-          </div>
-        </aside>
+
+            <div className="border-t border-rose-100 pt-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
+                Need a faster answer?
+              </p>
+              <p className="mt-3 text-sm leading-7 text-salon-copy">
+                Use WhatsApp for prep questions, bridal timing, or help choosing
+                the right service before you confirm.
+              </p>
+              <div className="mt-4">
+                <ActionLink href={salonInfo.whatsappHref} variant="secondary">
+                  Chat on WhatsApp
+                </ActionLink>
+              </div>
+            </div>
+          </aside>
+        ) : null}
       </div>
     </PageShell>
   );

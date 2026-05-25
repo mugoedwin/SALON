@@ -9,7 +9,7 @@ function Footer() {
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.75fr_0.75fr_1fr]">
           <div>
             <div className="flex items-center gap-4">
-              <span className="h-px w-10 bg-rose-300" />
+              <span className="h-px w-10 bg-rose-500" />
               <p className="eyebrow-label">Book your glow</p>
             </div>
             <h2 className="mt-5 text-4xl font-semibold text-salon-strong">

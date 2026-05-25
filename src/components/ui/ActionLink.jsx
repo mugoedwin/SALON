@@ -2,13 +2,13 @@ import { Link } from "react-router-dom";
 
 const variantClasses = {
   primary:
-    "bg-rose-600 text-white hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600",
+    "bg-[#E11D48] text-white shadow-[0_12px_28px_rgba(225,29,72,0.24)] hover:bg-[#F43F5E] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-light",
   secondary:
-    "border border-rose-200 bg-white text-rose-700 hover:border-rose-300 hover:bg-rose-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600",
+    "border border-gold-muted/45 bg-white text-maroon-deep hover:border-gold-muted hover:bg-[#FBF3F2] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-light",
   inverse:
-    "bg-white text-rose-700 hover:bg-rose-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+    "bg-white text-maroon-deep hover:bg-[#FBF3F2] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
   subtle:
-    "border border-white/35 bg-white/15 text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+    "border border-gold-light/45 bg-white/10 text-white hover:border-gold-light/70 hover:bg-white/18 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
 };
 
 function ActionLink({
