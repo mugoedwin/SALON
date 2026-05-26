@@ -153,6 +153,63 @@ export const galleryImages = [
   },
 ];
 
+export const staffProfiles = [
+  {
+    name: "Lead Stylist",
+    initials: "LS",
+    role: "Hair & Styling Lead",
+    bio: "Leads consultations, styling plans, and polished finishes for everyday and occasion looks.",
+    specialties: ["Silk press", "Blowouts", "Hair care"],
+    image: "",
+    alt: "Lead stylist portrait",
+  },
+  {
+    name: "Braids Specialist",
+    initials: "BS",
+    role: "Braids Expert",
+    bio: "Focuses on neat parting, comfortable installs, and protective styles that last well.",
+    specialties: ["Knotless", "Cornrows", "Loc styling"],
+    image: "",
+    alt: "Braids specialist portrait",
+  },
+  {
+    name: "Wig Artist",
+    initials: "WA",
+    role: "Wig Install Artist",
+    bio: "Creates clean hairlines, secure installs, and customized styling for natural-looking finishes.",
+    specialties: ["Wig installs", "Customization", "Styling"],
+    image: "",
+    alt: "Wig artist portrait",
+  },
+  {
+    name: "Nail Technician",
+    initials: "NT",
+    role: "Nail Care Specialist",
+    bio: "Handles shaping, prep, color, and detail work for neat manicures and elevated nail finishes.",
+    specialties: ["Gel polish", "Nail art", "Manicure"],
+    image: "",
+    alt: "Nail technician portrait",
+  },
+  {
+    name: "Makeup Artist",
+    initials: "MA",
+    role: "Makeup Artist",
+    bio: "Builds soft glam, bridal beauty, and camera-ready looks with clean skin-focused application.",
+    specialties: ["Soft glam", "Bridal", "Events"],
+    image: "",
+    alt: "Makeup artist portrait",
+  },
+  {
+    name: "Salon Coordinator",
+    initials: "SC",
+    role: "Client Coordinator",
+    bio: "Keeps bookings organized, supports client prep, and helps each appointment run smoothly.",
+    specialties: ["Bookings", "Client care", "Planning"],
+    image: "",
+    alt: "Salon coordinator portrait",
+  },
+];
+
 export const homeTestimonials = [
   {
     name: "Aisha Al Mansoori",

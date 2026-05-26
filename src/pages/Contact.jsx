@@ -23,19 +23,19 @@ function Contact() {
       }
     >
       <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr]">
-        <div className="rounded-[1.75rem] bg-rose-600 px-6 py-7 text-white sm:px-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-rose-100">
+        <div className="rounded-[1.75rem] bg-rose-500 px-6 py-7 text-white shadow-[0_24px_60px_rgba(225,29,72,0.22)] sm:px-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-rose-50">
             Visit Us
           </p>
           <h2 className="mt-4 text-4xl font-semibold">
             {salonInfo.neighborhood}
           </h2>
-          <p className="mt-3 text-base leading-8 text-rose-50">
+          <p className="mt-3 text-base leading-8 text-white/90">
             {salonInfo.address}, {salonInfo.location}
           </p>
 
           <div className="mt-8 border-t border-white/20 pt-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-rose-100">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-rose-50">
               Opening Hours
             </p>
             <div className="mt-4 space-y-3">
@@ -45,7 +45,7 @@ function Contact() {
                   className="flex items-center justify-between gap-4 text-sm"
                 >
                   <span className="font-semibold">{item.label}</span>
-                  <span className="text-rose-50">{item.value}</span>
+                  <span className="text-white/90">{item.value}</span>
                 </div>
               ))}
             </div>
@@ -95,7 +95,7 @@ function Contact() {
         </div>
         <iframe
           title={`Map to ${salonInfo.location}`}
-          src="https://www.google.com/maps?q=Dubai,+UAE&output=embed"
+          src="https://www.google.com/maps?q=25.276556,55.313111&output=embed"
           width="100%"
           height="300"
           style={{ border: 0 }}

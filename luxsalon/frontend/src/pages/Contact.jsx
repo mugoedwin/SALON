@@ -95,7 +95,7 @@ function Contact() {
         </div>
         <iframe
           title={`Map to ${salonInfo.location}`}
-          src="https://www.google.com/maps?q=Dubai,+UAE&output=embed"
+          src="https://www.google.com/maps?q=25.276556,55.313111&output=embed"
           width="100%"
           height="300"
           style={{ border: 0 }}
