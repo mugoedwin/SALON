@@ -10,12 +10,12 @@ export const salonInfo = {
   name: "Ivonne Orchard",
   footerDescription:
     "Modern salon care for busy Dubai clients, with elevated hair, nails, makeup, and bridal experiences backed by easy mobile booking and WhatsApp-friendly support.",
-  phone: "0522202609",
-  phoneHref: "tel:+971522202609",
-  whatsapp: "0522202609",
-  whatsappHref: "https://wa.me/971522202609",
-  email: "hello@roseglowsalon.co.ke",
-  emailHref: "mailto:hello@roseglowsalon.co.ke",
+  phone: "+971 589178814",
+  phoneHref: "tel:+971589178814",
+  whatsapp: "+971 589178814",
+  whatsappHref: "https://wa.me/971589178814",
+  email: "aggiea018@gmail.com",
+  emailHref: "mailto:aggiea018@gmail.com",
   location: "Dubai, United Arab Emirates",
   neighborhood: "Downtown Dubai Studio",
   address: "Downtown Dubai",
@@ -77,23 +77,26 @@ export const bookingTimeSlots = [
 export const galleryImages = [
   {
     title: "Protective Styles",
+    group: "Braids",
     category: "Braids & installs",
     caption: "Lightweight braids and installs designed to move beautifully and last well.",
     size: "tall",
     image:
-      "https://images.pexels.com/photos/36441633/pexels-photo-36441633.jpeg?auto=compress&cs=tinysrgb&w=900",
-    alt: "Protective knotless braids hairstyle in a salon setting",
+      "https://images.pexels.com/photos/8422334/pexels-photo-8422334.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Editorial portrait of a woman with intricate braided protective styling",
   },
   {
     title: "Bridal Looks",
+    group: "Bridal",
     category: "Events",
     caption: "Soft glamour with clean skin, long-wear makeup, and elegant finishing touches.",
     image:
-      "https://images.pexels.com/photos/34049570/pexels-photo-34049570.jpeg?auto=compress&cs=tinysrgb&w=900",
-    alt: "Bridal beauty look prepared for a wedding day appointment",
+      "https://images.pexels.com/photos/32111039/pexels-photo-32111039.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Elegant bride wearing a detailed veil with polished bridal makeup",
   },
   {
     title: "Nail Finishes",
+    group: "Nails",
     category: "Gloss & detail",
     caption: "Neat shaping, smooth cuticles, and color that feels elevated.",
     image:
@@ -102,6 +105,7 @@ export const galleryImages = [
   },
   {
     title: "Natural Hair Care",
+    group: "Hair",
     category: "Healthy texture",
     caption: "Treatments and styling choices that keep natural hair nourished and defined.",
     size: "wide",
@@ -111,31 +115,35 @@ export const galleryImages = [
   },
   {
     title: "Soft Blowouts",
+    group: "Hair",
     category: "Signature styling",
     caption: "Bouncy movement, polished layers, and a soft finish for day-to-night wear.",
     image:
-      "https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=900",
-    alt: "Salon blowout with polished styling and volume",
+      "https://images.pexels.com/photos/14615063/pexels-photo-14615063.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Stylist blow drying a client's hair with a round brush in a salon",
   },
   {
     title: "Scalp Rituals",
+    group: "Hair",
     category: "Care & reset",
     caption: "Steam and scalp therapy sessions that support stronger, healthier styling results.",
     image:
-      "https://images.pexels.com/photos/3993465/pexels-photo-3993465.jpeg?auto=compress&cs=tinysrgb&w=900",
-    alt: "Relaxing scalp treatment and hair wash in a salon",
+      "https://images.pexels.com/photos/8834050/pexels-photo-8834050.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Client enjoying a gentle salon hair wash and scalp massage",
   },
   {
     title: "Wig Installs",
+    group: "Wigs",
     category: "Seamless finish",
     caption: "Natural-looking installs with carefully blended hairlines and customized styling.",
     size: "tall",
     image:
-      "https://images.pexels.com/photos/13004170/pexels-photo-13004170.jpeg?auto=compress&cs=tinysrgb&w=900",
-    alt: "Seamless wig install and styling in a professional salon",
+      "https://images.pexels.com/photos/6923437/pexels-photo-6923437.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Hairstylist fitting a curly black wig on a client in a salon",
   },
   {
     title: "Loc Styling",
+    group: "Braids",
     category: "Texture care",
     caption: "Fresh retwists and styling patterns that keep locs intentional and camera-ready.",
     image:
@@ -144,6 +152,7 @@ export const galleryImages = [
   },
   {
     title: "Soft Glam Beauty",
+    group: "Makeup",
     category: "Makeup artistry",
     caption: "Light-catching makeup for dinners, content shoots, and milestone events.",
     size: "wide",
@@ -153,6 +162,68 @@ export const galleryImages = [
   },
 ];
 
+export const salonInteriorImages = [
+  {
+    title: "Styling Stations",
+    caption: "Mirrored styling stations with salon lighting and comfortable seating.",
+    image: "/images/salon/interior/interior-01.jpeg",
+    alt: "Ivonne Orchard salon styling station with mirrors and chairs",
+  },
+  {
+    title: "Beauty Lounge",
+    caption: "A compact, polished room set up for hair, nails, and beauty care.",
+    image: "/images/salon/interior/interior-02.jpeg",
+    alt: "Ivonne Orchard salon beauty lounge interior",
+  },
+  {
+    title: "Salon Mirrors",
+    caption: "Gold-framed mirrors and bright lighting for detailed finishing work.",
+    image: "/images/salon/interior/interior-03.jpeg",
+    alt: "Gold framed salon mirrors and styling chairs",
+  },
+  {
+    title: "Nail & Hair Space",
+    caption: "The main service area arranged for multi-category appointments.",
+    image: "/images/salon/interior/interior-04.jpeg",
+    alt: "Salon nail and hair service area",
+  },
+  {
+    title: "Wash & Care Area",
+    caption: "A dedicated care corner for wash, treatment, and reset appointments.",
+    image: "/images/salon/interior/interior-05.jpeg",
+    alt: "Salon wash and care area",
+  },
+  {
+    title: "Pedicure Chair",
+    caption: "Comfortable pedicure seating with tools close at hand.",
+    image: "/images/salon/interior/interior-06.jpeg",
+    alt: "Salon pedicure chair and nail polish wall",
+  },
+  {
+    title: "Client Seating",
+    caption: "A practical, calm setup for appointment-first visits.",
+    image: "/images/salon/interior/interior-07.jpeg",
+    alt: "Salon client seating and styling area",
+  },
+  {
+    title: "Main Studio",
+    caption: "The full studio view with styling chairs, mirrors, and chandelier lighting.",
+    image: "/images/salon/interior/interior-08.jpeg",
+    alt: "Full Ivonne Orchard salon studio interior",
+  },
+  {
+    title: "Treatment Room",
+    caption: "A clean treatment room detail from the salon interior.",
+    image: "/images/salon/interior/interior-09.jpeg",
+    alt: "Salon treatment room interior detail",
+  },
+];
+
+export const footerImage = {
+  image: "/images/salon/footer/footer-spa.jpeg",
+  alt: "Salon spa essentials arranged on a pink background",
+};
+
 export const staffProfiles = [
   {
     name: "Lead Stylist",
@@ -160,7 +231,7 @@ export const staffProfiles = [
     role: "Hair & Styling Lead",
     bio: "Leads consultations, styling plans, and polished finishes for everyday and occasion looks.",
     specialties: ["Silk press", "Blowouts", "Hair care"],
-    image: "",
+    image: "/images/salon/staff/staff-01.jpeg",
     alt: "Lead stylist portrait",
   },
   {
@@ -169,7 +240,7 @@ export const staffProfiles = [
     role: "Braids Expert",
     bio: "Focuses on neat parting, comfortable installs, and protective styles that last well.",
     specialties: ["Knotless", "Cornrows", "Loc styling"],
-    image: "",
+    image: "/images/salon/staff/staff-02.jpeg",
     alt: "Braids specialist portrait",
   },
   {
@@ -178,7 +249,7 @@ export const staffProfiles = [
     role: "Wig Install Artist",
     bio: "Creates clean hairlines, secure installs, and customized styling for natural-looking finishes.",
     specialties: ["Wig installs", "Customization", "Styling"],
-    image: "",
+    image: "/images/salon/staff/staff-03.jpeg",
     alt: "Wig artist portrait",
   },
   {
@@ -187,25 +258,7 @@ export const staffProfiles = [
     role: "Nail Care Specialist",
     bio: "Handles shaping, prep, color, and detail work for neat manicures and elevated nail finishes.",
     specialties: ["Gel polish", "Nail art", "Manicure"],
-    image: "",
-    alt: "Nail technician portrait",
-  },
-  {
-    name: "Makeup Artist",
-    initials: "MA",
-    role: "Makeup Artist",
-    bio: "Builds soft glam, bridal beauty, and camera-ready looks with clean skin-focused application.",
-    specialties: ["Soft glam", "Bridal", "Events"],
-    image: "",
-    alt: "Makeup artist portrait",
-  },
-  {
-    name: "Salon Coordinator",
-    initials: "SC",
-    role: "Client Coordinator",
-    bio: "Keeps bookings organized, supports client prep, and helps each appointment run smoothly.",
-    specialties: ["Bookings", "Client care", "Planning"],
-    image: "",
+    image: "/images/salon/staff/staff-04.jpeg",
     alt: "Salon coordinator portrait",
   },
 ];

@@ -1,19 +1,10 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import PageShell from "../components/common/PageShell";
 import ActionLink from "../components/ui/ActionLink";
-import { galleryImages, staffProfiles } from "../data/siteData";
+import { galleryImages, salonInteriorImages, staffProfiles } from "../data/siteData";
 
-const filters = ["All", "Hair", "Braids", "Wigs", "Nails", "Makeup", "Bridal"];
-
-function getGalleryGroup(item) {
-  const text = `${item.title} ${item.category}`.toLowerCase();
-
-  if (text.includes("braid") || text.includes("loc")) return "Braids";
-  if (text.includes("wig")) return "Wigs";
-  if (text.includes("nail")) return "Nails";
-  if (text.includes("makeup") || text.includes("glam")) return "Makeup";
-  if (text.includes("bridal") || text.includes("event")) return "Bridal";
-  return "Hair";
+function getBookingUrl(item) {
+  return `/booking?style=${encodeURIComponent(item.title)}`;
 }
 
 function GalleryCard({ item, onSelect }) {
@@ -21,132 +12,437 @@ function GalleryCard({ item, onSelect }) {
     <button
       type="button"
       onClick={() => onSelect(item)}
-      className="group block overflow-hidden rounded-lg border border-rose-100 bg-white text-left shadow-[0_18px_44px_rgba(126,91,100,0.08)] transition duration-300 hover:-translate-y-1 hover:border-rose-200 hover:shadow-[0_22px_54px_rgba(126,91,100,0.14)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+      className="group block w-full overflow-hidden rounded-lg border border-rose-100 bg-white text-left shadow-[0_14px_34px_rgba(74,14,23,0.08)] transition duration-500 hover:-translate-y-1 hover:border-rose-200 hover:shadow-[0_24px_58px_rgba(74,14,23,0.15)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
     >
       <div className="overflow-hidden bg-rose-50">
         <img
           src={item.image}
           alt={item.alt}
           loading="lazy"
-          className={`w-full object-cover transition duration-700 group-hover:scale-105 ${
-            item.size === "tall" ? "aspect-[4/5]" : "aspect-[4/3]"
-          }`}
+          className="aspect-[4/5] w-full object-cover opacity-95 saturate-[0.92] transition duration-700 group-hover:scale-105 group-hover:opacity-100 group-hover:saturate-100"
         />
       </div>
-      <div className="p-4">
-        <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-rose-700">
-          {getGalleryGroup(item)}
+      <div className="border-t border-rose-100 bg-[#fff9f8] p-5">
+        <p className="text-[0.72rem] font-bold uppercase tracking-[0.2em] text-rose-700">
+          {item.group}
         </p>
-        <h3 className="mt-2 text-xl font-semibold text-salon-strong">
+        <h3 className="mt-2 text-2xl font-semibold text-salon-strong">
           {item.title}
         </h3>
-        <p className="mt-2 text-sm leading-6 text-salon-copy">{item.caption}</p>
+        <p className="mt-2 text-sm font-semibold leading-6 text-[#6f4b55]">
+          {item.category}
+        </p>
+        <p className="mt-3 text-sm font-medium leading-7 text-[#765762]">
+          {item.caption}
+        </p>
       </div>
     </button>
   );
 }
 
-function GalleryPreview({ item, onClose }) {
+function RelatedLooks({ item, items, onSelect }) {
+  const related = items
+    .filter((candidate) => candidate.title !== item.title)
+    .sort((a, b) => {
+      if (a.group === item.group && b.group !== item.group) return -1;
+      if (a.group !== item.group && b.group === item.group) return 1;
+      return 0;
+    })
+    .slice(0, 4);
+
+  if (related.length === 0) return null;
+
+  return (
+    <div className="mt-7 border-t border-rose-100 pt-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
+        Related looks
+      </p>
+      <div className="mt-3 grid grid-cols-2 gap-3">
+        {related.map((look) => (
+          <button
+            key={look.title}
+            type="button"
+            onClick={() => onSelect(look)}
+            className="group overflow-hidden rounded-lg border border-rose-100 bg-white text-left transition hover:border-rose-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+          >
+            <img
+              src={look.image}
+              alt={look.alt}
+              className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105"
+            />
+            <div className="p-3">
+              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-rose-700">
+                {look.group}
+              </p>
+              <p className="mt-1 text-sm font-semibold text-salon-strong">
+                {look.title}
+              </p>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function GalleryPreview({ items, selectedIndex, onClose, onMove, onSelect }) {
+  const item = selectedIndex === null ? null : items[selectedIndex];
+
+  useEffect(() => {
+    if (!item) return undefined;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function handleKeyDown(event) {
+      if (event.key === "Escape") onClose();
+      if (event.key === "ArrowLeft") onMove(-1);
+      if (event.key === "ArrowRight") onMove(1);
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [item, onClose, onMove]);
+
   if (!item) return null;
 
   return (
     <div
-      className="fixed inset-0 z-[80] flex items-center justify-center bg-maroon-deep/75 px-4 py-6"
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-maroon-deep/88 px-3 py-5 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-label={`${item.title} preview`}
       onClick={onClose}
     >
       <div
-        className="max-h-[92vh] w-full max-w-4xl overflow-hidden rounded-lg bg-white shadow-[0_28px_80px_rgba(0,0,0,0.28)]"
+        className="relative grid max-h-[92vh] w-full max-w-6xl overflow-hidden rounded-lg bg-white shadow-[0_28px_90px_rgba(0,0,0,0.34)] lg:grid-cols-[1.35fr_0.65fr]"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="grid lg:grid-cols-[1.2fr_0.8fr]">
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-3 top-3 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/92 text-maroon-deep shadow-[0_10px_28px_rgba(0,0,0,0.18)] transition hover:bg-rose-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+          aria-label="Close preview"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            className="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M18 6 6 18" />
+            <path d="M6 6l12 12" />
+          </svg>
+        </button>
+
+        <div className="relative min-h-[52vh] bg-maroon-deep lg:min-h-[78vh]">
           <img
             src={item.image}
             alt={item.alt}
-            className="max-h-[70vh] w-full bg-rose-50 object-cover lg:h-full"
+            className="h-full max-h-[78vh] w-full object-cover"
           />
-          <div className="flex flex-col justify-between p-5 sm:p-7">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
-                {getGalleryGroup(item)}
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold text-salon-strong">
-                {item.title}
-              </h2>
-              <p className="mt-4 text-sm leading-7 text-salon-copy">
-                {item.caption}
-              </p>
-            </div>
+          <button
+            type="button"
+            onClick={() => onMove(-1)}
+            className="absolute left-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-maroon-deep shadow-[0_10px_28px_rgba(0,0,0,0.2)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+            aria-label="Previous gallery image"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={() => onMove(1)}
+            className="absolute right-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-maroon-deep shadow-[0_10px_28px_rgba(0,0,0,0.2)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+            aria-label="Next gallery image"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+        </div>
 
-            <div className="mt-6 flex flex-wrap gap-3">
-              <ActionLink to="/booking">Book this Look</ActionLink>
-              <button
-                type="button"
-                onClick={onClose}
-                className="rounded-full border border-rose-200 bg-white px-5 py-3 text-sm font-semibold text-salon-copy transition-colors duration-300 hover:border-rose-400 hover:text-rose-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
-              >
-                Close
-              </button>
-            </div>
+        <div className="flex flex-col justify-between p-5 sm:p-7">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
+              {item.group}
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold text-salon-strong sm:text-4xl">
+              {item.title}
+            </h2>
+            <p className="mt-4 text-sm leading-7 text-salon-copy">
+              {item.caption}
+            </p>
           </div>
+
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <ActionLink to={getBookingUrl(item)}>Book this Look</ActionLink>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-salon-muted">
+              {selectedIndex + 1} / {items.length}
+            </p>
+          </div>
+
+          <RelatedLooks item={item} items={galleryImages} onSelect={onSelect} />
         </div>
       </div>
     </div>
   );
 }
 
-function StaffCard({ member }) {
+function InteriorCarousel() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeImage = salonInteriorImages[activeIndex];
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % salonInteriorImages.length);
+    }, 4500);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  function moveSlide(direction) {
+    setActiveIndex((current) => {
+      const next = current + direction;
+      if (next < 0) return salonInteriorImages.length - 1;
+      if (next >= salonInteriorImages.length) return 0;
+      return next;
+    });
+  }
+
   return (
-    <article className="rounded-lg border border-rose-100 bg-white shadow-[0_18px_44px_rgba(126,91,100,0.08)]">
-      <div className="aspect-[4/3] overflow-hidden rounded-t-lg bg-rose-50">
-        {member.image ? (
-          <img
-            src={member.image}
-            alt={member.alt}
-            loading="lazy"
-            className="h-full w-full object-cover"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-[#FBF3F2]">
-            <div className="flex h-20 w-20 items-center justify-center rounded-full border border-rose-200 bg-white text-2xl font-semibold text-rose-700">
-              {member.initials}
-            </div>
-          </div>
-        )}
-      </div>
-      <div className="p-5">
-        <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-rose-700">
-          {member.role}
-        </p>
-        <h3 className="mt-2 text-2xl font-semibold text-salon-strong">
-          {member.name}
-        </h3>
-        <p className="mt-3 text-sm leading-7 text-salon-copy">{member.bio}</p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {member.specialties.map((specialty) => (
-            <span
-              key={specialty}
-              className="rounded-full border border-rose-100 bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-700"
+    <section className="mt-16 border-t border-rose-100 pt-10">
+      <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-rose-700">
+            Salon Space
+          </p>
+          <h2 className="mt-3 text-4xl font-semibold text-salon-strong">
+            Step inside before you book.
+          </h2>
+          <p className="mt-4 text-base leading-8 text-salon-copy">
+            A quick look at the interior, seating, mirrors, and treatment areas
+            clients see when they arrive.
+          </p>
+        </div>
+        <div className="flex gap-3 lg:justify-end">
+          <button
+            type="button"
+            onClick={() => moveSlide(-1)}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-rose-100 bg-white text-maroon-deep transition hover:border-rose-300 hover:text-rose-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+            aria-label="Previous salon interior image"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
             >
-              {specialty}
-            </span>
-          ))}
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={() => moveSlide(1)}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-rose-100 bg-white text-maroon-deep transition hover:border-rose-300 hover:text-rose-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+            aria-label="Next salon interior image"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
         </div>
       </div>
-    </article>
+
+      <div className="mt-7 overflow-hidden rounded-lg bg-maroon-deep shadow-[0_24px_64px_rgba(74,14,23,0.18)]">
+        <div className="relative">
+          <img
+            key={activeImage.image}
+            src={activeImage.image}
+            alt={activeImage.alt}
+            className="gallery-carousel-image h-[18rem] w-full object-cover sm:h-[24rem] lg:h-[28rem]"
+          />
+          <div className="pointer-events-none absolute inset-0 gallery-carousel-shine" />
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-maroon-deep via-maroon-deep/68 to-transparent p-5 pt-24 text-white sm:p-7">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-light">
+              {activeIndex + 1} / {salonInteriorImages.length}
+            </p>
+            <h3 className="mt-2 text-3xl font-semibold text-white">
+              {activeImage.title}
+            </h3>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-white/84">
+              {activeImage.caption}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-5 lg:grid-cols-9">
+        {salonInteriorImages.map((image, index) => (
+          <button
+            key={image.image}
+            type="button"
+            onClick={() => setActiveIndex(index)}
+            className={`h-16 overflow-hidden rounded-lg border transition duration-300 sm:h-[4.5rem] ${
+              activeIndex === index
+                ? "border-rose-600 opacity-100 shadow-[0_10px_24px_rgba(74,14,23,0.14)]"
+                : "border-rose-100 opacity-70 hover:opacity-100"
+            }`}
+            aria-label={`Show ${image.title}`}
+          >
+            <img
+              src={image.image}
+              alt=""
+              loading="lazy"
+              className="h-full w-full object-cover"
+            />
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-4 h-px overflow-hidden bg-rose-100">
+        <div key={activeIndex} className="gallery-carousel-progress h-full bg-rose-600" />
+      </div>
+    </section>
+  );
+}
+
+function StaffSection() {
+  return (
+    <section className="mt-16 border-t border-rose-100 pt-10">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-rose-700">
+            The Team
+          </p>
+          <h2 className="mt-3 text-4xl font-semibold text-salon-strong">
+            Four specialists behind the finish.
+          </h2>
+          <p className="mt-4 text-base font-medium leading-8 text-[#6f4b55]">
+            Hair, braids, wigs, nails, and client care handled by a focused
+            salon team.
+          </p>
+        </div>
+        <ActionLink to="/booking" variant="secondary">
+          Book with Us
+        </ActionLink>
+      </div>
+
+      <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {staffProfiles.slice(0, 4).map((member) => (
+          <article
+            key={member.name}
+            className="group overflow-hidden rounded-lg border border-rose-100 bg-white shadow-[0_16px_38px_rgba(74,14,23,0.08)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_24px_54px_rgba(74,14,23,0.14)]"
+          >
+            <div className="aspect-[4/5] overflow-hidden bg-rose-50">
+              <img
+                src={member.image}
+                alt={member.alt}
+                loading="lazy"
+                className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+              />
+            </div>
+            <div className="p-5">
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-rose-700">
+                {member.role}
+              </p>
+              <h3 className="mt-2 text-2xl font-semibold text-salon-strong">
+                {member.name}
+              </h3>
+              <p className="mt-3 text-sm font-medium leading-7 text-[#6f4b55]">
+                {member.bio}
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function GalleryClosing() {
+  return (
+    <section className="mt-20 pb-8">
+      <div className="relative overflow-hidden rounded-lg border border-rose-100 bg-[#fff9f8] px-5 py-10 shadow-[0_18px_52px_rgba(74,14,23,0.08)] sm:px-8 sm:py-12">
+        <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-gold-muted/70 to-transparent" />
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-rose-700">
+            Ready when you are
+          </p>
+          <h2 className="mt-4 text-4xl font-semibold text-salon-strong sm:text-5xl">
+            Bring the reference. We will refine the finish.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base font-medium leading-8 text-[#6f4b55]">
+            Choose the mood, share your inspiration, and book a session planned
+            around your timing, hair, skin, and occasion.
+          </p>
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <ActionLink to="/booking">Reserve a Session</ActionLink>
+            <ActionLink to="/services" variant="secondary">
+              Explore Services
+            </ActionLink>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
 function Gallery() {
-  const [activeFilter, setActiveFilter] = useState("All");
-  const [selectedLook, setSelectedLook] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
-  const visibleImages = useMemo(() => {
-    if (activeFilter === "All") return galleryImages;
-    return galleryImages.filter((item) => getGalleryGroup(item) === activeFilter);
-  }, [activeFilter]);
+  function handleSelect(item) {
+    setSelectedIndex(galleryImages.findIndex((image) => image.title === item.title));
+  }
+
+  function movePreview(direction) {
+    setSelectedIndex((current) => {
+      if (current === null) return current;
+      const next = current + direction;
+      if (next < 0) return galleryImages.length - 1;
+      if (next >= galleryImages.length) return 0;
+      return next;
+    });
+  }
 
   return (
     <PageShell
@@ -162,102 +458,42 @@ function Gallery() {
         </>
       }
     >
-      <section className="grid gap-8 border-b border-rose-100 pb-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-rose-700">
-            Portfolio
-          </p>
-          <h2 className="mt-3 text-4xl font-semibold text-salon-strong sm:text-5xl">
-            Clean looks, real appointment inspiration.
-          </h2>
-          <p className="mt-5 text-base leading-8 text-salon-copy">
-            Use this page to choose the finish you want, compare categories, and
-            book with a clearer idea of your preferred style.
-          </p>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-3">
-          <div className="rounded-lg border border-rose-100 bg-white p-5">
-            <p className="text-3xl font-semibold text-salon-strong">
-              {galleryImages.length}
-            </p>
-            <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-salon-muted">
-              Looks
-            </p>
-          </div>
-          <div className="rounded-lg border border-rose-100 bg-white p-5">
-            <p className="text-3xl font-semibold text-salon-strong">
-              {filters.length - 1}
-            </p>
-            <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-salon-muted">
-              Categories
-            </p>
-          </div>
-          <div className="rounded-lg border border-rose-100 bg-white p-5">
-            <p className="text-3xl font-semibold text-salon-strong">
-              {staffProfiles.length}
-            </p>
-            <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-salon-muted">
-              Staff
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="mt-10">
-        <div className="flex flex-wrap gap-2">
-          {filters.map((filter) => (
-            <button
-              key={filter}
-              type="button"
-              onClick={() => setActiveFilter(filter)}
-              className={`rounded-full border px-4 py-2 text-sm font-semibold transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500 ${
-                activeFilter === filter
-                  ? "border-rose-600 bg-rose-600 text-white"
-                  : "border-rose-100 bg-white text-salon-copy hover:border-rose-300 hover:text-rose-700"
-              }`}
-            >
-              {filter}
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-6 columns-1 gap-5 sm:columns-2 lg:columns-3">
-          {visibleImages.map((item) => (
-            <div key={item.title} className="mb-5 break-inside-avoid">
-              <GalleryCard item={item} onSelect={setSelectedLook} />
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-16 border-t border-rose-100 pt-10">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div className="max-w-2xl">
+      <section>
+        <div className="grid gap-7 border-b border-rose-100 pb-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
+          <div>
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-rose-700">
-              Meet the Team
+              Portfolio
             </p>
             <h2 className="mt-3 text-4xl font-semibold text-salon-strong">
-              Six specialists behind the chair.
+              Choose by finish, not by noise.
             </h2>
-            <p className="mt-4 text-base leading-8 text-salon-copy">
-              These profiles are ready for real staff photos and updated bios
-              when you share them.
-            </p>
           </div>
-          <ActionLink to="/booking" variant="secondary">
-            Book with Us
-          </ActionLink>
+          <p className="max-w-3xl text-base font-medium leading-8 text-[#6f4b55]">
+            A calmer gallery organized as a complete visual portfolio. Open any
+            look to browse related options from the same mood before booking.
+          </p>
         </div>
 
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {staffProfiles.map((member) => (
-            <StaffCard key={member.name} member={member} />
+          {galleryImages.map((item) => (
+            <GalleryCard key={item.title} item={item} onSelect={handleSelect} />
           ))}
         </div>
       </section>
 
-      <GalleryPreview item={selectedLook} onClose={() => setSelectedLook(null)} />
+      <InteriorCarousel />
+
+      <StaffSection />
+
+      <GalleryClosing />
+
+      <GalleryPreview
+        items={galleryImages}
+        selectedIndex={selectedIndex}
+        onClose={() => setSelectedIndex(null)}
+        onMove={movePreview}
+        onSelect={handleSelect}
+      />
     </PageShell>
   );
 }
