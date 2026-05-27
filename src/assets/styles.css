@@ -106,14 +106,14 @@
   @keyframes contact-petal-drift {
     0%,
     100% {
-      opacity: 0.36;
+      opacity: var(--petal-opacity, 0.34);
       transform: translate3d(0, 0, 0) rotate(var(--rotate)) scale(1);
     }
 
     50% {
-      opacity: 0.72;
-      transform: translate3d(var(--x), var(--y), 0) rotate(calc(var(--rotate) + 12deg))
-        scale(1.08);
+      opacity: var(--petal-peak-opacity, 0.72);
+      transform: translate3d(var(--x), var(--y), 0) rotate(calc(var(--rotate) + 10deg))
+        scale(var(--petal-scale, 1.08));
     }
   }
 
@@ -233,11 +233,47 @@
     background: #000;
   }
 
+  .salon-hero::before,
+  .salon-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .salon-hero::before {
+    background:
+      linear-gradient(
+        115deg,
+        transparent 0%,
+        transparent 34%,
+        rgba(255, 246, 224, 0.16) 47%,
+        rgba(242, 198, 109, 0.12) 50%,
+        transparent 64%,
+        transparent 100%
+      );
+    mix-blend-mode: screen;
+    opacity: 0.7;
+    transform: translateX(-36%);
+    animation: salon-hero-light-sweep 14s ease-in-out infinite;
+  }
+
+  .salon-hero::after {
+    background:
+      radial-gradient(circle at 50% 14%, rgba(255, 255, 255, 0.16), transparent 22%),
+      radial-gradient(circle at 62% 24%, rgba(242, 198, 109, 0.1), transparent 24%);
+    mix-blend-mode: screen;
+    opacity: 0.68;
+    animation: salon-hero-glow 9s ease-in-out infinite;
+  }
+
   .salon-hero__image {
     z-index: 0;
-    transform: scale(1.1);
-    animation: salon-hero-zoom 60s linear infinite;
-    object-position: 54% center;
+    transform: scale(1.01);
+    animation: salon-hero-zoom 24s ease-in-out infinite;
+    image-rendering: auto;
+    object-position: 50% 28%;
   }
 
   .salon-hero__shade {
@@ -246,15 +282,15 @@
       radial-gradient(circle at 50% 45%, rgba(255, 232, 237, 0.12), transparent 34%),
       linear-gradient(
         180deg,
-        rgba(20, 2, 6, 0.18) 0%,
-        rgba(20, 2, 6, 0.2) 44%,
-        rgba(48, 7, 12, 0.44) 100%
+        rgba(20, 2, 6, 0.08) 0%,
+        rgba(20, 2, 6, 0.12) 44%,
+        rgba(48, 7, 12, 0.34) 100%
       ),
       linear-gradient(
         90deg,
-        rgba(0, 0, 0, 0.24) 0%,
-        rgba(0, 0, 0, 0.04) 42%,
-        rgba(0, 0, 0, 0.16) 100%
+        rgba(0, 0, 0, 0.14) 0%,
+        rgba(0, 0, 0, 0.02) 42%,
+        rgba(0, 0, 0, 0.1) 100%
       );
   }
 
@@ -270,7 +306,7 @@
     border-radius: 999px;
     background: radial-gradient(
       circle,
-      rgba(255, 255, 255, 0.07) 0%,
+      rgba(255, 255, 255, 0.1) 0%,
       rgba(255, 255, 255, 0) 78%
     );
     filter: blur(50px);
@@ -306,15 +342,17 @@
   .salon-hero__title {
     position: relative;
     overflow: hidden;
-    color: #fff8f1;
+    color: #fff4ea;
     font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
     font-size: clamp(2.75rem, 6.2vw, 5.6rem);
     font-weight: 600;
     line-height: 1.02;
     letter-spacing: 0.025em;
     text-shadow:
-      0 0 16px rgba(255, 248, 241, 0.26),
-      0 4px 34px rgba(0, 0, 0, 0.82);
+      0 1px 2px rgba(0, 0, 0, 0.92),
+      0 0 18px rgba(255, 244, 234, 0.3),
+      0 8px 38px rgba(0, 0, 0, 0.92);
+    animation: salon-hero-title-breathe 7s ease-in-out infinite;
   }
 
   .salon-hero__title::after {
@@ -324,11 +362,11 @@
     width: 100%;
     background: linear-gradient(
       120deg,
-      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.24),
       rgba(255, 255, 255, 0) 70%
     );
     transform: skewX(-25deg);
-    animation: salon-hero-shimmer 5.6s infinite;
+    animation: salon-hero-shimmer 7.5s ease-in-out infinite;
   }
 
   .salon-hero__title span {
@@ -337,13 +375,14 @@
 
   .salon-hero__title-accent {
     margin-top: 0.1em;
-    color: rgb(var(--color-gold-light));
+    color: #f2c66d;
     font-style: italic;
     font-weight: 500;
     letter-spacing: 0.015em;
     text-shadow:
-      0 0 20px rgba(230, 195, 135, 0.38),
-      0 4px 30px rgba(0, 0, 0, 0.82);
+      0 1px 2px rgba(0, 0, 0, 0.9),
+      0 0 22px rgba(242, 198, 109, 0.48),
+      0 8px 36px rgba(0, 0, 0, 0.9);
   }
 
   .salon-hero__title .salon-hero__title-mobile {
@@ -351,15 +390,16 @@
   }
 
   .salon-hero__subtitle {
-    color: rgba(255, 248, 241, 0.94);
+    color: rgba(255, 244, 234, 0.98);
     font-size: clamp(1.16rem, 2.1vw, 1.5rem);
     font-weight: 600;
     line-height: 1.55;
     max-width: min(44rem, calc(100vw - 2rem));
     overflow-wrap: break-word;
     text-shadow:
-      0 2px 6px rgba(0, 0, 0, 0.86),
-      0 10px 28px rgba(0, 0, 0, 0.64);
+      0 1px 2px rgba(0, 0, 0, 0.94),
+      0 4px 14px rgba(0, 0, 0, 0.88),
+      0 12px 34px rgba(0, 0, 0, 0.74);
   }
 
   .gallery-carousel-image {
@@ -391,46 +431,45 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-image:
-      linear-gradient(rgba(230, 195, 135, 0.16) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(230, 195, 135, 0.12) 1px, transparent 1px);
-    background-size: 46px 46px;
-    mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.75), transparent 68%);
-    opacity: 0.42;
-    transition: opacity 500ms ease;
-  }
-
-  .contact-petals:hover::after {
-    opacity: 0.72;
+    background:
+      radial-gradient(circle at 22% 18%, rgba(255, 182, 193, 0.24), transparent 28%),
+      radial-gradient(circle at 78% 72%, rgba(225, 29, 72, 0.16), transparent 32%),
+      radial-gradient(circle at 52% 48%, rgba(255, 232, 237, 0.12), transparent 44%);
+    opacity: 0.78;
+    animation: contact-rose-glow 8s ease-in-out infinite;
   }
 
   .contact-petal {
     --rotate: 18deg;
     --x: 12px;
     --y: -16px;
+    --petal-opacity: 0.34;
+    --petal-peak-opacity: 0.72;
+    --petal-scale: 1.08;
     position: absolute;
-    width: 4.6rem;
-    height: 2.1rem;
+    width: var(--petal-width, 4.6rem);
+    height: var(--petal-height, 2.1rem);
     border-radius: 999px 999px 999px 0;
     background:
-      radial-gradient(circle at 30% 35%, rgba(255, 255, 255, 0.38), transparent 32%),
-      linear-gradient(135deg, rgba(255, 232, 237, 0.5), rgba(230, 195, 135, 0.22));
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
-    opacity: 0.36;
+      radial-gradient(circle at 30% 34%, rgba(255, 255, 255, 0.42), transparent 34%),
+      linear-gradient(135deg, rgba(255, 228, 235, 0.64), rgba(244, 114, 182, 0.3) 56%, rgba(225, 29, 72, 0.18));
+    box-shadow:
+      0 16px 40px rgba(74, 14, 23, 0.14),
+      0 0 24px rgba(255, 182, 193, 0.12);
+    opacity: var(--petal-opacity, 0.34);
     transform: rotate(var(--rotate));
+    animation: contact-petal-drift var(--petal-duration, 6.2s) ease-in-out infinite;
+    animation-delay: var(--petal-delay, 0s);
     transition:
       opacity 500ms ease,
       transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-
-  .contact-petals:hover .contact-petal {
-    animation: contact-petal-drift 4.8s ease-in-out infinite;
   }
 
   .contact-petal--one {
     --rotate: -18deg;
     --x: 18px;
     --y: -18px;
+    --petal-delay: -0.8s;
     left: 12%;
     top: 20%;
   }
@@ -439,36 +478,95 @@
     --rotate: 28deg;
     --x: -16px;
     --y: 18px;
+    --petal-delay: -2s;
+    --petal-duration: 7.2s;
     right: 14%;
     top: 16%;
-    animation-delay: 320ms;
   }
 
   .contact-petal--three {
     --rotate: 54deg;
     --x: 20px;
     --y: 14px;
+    --petal-delay: -3.1s;
+    --petal-duration: 6.8s;
     right: 22%;
     bottom: 24%;
-    animation-delay: 640ms;
   }
 
   .contact-petal--four {
     --rotate: -42deg;
     --x: -22px;
     --y: -10px;
+    --petal-delay: -1.6s;
+    --petal-duration: 7.8s;
     left: 20%;
     bottom: 18%;
-    animation-delay: 960ms;
   }
 
   .contact-petal--five {
     --rotate: 8deg;
     --x: 10px;
     --y: 20px;
+    --petal-delay: -4.1s;
     left: 46%;
     top: 42%;
-    animation-delay: 1280ms;
+  }
+
+  .contact-petal--six {
+    --rotate: 36deg;
+    --x: -18px;
+    --y: -20px;
+    --petal-width: 3.7rem;
+    --petal-height: 1.75rem;
+    --petal-opacity: 0.28;
+    --petal-peak-opacity: 0.58;
+    --petal-delay: -2.7s;
+    --petal-duration: 8s;
+    left: 58%;
+    top: 18%;
+  }
+
+  .contact-petal--seven {
+    --rotate: -10deg;
+    --x: 16px;
+    --y: 18px;
+    --petal-width: 3.3rem;
+    --petal-height: 1.55rem;
+    --petal-opacity: 0.26;
+    --petal-peak-opacity: 0.54;
+    --petal-delay: -5s;
+    --petal-duration: 7.4s;
+    left: 8%;
+    bottom: 34%;
+  }
+
+  .contact-petal--eight {
+    --rotate: 64deg;
+    --x: 12px;
+    --y: -16px;
+    --petal-width: 3.9rem;
+    --petal-height: 1.8rem;
+    --petal-opacity: 0.3;
+    --petal-peak-opacity: 0.62;
+    --petal-delay: -3.8s;
+    --petal-duration: 8.4s;
+    right: 8%;
+    bottom: 12%;
+  }
+
+  .contact-petal--nine {
+    --rotate: -58deg;
+    --x: -14px;
+    --y: 22px;
+    --petal-width: 3rem;
+    --petal-height: 1.35rem;
+    --petal-opacity: 0.24;
+    --petal-peak-opacity: 0.5;
+    --petal-delay: -6s;
+    --petal-duration: 9s;
+    right: 36%;
+    top: 8%;
   }
 
   .salon-hero__button {
@@ -521,14 +619,14 @@
     bottom: -12px;
     left: calc(8% + (var(--i) * 9%));
     display: block;
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 999px;
-    background: #e11d48;
-    box-shadow: 0 0 14px rgba(225, 29, 72, 0.72);
-    opacity: 0.58;
-    animation: salon-hero-float 12s linear infinite;
-    animation-delay: calc(var(--i) * 0.5s);
+    background: #f2c66d;
+    box-shadow: 0 0 14px rgba(242, 198, 109, 0.62);
+    opacity: 0.42;
+    animation: salon-hero-float 18s linear infinite;
+    animation-delay: calc(var(--i) * 0.8s);
   }
 
   @keyframes salon-hero-float {
@@ -538,13 +636,13 @@
     }
 
     50% {
-      opacity: 1;
-      transform: translateY(-250px) translateX(50px) scale(1.2);
+      opacity: 0.86;
+      transform: translateY(-230px) translateX(34px) scale(1.16);
     }
 
     100% {
       opacity: 0;
-      transform: translateY(-500px) translateX(0) scale(1);
+      transform: translateY(-460px) translateX(0) scale(1);
     }
   }
 
@@ -563,11 +661,57 @@
   @keyframes salon-hero-zoom {
     0%,
     100% {
-      transform: scale(1.1);
+      transform: scale(1.01) translate3d(0, 0, 0);
     }
 
     50% {
-      transform: scale(1.12);
+      transform: scale(1.025) translate3d(0, -0.7%, 0);
+    }
+  }
+
+  @keyframes salon-hero-light-sweep {
+    0%,
+    28% {
+      opacity: 0;
+      transform: translateX(-42%);
+    }
+
+    44% {
+      opacity: 0.72;
+    }
+
+    70%,
+    100% {
+      opacity: 0;
+      transform: translateX(42%);
+    }
+  }
+
+  @keyframes salon-hero-glow {
+    0%,
+    100% {
+      opacity: 0.48;
+    }
+
+    50% {
+      opacity: 0.78;
+    }
+  }
+
+  @keyframes salon-hero-title-breathe {
+    0%,
+    100% {
+      text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.92),
+        0 0 18px rgba(255, 244, 234, 0.3),
+        0 8px 38px rgba(0, 0, 0, 0.92);
+    }
+
+    50% {
+      text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.92),
+        0 0 24px rgba(255, 244, 234, 0.38),
+        0 9px 42px rgba(0, 0, 0, 0.92);
     }
   }
 
@@ -593,6 +737,19 @@
     }
   }
 
+  @keyframes contact-rose-glow {
+    0%,
+    100% {
+      opacity: 0.62;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.88;
+      transform: scale(1.03);
+    }
+  }
+
   @media (max-width: 767px) {
     .salon-hero {
       min-height: calc(100svh - 1rem);
@@ -600,7 +757,7 @@
     }
 
     .salon-hero__image {
-      object-position: 35% center;
+      object-position: 49% 24%;
     }
 
     .salon-hero__title {
@@ -631,6 +788,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     .salon-hero__image,
+    .salon-hero::before,
+    .salon-hero::after,
     .salon-hero__content,
     .salon-hero__title::after,
     .salon-hero__mist span,
@@ -641,12 +800,13 @@
     .gallery-carousel-image,
     .gallery-carousel-shine::after,
     .gallery-carousel-progress,
-    .contact-petals:hover .contact-petal {
+    .contact-petals::after,
+    .contact-petal {
       animation: none;
     }
 
     .salon-hero__image {
-      transform: scale(1.05);
+      transform: scale(1.01);
     }
   }
 }

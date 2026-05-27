@@ -11,7 +11,7 @@ function Hero() {
         srcSet={heroImage.srcSet}
         sizes={heroImage.sizes}
         alt={heroImage.alt}
-        className="salon-hero__image absolute inset-0 h-full w-full object-cover brightness-140 contrast-105 saturate-120"
+        className="salon-hero__image absolute inset-0 h-full w-full object-cover brightness-150 contrast-105 saturate-125"
         loading="eager"
         fetchPriority="high"
       />

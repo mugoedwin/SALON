@@ -259,13 +259,17 @@ function Home() {
         <div className="mx-auto max-w-6xl">
           <div className="overflow-hidden rounded-lg border border-rose-100 bg-white shadow-[0_22px_64px_rgba(74,14,23,0.1)]">
             <div className="grid lg:grid-cols-[0.92fr_1.08fr]">
-              <div className="contact-petals group relative min-h-[24rem] overflow-hidden bg-maroon-deep p-6 text-white sm:p-8">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(230,195,135,0.22),transparent_28%),linear-gradient(135deg,#30070C_0%,#4A0E17_54%,#881337_100%)]" />
+              <div className="contact-petals group relative min-h-[24rem] overflow-hidden bg-rose-950 p-6 text-white sm:p-8">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(255,182,193,0.28),transparent_30%),radial-gradient(circle_at_78%_70%,rgba(244,114,182,0.18),transparent_34%),linear-gradient(135deg,#4A0E17_0%,#881337_54%,#BE123C_100%)]" />
                 <span className="contact-petal contact-petal--one" aria-hidden="true" />
                 <span className="contact-petal contact-petal--two" aria-hidden="true" />
                 <span className="contact-petal contact-petal--three" aria-hidden="true" />
                 <span className="contact-petal contact-petal--four" aria-hidden="true" />
                 <span className="contact-petal contact-petal--five" aria-hidden="true" />
+                <span className="contact-petal contact-petal--six" aria-hidden="true" />
+                <span className="contact-petal contact-petal--seven" aria-hidden="true" />
+                <span className="contact-petal contact-petal--eight" aria-hidden="true" />
+                <span className="contact-petal contact-petal--nine" aria-hidden="true" />
                 <div className="pointer-events-none absolute inset-x-8 top-8 h-px bg-gradient-to-r from-transparent via-gold-light/70 to-transparent" />
                 <div className="relative flex h-full flex-col justify-between">
                   <div>

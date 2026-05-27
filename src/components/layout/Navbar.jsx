@@ -70,12 +70,12 @@ function Navbar() {
             </nav>
 
             <div className="hidden items-center gap-3 md:flex">
-              <a
-                href={salonInfo.phoneHref}
+              <NavLink
+                to="/contact"
                 className="rounded-full border border-rose-200 bg-rose-50/60 px-4 py-2.5 text-sm font-semibold text-salon-copy transition-colors duration-200 hover:border-rose-400 hover:bg-white hover:text-rose-700"
               >
                 Call
-              </a>
+              </NavLink>
               <NavLink
                 to="/booking"
                 className="rounded-full bg-[#E11D48] px-5 py-2.5 text-sm font-bold text-white shadow-[0_12px_28px_rgba(225,29,72,0.24)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#F43F5E] focus:outline-none focus:ring-2 focus:ring-gold-light focus:ring-offset-2 focus:ring-offset-white"
@@ -144,12 +144,12 @@ function Navbar() {
               >
                 Book Appointment
               </NavLink>
-              <a
-                href={salonInfo.phoneHref}
+              <NavLink
+                to="/contact"
                 className="rounded-[1.25rem] border border-rose-100 bg-rose-50/70 px-4 py-3 text-center text-sm font-semibold text-salon-copy"
               >
                 Call the salon
-              </a>
+              </NavLink>
               <a
                 href={salonInfo.whatsappHref}
                 className="rounded-[1.25rem] border border-rose-100 bg-white px-4 py-3 text-center text-sm font-semibold text-rose-700"

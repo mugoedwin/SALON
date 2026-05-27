@@ -22,11 +22,10 @@ export const salonInfo = {
 };
 
 export const heroImage = {
-  src: "https://images.pexels.com/photos/7750124/pexels-photo-7750124.jpeg?auto=compress&cs=tinysrgb&w=2400",
-  srcSet:
-    "https://images.pexels.com/photos/7750124/pexels-photo-7750124.jpeg?auto=compress&cs=tinysrgb&w=1200 1200w, https://images.pexels.com/photos/7750124/pexels-photo-7750124.jpeg?auto=compress&cs=tinysrgb&w=1800 1800w, https://images.pexels.com/photos/7750124/pexels-photo-7750124.jpeg?auto=compress&cs=tinysrgb&w=2400 2400w",
+  src: "/images/salon/interior/interior-03-ultra-hd.jpeg",
+  srcSet: "",
   sizes: "100vw",
-  alt: "Luxury beauty salon interior with illuminated mirrors and styling chairs",
+  alt: "Ivonne Orchard salon interior with chandelier lighting, mirrors, and styling chairs",
 };
 
 export const homeValueHighlights = [
