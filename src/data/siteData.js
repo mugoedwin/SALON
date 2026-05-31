@@ -1,3 +1,5 @@
+import { cloudinaryImage, cloudinaryVideo } from "../services/cloudinaryMedia";
+
 export const navigationLinks = [
   { label: "Home", to: "/" },
   { label: "Services", to: "/services" },
@@ -27,11 +29,16 @@ export const salonInfo = {
 };
 
 export const heroImage = {
-  src: "/images/salon/interior/interior-03-ultra-hd.jpeg",
+  src: cloudinaryImage(
+    "ivonne-orchard/images/salon/interior/interior-03-ultra-hd",
+    "f_auto,q_auto,w_2200",
+  ),
   srcSet: "",
   sizes: "100vw",
   alt: "Ivonne Orchard salon interior with chandelier lighting, mirrors, and styling chairs",
 };
+
+export const salonTourVideo = cloudinaryVideo("ivonne-orchard/videos/salon-tour");
 
 export const homeValueHighlights = [
   {
@@ -170,63 +177,116 @@ export const salonInteriorImages = [
   {
     title: "Styling Stations",
     caption: "Mirrored styling stations with salon lighting and comfortable seating.",
-    image: "/images/salon/interior/interior-01.jpeg",
+    image: cloudinaryImage("ivonne-orchard/images/salon/interior/interior-01"),
     alt: "Ivonne Orchard salon styling station with mirrors and chairs",
   },
   {
     title: "Beauty Lounge",
     caption: "A compact, polished room set up for hair, nails, and beauty care.",
-    image: "/images/salon/interior/interior-02.jpeg",
+    image: cloudinaryImage("ivonne-orchard/images/salon/interior/interior-02"),
     alt: "Ivonne Orchard salon beauty lounge interior",
   },
   {
     title: "Salon Mirrors",
     caption: "Gold-framed mirrors and bright lighting for detailed finishing work.",
-    image: "/images/salon/interior/interior-03.jpeg",
+    image: cloudinaryImage("ivonne-orchard/images/salon/interior/interior-03"),
     alt: "Gold framed salon mirrors and styling chairs",
   },
   {
     title: "Nail & Hair Space",
     caption: "The main service area arranged for multi-category appointments.",
-    image: "/images/salon/interior/interior-04.jpeg",
+    image: cloudinaryImage("ivonne-orchard/images/salon/interior/interior-04"),
     alt: "Salon nail and hair service area",
   },
   {
     title: "Wash & Care Area",
     caption: "A dedicated care corner for wash, treatment, and reset appointments.",
-    image: "/images/salon/interior/interior-05.jpeg",
+    image: cloudinaryImage("ivonne-orchard/images/salon/interior/interior-05"),
     alt: "Salon wash and care area",
   },
   {
     title: "Pedicure Chair",
     caption: "Comfortable pedicure seating with tools close at hand.",
-    image: "/images/salon/interior/interior-06.jpeg",
+    image: cloudinaryImage("ivonne-orchard/images/salon/interior/interior-06"),
     alt: "Salon pedicure chair and nail polish wall",
   },
   {
     title: "Client Seating",
     caption: "A practical, calm setup for appointment-first visits.",
-    image: "/images/salon/interior/interior-07.jpeg",
+    image: cloudinaryImage("ivonne-orchard/images/salon/interior/interior-07"),
     alt: "Salon client seating and styling area",
   },
   {
     title: "Main Studio",
     caption: "The full studio view with styling chairs, mirrors, and chandelier lighting.",
-    image: "/images/salon/interior/interior-08.jpeg",
+    image: cloudinaryImage("ivonne-orchard/images/salon/interior/interior-08"),
     alt: "Full Ivonne Orchard salon studio interior",
   },
   {
     title: "Treatment Room",
     caption: "A clean treatment room detail from the salon interior.",
-    image: "/images/salon/interior/interior-09.jpeg",
+    image: cloudinaryImage("ivonne-orchard/images/salon/interior/interior-09"),
     alt: "Salon treatment room interior detail",
+  },
+  {
+    title: "Original Salon View",
+    caption: "An extra original view from the salon photo set.",
+    image: cloudinaryImage("ivonne-orchard/images-source/image1"),
+    alt: "Original Ivonne Orchard salon view",
+  },
+  {
+    title: "Original Styling Station",
+    caption: "An original salon styling-station photo from the uploaded media set.",
+    image: cloudinaryImage("ivonne-orchard/images-source/IMG-20260426-WA0096"),
+    alt: "Original Ivonne Orchard styling station photo",
+  },
+  {
+    title: "Studio Detail",
+    caption: "A close look at the studio setup from the original media folder.",
+    image: cloudinaryImage("ivonne-orchard/images-source/IMG-20260426-WA0097"),
+    alt: "Ivonne Orchard salon studio detail",
+  },
+  {
+    title: "Original Nail Space",
+    caption: "A second original salon angle showing the service space.",
+    image: cloudinaryImage("ivonne-orchard/images-source/IMG-20260426-WA0100"),
+    alt: "Original Ivonne Orchard nail and service space",
+  },
+  {
+    title: "Original Care Corner",
+    caption: "A care-area photo from the uploaded original salon set.",
+    image: cloudinaryImage("ivonne-orchard/images-source/IMG-20260426-WA0103"),
+    alt: "Original Ivonne Orchard care area",
+  },
+  {
+    title: "Original Studio Seating",
+    caption: "Client seating and salon details from the original media folder.",
+    image: cloudinaryImage("ivonne-orchard/images-source/IMG-20260426-WA0106"),
+    alt: "Original Ivonne Orchard studio seating",
+  },
+  {
+    title: "Original Treatment Detail",
+    caption: "An additional treatment-room detail from the uploaded images.",
+    image: cloudinaryImage("ivonne-orchard/images-source/IMG-20260426-WA0107"),
+    alt: "Original Ivonne Orchard treatment-room detail",
+  },
+  {
+    title: "Salon Finish Area",
+    caption: "Another original salon angle for clients browsing the space.",
+    image: cloudinaryImage("ivonne-orchard/images-source/IMG-20260426-WA0108"),
+    alt: "Ivonne Orchard salon finish area",
   },
 ];
 
 export const footerImage = {
-  image: "/images/salon/footer/footer-spa.jpeg",
+  image: cloudinaryImage("ivonne-orchard/images/salon/footer/footer-spa"),
   alt: "Salon spa essentials arranged on a pink background",
 };
+
+export const logoImage = cloudinaryImage(
+  "ivonne-orchard/images/ivonne-logo",
+  "f_auto,q_auto,w_240",
+);
 
 export const staffProfiles = [
   {
@@ -235,7 +295,7 @@ export const staffProfiles = [
     role: "Hair & Styling Lead",
     bio: "Leads consultations, styling plans, and polished finishes for everyday and occasion looks.",
     specialties: ["Silk press", "Blowouts", "Hair care"],
-    image: "/images/salon/staff/staff-01.jpeg",
+    image: cloudinaryImage("ivonne-orchard/images/salon/staff/staff-01"),
     alt: "Lead stylist portrait",
   },
   {
@@ -244,7 +304,7 @@ export const staffProfiles = [
     role: "Braids Expert",
     bio: "Focuses on neat parting, comfortable installs, and protective styles that last well.",
     specialties: ["Knotless", "Cornrows", "Loc styling"],
-    image: "/images/salon/staff/staff-02.jpeg",
+    image: cloudinaryImage("ivonne-orchard/images/salon/staff/staff-02"),
     alt: "Braids specialist portrait",
   },
   {
@@ -253,7 +313,7 @@ export const staffProfiles = [
     role: "Wig Install Artist",
     bio: "Creates clean hairlines, secure installs, and customized styling for natural-looking finishes.",
     specialties: ["Wig installs", "Customization", "Styling"],
-    image: "/images/salon/staff/staff-03.jpeg",
+    image: cloudinaryImage("ivonne-orchard/images/salon/staff/staff-03"),
     alt: "Wig artist portrait",
   },
   {
@@ -262,7 +322,7 @@ export const staffProfiles = [
     role: "Nail Care Specialist",
     bio: "Handles shaping, prep, color, and detail work for neat manicures and elevated nail finishes.",
     specialties: ["Gel polish", "Nail art", "Manicure"],
-    image: "/images/salon/staff/staff-04.jpeg",
+    image: cloudinaryImage("ivonne-orchard/images/salon/staff/staff-04"),
     alt: "Salon coordinator portrait",
   },
 ];

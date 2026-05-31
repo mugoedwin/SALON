@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { navigationLinks, salonInfo } from "../../data/siteData";
+import { logoImage, navigationLinks, salonInfo } from "../../data/siteData";
 
 const baseLinkClass =
   "relative px-1 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-salon-copy transition-colors duration-200 hover:text-rose-700 after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-rose-500 after:transition-all after:duration-300 hover:after:w-full";
@@ -38,7 +38,7 @@ function Navbar() {
           <div className="mx-auto flex w-full max-w-[92rem] items-center justify-between gap-4">
             <NavLink to="/" className="group flex min-w-0 items-center gap-3">
               <img
-                src="/images/ivonne-logo.jpg"
+                src={logoImage}
                 alt="Ivonne Orchard Beauty Salon Logo"
                 className="h-11 w-11 rounded-full border border-rose-200 object-cover shadow-[0_0_0_4px_rgba(74,14,23,0.08)] sm:h-12 sm:w-12"
               />

@@ -1,5 +1,5 @@
 import ActionLink from "../ui/ActionLink";
-import { heroImage } from "../../data/siteData";
+import { heroImage, salonTourVideo } from "../../data/siteData";
 
 const particles = Array.from({ length: 10 }, (_, index) => index);
 
@@ -7,7 +7,7 @@ function Hero() {
   return (
     <section className="salon-hero relative isolate flex min-h-svh items-center justify-center overflow-hidden bg-black px-4 pt-24 text-center text-white sm:pt-28">
       <video
-        src="/videos/salon-tour.mp4"
+        src={salonTourVideo}
         poster={heroImage.src}
         className="salon-hero__image absolute inset-0 h-full w-full object-cover brightness-150 contrast-105 saturate-125"
         autoPlay

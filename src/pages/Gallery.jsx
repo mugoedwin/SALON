@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import PageShell from "../components/common/PageShell";
 import ActionLink from "../components/ui/ActionLink";
-import { galleryImages, salonInteriorImages, staffProfiles } from "../data/siteData";
+import {
+  galleryImages,
+  salonInteriorImages,
+  salonTourVideo,
+  staffProfiles,
+} from "../data/siteData";
 
 const salonMediaItems = [
   {
     type: "video",
     title: "Salon Video Tour",
     caption: "A quick motion preview of the salon experience before the photos.",
-    src: "/videos/salon-tour.mp4",
+    src: salonTourVideo,
   },
   ...salonInteriorImages.map((image) => ({
     type: "image",

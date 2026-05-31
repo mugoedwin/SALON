@@ -11,9 +11,12 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { db, storage } from "../firebase";
+import { db } from "../firebase";
 import { servicesData } from "../data/servicesData";
+import {
+  cloudinaryCloudName,
+  cloudinaryUploadPreset,
+} from "./cloudinaryMedia";
 
 const servicesCollection = collection(db, "services");
 
@@ -146,30 +149,50 @@ export async function publishStarterCatalog() {
 }
 
 export function uploadServiceImage(file, serviceName, onProgress) {
-  const timestamp = Date.now();
-  const extension = file.name.split(".").pop() || "jpg";
   const serviceSlug = slugify(serviceName) || "service";
-  const storageRef = ref(
-    storage,
-    `services/${serviceSlug}-${timestamp}.${extension}`,
-  );
-
-  const uploadTask = uploadBytesResumable(storageRef, file, {
-    contentType: file.type || "image/jpeg",
-  });
+  const endpoint = `https://api.cloudinary.com/v1_1/${cloudinaryCloudName}/image/upload`;
 
   return new Promise((resolve, reject) => {
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        if (typeof onProgress === "function") {
-          onProgress(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100));
-        }
-      },
-      reject,
-      async () => {
-        resolve(await getDownloadURL(uploadTask.snapshot.ref));
-      },
-    );
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", cloudinaryUploadPreset);
+    formData.append("folder", `ivonne-orchard/services/${serviceSlug}`);
+
+    const request = new XMLHttpRequest();
+    request.open("POST", endpoint);
+
+    request.upload.onprogress = (event) => {
+      if (event.lengthComputable && typeof onProgress === "function") {
+        onProgress(Math.max(8, Math.round((event.loaded / event.total) * 100)));
+      }
+    };
+
+    request.onload = () => {
+      let response;
+      try {
+        response = JSON.parse(request.responseText);
+      } catch (error) {
+        reject(new Error("Cloudinary returned an unreadable response."));
+        return;
+      }
+
+      if (request.status >= 200 && request.status < 300 && response.secure_url) {
+        resolve(response.secure_url);
+        return;
+      }
+
+      reject(
+        new Error(
+          response?.error?.message ||
+            "Cloudinary upload failed. Check the upload preset.",
+        ),
+      );
+    };
+
+    request.onerror = () => {
+      reject(new Error("Cloudinary upload failed. Check your connection."));
+    };
+
+    request.send(formData);
   });
 }
