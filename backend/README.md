@@ -22,6 +22,39 @@ cp .env.example .env
 npm run dev
 ```
 
+## M-Pesa STK Push
+
+`POST /api/payments/mpesa/stk-push` sends a Daraja STK Push prompt to the
+client's phone. Keep all Daraja credentials on the backend:
+
+```env
+MPESA_ENVIRONMENT=sandbox
+MPESA_CONSUMER_KEY=your_daraja_consumer_key
+MPESA_CONSUMER_SECRET=your_daraja_consumer_secret
+MPESA_SHORTCODE=174379
+MPESA_PASSKEY=your_daraja_passkey
+MPESA_CALLBACK_URL=https://your-public-api.example.com/api/payments/mpesa/callback
+MPESA_TRANSACTION_TYPE=CustomerPayBillOnline
+MPESA_ACCOUNT_REFERENCE=IvonneOrchard
+```
+
+Example request:
+
+```bash
+curl -X POST http://localhost:4000/api/payments/mpesa/stk-push \
+  -H "Content-Type: application/json" \
+  -d '{
+    "phone": "+254705985701",
+    "amount": 1,
+    "accountReference": "IvonneOrch",
+    "transactionDesc": "Booking deposit"
+  }'
+```
+
+Safaricom posts the payment result to `MPESA_CALLBACK_URL`. During local
+development, expose the backend with a public HTTPS tunnel such as ngrok and
+use that callback URL.
+
 Twilio Sandbox setup:
 
 1. Open Twilio Console.

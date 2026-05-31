@@ -3,6 +3,7 @@ import express from "express";
 import helmet from "helmet";
 
 import bookingRoutes from "./routes/booking.routes.js";
+import paymentRoutes from "./routes/payment.routes.js";
 import webhookRoutes from "./routes/webhook.routes.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 
@@ -17,6 +18,7 @@ export function createApp() {
   // Twilio status callbacks are form-encoded by default.
   app.use("/api/webhooks", express.urlencoded({ extended: false }), webhookRoutes);
   app.use("/api/bookings", bookingRoutes);
+  app.use("/api/payments", paymentRoutes);
 
   app.get("/health", (_req, res) => {
     res.status(200).json({ status: "ok" });

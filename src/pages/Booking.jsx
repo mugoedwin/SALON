@@ -10,10 +10,41 @@ import {
 import { useServiceCatalog } from "../services/serviceCatalog";
 import { submitBookingRequest } from "../services/bookingService";
 import {
+  initiateMpesaStkPush,
+  mpesaDepositAmountKes,
+} from "../services/paymentService";
+import {
   formInputClassName,
   primaryButtonClassName,
   secondaryButtonClassName,
 } from "../utils/uiClasses";
+
+const MPESA_PAYMENT_NUMBER = "+254705985701";
+
+const paymentOptions = [
+  {
+    id: "mpesa",
+    name: "M-Pesa",
+    status: "pending_verification",
+    bookingStatus: "Pending Payment",
+    detail: `Send payment to ${MPESA_PAYMENT_NUMBER}. The salon will verify it before confirming.`,
+  },
+  {
+    id: "paypal",
+    name: "PayPal",
+    status: "pending_checkout",
+    bookingStatus: "Pending Payment",
+    detail:
+      "Select PayPal now and the salon can send a secure PayPal checkout link for the booking.",
+  },
+  {
+    id: "pay_at_salon",
+    name: "Pay at Salon",
+    status: "unpaid",
+    bookingStatus: "Pending",
+    detail: "Reserve first and settle payment directly with the salon team.",
+  },
+];
 
 function formatBookingDate(value) {
   if (!value) {
@@ -126,6 +157,60 @@ function ServiceOption({ service, isSelected, onSelect, onRemove }) {
   );
 }
 
+function PaymentLogo({ method }) {
+  if (method === "mpesa") {
+    return (
+      <span className="inline-flex h-11 min-w-[6.8rem] items-center justify-center rounded-md bg-[#20A852] px-3 text-sm font-black tracking-[0.08em] text-white shadow-[0_10px_22px_rgba(32,168,82,0.22)]">
+        M-PESA
+      </span>
+    );
+  }
+
+  if (method === "paypal") {
+    return (
+      <span className="inline-flex h-11 min-w-[6.8rem] items-center justify-center rounded-md bg-white px-3 text-lg font-black tracking-[-0.02em] shadow-[0_10px_22px_rgba(0,48,135,0.14)]">
+        <span className="text-[#003087]">Pay</span>
+        <span className="text-[#009CDE]">Pal</span>
+      </span>
+    );
+  }
+
+  return (
+    <span className="inline-flex h-11 min-w-[6.8rem] items-center justify-center rounded-md border border-rose-200 bg-white px-3 text-xs font-bold uppercase tracking-[0.14em] text-salon-copy">
+      Salon Pay
+    </span>
+  );
+}
+
+function PaymentOption({ option, isSelected, onSelect }) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className={`flex h-full flex-col rounded-[1.25rem] border p-4 text-left transition duration-300 hover:-translate-y-1 hover:border-rose-300 hover:shadow-[0_18px_42px_rgba(74,14,23,0.12)] ${
+        isSelected
+          ? "border-rose-500 bg-[#F7ECE8] shadow-[0_16px_38px_rgba(74,14,23,0.12)]"
+          : "border-rose-100 bg-white"
+      }`}
+      aria-pressed={isSelected}
+    >
+      <div className="flex items-center justify-between gap-3">
+        <PaymentLogo method={option.id} />
+        <span
+          className={`h-4 w-4 rounded-full border ${
+            isSelected ? "border-rose-600 bg-rose-600" : "border-rose-200 bg-white"
+          }`}
+          aria-hidden="true"
+        />
+      </div>
+      <h3 className="mt-5 text-2xl font-semibold text-salon-strong">
+        {option.name}
+      </h3>
+      <p className="mt-3 text-sm leading-7 text-salon-copy">{option.detail}</p>
+    </button>
+  );
+}
+
 function Booking() {
   const { services, isLoading: isServiceCatalogLoading, loadError: serviceLoadError } =
     useServiceCatalog();
@@ -138,6 +223,9 @@ function Booking() {
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [notes, setNotes] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("mpesa");
+  const [paymentReference, setPaymentReference] = useState("");
+  const [paymentPromptMessage, setPaymentPromptMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [confirmedBooking, setConfirmedBooking] = useState(null);
   const [submitError, setSubmitError] = useState("");
@@ -182,10 +270,14 @@ function Booking() {
     (currentStep === 1 && Boolean(bookingDate) && Boolean(bookingTime)) ||
     (currentStep === 2 &&
       Boolean(customerName.trim()) &&
-      Boolean(customerPhone.trim()));
+      Boolean(customerPhone.trim())) ||
+    (currentStep === 3 && Boolean(paymentMethod));
+
+  const selectedPaymentOption =
+    paymentOptions.find((option) => option.id === paymentMethod) ?? paymentOptions[0];
 
   function handleNextStep() {
-    if (canContinue && currentStep < 2) {
+    if (canContinue && currentStep < bookingFlowSteps.length - 1) {
       setCurrentStep((value) => value + 1);
     }
   }
@@ -200,7 +292,35 @@ function Booking() {
     }
 
     setSubmitError("");
+    setPaymentPromptMessage("");
     setIsSubmitting(true);
+    let mpesaResult = null;
+
+    try {
+      if (selectedPaymentOption.id === "mpesa") {
+        mpesaResult = await initiateMpesaStkPush({
+          phone: customerPhone.trim(),
+          amount: mpesaDepositAmountKes,
+          accountReference: "IvonneOrch",
+          transactionDesc: "Booking deposit",
+        });
+
+        setPaymentPromptMessage(
+          mpesaResult.customerMessage ||
+            "M-Pesa prompt sent. Check your phone and enter your PIN.",
+        );
+      }
+    } catch (error) {
+      setIsSubmitting(false);
+      const message =
+        error instanceof Error && error.message
+          ? error.message
+          : "Could not send the M-Pesa prompt.";
+      setSubmitError(message);
+      console.error("M-Pesa STK Push failed", error);
+      return;
+    }
+
     const bookingPayload = {
       service: selectedService.name,
       price: selectedService.price,
@@ -210,13 +330,28 @@ function Booking() {
       name: customerName.trim(),
       phone: customerPhone.trim(),
       notes: notes.trim(),
+      paymentMethod: selectedPaymentOption.id,
+      paymentMethodLabel: selectedPaymentOption.name,
+      paymentStatus:
+        selectedPaymentOption.id === "mpesa"
+          ? "stk_push_sent"
+          : selectedPaymentOption.status,
+      paymentReference:
+        paymentReference.trim() || mpesaResult?.checkoutRequestId || "",
+      paymentNumber:
+        selectedPaymentOption.id === "mpesa" ? MPESA_PAYMENT_NUMBER : "",
+      mpesaCheckoutRequestId: mpesaResult?.checkoutRequestId ?? "",
+      mpesaMerchantRequestId: mpesaResult?.merchantRequestId ?? "",
+      mpesaAmountKes:
+        selectedPaymentOption.id === "mpesa" ? mpesaDepositAmountKes : "",
+      status: selectedPaymentOption.bookingStatus,
     };
 
     try {
       const response = await submitBookingRequest(bookingPayload);
       setConfirmedBooking(response.booking);
       setIsSubmitting(false);
-      setCurrentStep(3);
+      setCurrentStep(bookingFlowSteps.length);
     } catch (error) {
       setIsSubmitting(false);
       const message =
@@ -238,6 +373,9 @@ function Booking() {
     setCustomerName("");
     setCustomerPhone("");
     setNotes("");
+    setPaymentMethod("mpesa");
+    setPaymentReference("");
+    setPaymentPromptMessage("");
     setConfirmedBooking(null);
     setIsSubmitting(false);
   }
@@ -406,75 +544,163 @@ function Booking() {
       );
     }
 
+    if (currentStep === 2) {
+      return (
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_220px]">
+          <div className="space-y-4">
+            <div>
+              <label
+                htmlFor="customer-name"
+                className="mb-2 block text-sm font-semibold text-salon-strong"
+              >
+                Full Name
+              </label>
+              <input
+                id="customer-name"
+                type="text"
+                value={customerName}
+                onChange={(event) => setCustomerName(event.target.value)}
+                placeholder="Enter your full name"
+                className={formInputClassName}
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="customer-phone"
+                className="mb-2 block text-sm font-semibold text-salon-strong"
+              >
+                Phone Number
+              </label>
+              <input
+                id="customer-phone"
+                type="tel"
+                value={customerPhone}
+                onChange={(event) => setCustomerPhone(event.target.value)}
+                placeholder="e.g. 0712 345 678"
+                className={formInputClassName}
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="customer-notes"
+                className="mb-2 block text-sm font-semibold text-salon-strong"
+              >
+                Notes (Optional)
+              </label>
+              <textarea
+                id="customer-notes"
+                rows="4"
+                value={notes}
+                onChange={(event) => setNotes(event.target.value)}
+                placeholder="Share hairstyle preferences or arrival notes"
+                className={formInputClassName}
+              />
+            </div>
+          </div>
+
+          <div className="border-l-2 border-rose-200 pl-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
+              Confirmation
+            </p>
+            <p className="mt-3 text-sm leading-7 text-salon-copy">
+              We only need the essentials here so follow-up stays quick and easy.
+              The team can confirm the rest directly with you.
+            </p>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_220px]">
         <div className="space-y-4">
-          <div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {paymentOptions.map((option) => (
+              <PaymentOption
+                key={option.id}
+                option={option}
+                isSelected={option.id === paymentMethod}
+                onSelect={() => setPaymentMethod(option.id)}
+              />
+            ))}
+          </div>
+
+          {paymentMethod === "mpesa" ? (
+            <div className="rounded-[1.25rem] border border-[#20A852]/25 bg-[#F1FFF5] p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#13843E]">
+                M-Pesa payment number
+              </p>
+              <p className="mt-2 text-3xl font-semibold text-salon-strong">
+                {MPESA_PAYMENT_NUMBER}
+              </p>
+              <p className="mt-3 text-sm leading-7 text-salon-copy">
+                A KES {mpesaDepositAmountKes} booking deposit prompt will be
+                sent to your phone when you confirm. You will enter your M-Pesa
+                PIN on your phone to approve it.
+              </p>
+            </div>
+          ) : null}
+
+          {paymentMethod === "paypal" ? (
+            <div className="rounded-[1.25rem] border border-[#009CDE]/25 bg-[#F4FBFF] p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#003087]">
+                PayPal checkout
+              </p>
+              <p className="mt-3 text-sm leading-7 text-salon-copy">
+                The booking will be marked as pending PayPal checkout so the
+                salon can send the correct secure payment link after reviewing
+                the appointment details.
+              </p>
+            </div>
+          ) : null}
+
+          {paymentMethod !== "pay_at_salon" ? (
+            <div>
             <label
-              htmlFor="customer-name"
+              htmlFor="payment-reference"
               className="mb-2 block text-sm font-semibold text-salon-strong"
             >
-              Full Name
+              Payment Reference (Optional)
             </label>
             <input
-              id="customer-name"
+              id="payment-reference"
               type="text"
-              value={customerName}
-              onChange={(event) => setCustomerName(event.target.value)}
-              placeholder="Enter your full name"
+              value={paymentReference}
+              onChange={(event) => setPaymentReference(event.target.value)}
+              placeholder={
+                paymentMethod === "mpesa"
+                  ? "M-Pesa transaction code"
+                  : "PayPal email or transaction ID"
+              }
               className={formInputClassName}
             />
-          </div>
+            </div>
+          ) : null}
 
-          <div>
-            <label
-              htmlFor="customer-phone"
-              className="mb-2 block text-sm font-semibold text-salon-strong"
-            >
-              Phone Number
-            </label>
-            <input
-              id="customer-phone"
-              type="tel"
-              value={customerPhone}
-              onChange={(event) => setCustomerPhone(event.target.value)}
-              placeholder="e.g. 0712 345 678"
-              className={formInputClassName}
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="customer-notes"
-              className="mb-2 block text-sm font-semibold text-salon-strong"
-            >
-              Notes (Optional)
-            </label>
-            <textarea
-              id="customer-notes"
-              rows="4"
-              value={notes}
-              onChange={(event) => setNotes(event.target.value)}
-              placeholder="Share hairstyle preferences or arrival notes"
-              className={formInputClassName}
-            />
-          </div>
+          {paymentPromptMessage ? (
+            <p className="rounded-2xl border border-[#20A852]/25 bg-[#F1FFF5] px-5 py-4 text-sm font-semibold text-[#13843E]">
+              {paymentPromptMessage}
+            </p>
+          ) : null}
         </div>
 
         <div className="border-l-2 border-rose-200 pl-4">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
-            Confirmation
+            Payment note
           </p>
           <p className="mt-3 text-sm leading-7 text-salon-copy">
-            We only need the essentials here so follow-up stays quick and easy.
-            The team can confirm the rest directly with you.
+            Payment is recorded with the booking for admin review. Live PayPal
+            capture and automatic M-Pesa STK Push can be added once merchant
+            credentials are available.
           </p>
         </div>
       </div>
     );
   }
 
-  if (currentStep === 3 && confirmedBooking) {
+  if (currentStep === bookingFlowSteps.length && confirmedBooking) {
     return (
       <PageShell
         eyebrow="Booking Complete"
@@ -558,6 +784,29 @@ function Booking() {
               <SummaryRow label="Price" value={confirmedBooking.price} />
               <SummaryRow label="Duration" value={confirmedBooking.duration} />
               <SummaryRow
+                label="Payment"
+                value={confirmedBooking.paymentMethodLabel || "Not selected"}
+              />
+              <SummaryRow
+                label="Payment Status"
+                value={confirmedBooking.paymentStatus || "unpaid"}
+              />
+              {confirmedBooking.paymentNumber ? (
+                <SummaryRow label="M-Pesa" value={confirmedBooking.paymentNumber} />
+              ) : null}
+              {confirmedBooking.mpesaAmountKes ? (
+                <SummaryRow
+                  label="Deposit"
+                  value={`KES ${confirmedBooking.mpesaAmountKes}`}
+                />
+              ) : null}
+              {confirmedBooking.paymentReference ? (
+                <SummaryRow
+                  label="Reference"
+                  value={confirmedBooking.paymentReference}
+                />
+              ) : null}
+              <SummaryRow
                 label="Date"
                 value={formatBookingDate(confirmedBooking.date)}
               />
@@ -576,15 +825,15 @@ function Booking() {
   return (
     <PageShell
       eyebrow="Booking"
-      title="Book your appointment in three clear, elegant steps."
-      description="The booking flow is more guided now: choose the service, lock the timing, then add your contact details for a quick salon confirmation."
+      title="Book your appointment in four clear, elegant steps."
+      description="Choose the service, lock the timing, add your details, then select M-Pesa, PayPal, or pay-at-salon before confirmation."
       actions={
         <ActionLink href={salonInfo.whatsappHref} variant="secondary">
           WhatsApp Support
         </ActionLink>
       }
     >
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {bookingFlowSteps.map((step, index) => (
           <StepMarker
             key={step}
@@ -612,7 +861,8 @@ function Booking() {
               </h2>
             </div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-salon-muted">
-              {String(currentStep + 1).padStart(2, "0")} / 03
+              {String(currentStep + 1).padStart(2, "0")} /{" "}
+              {String(bookingFlowSteps.length).padStart(2, "0")}
             </p>
           </div>
 
@@ -630,7 +880,7 @@ function Booking() {
                 </button>
               ) : null}
 
-              {currentStep < 2 ? (
+              {currentStep < bookingFlowSteps.length - 1 ? (
                 <button
                   type="button"
                   onClick={handleNextStep}
@@ -646,7 +896,13 @@ function Booking() {
                   disabled={!canContinue || isSubmitting}
                   className={primaryButtonClassName}
                 >
-                  {isSubmitting ? "Submitting..." : "Confirm Booking"}
+                  {isSubmitting
+                    ? selectedPaymentOption.id === "mpesa"
+                      ? "Sending M-Pesa Prompt..."
+                      : "Submitting..."
+                    : selectedPaymentOption.id === "mpesa"
+                      ? "Send M-Pesa Prompt & Confirm"
+                      : "Confirm Booking"}
                 </button>
               )}
             </div>
@@ -687,6 +943,16 @@ function Booking() {
                 <SummaryRow
                   label="Client"
                   value={customerName.trim() || "Add your details in step 3"}
+                />
+                <SummaryRow
+                  label="Payment"
+                  value={
+                    currentStep >= 3
+                      ? selectedPaymentOption.id === "mpesa"
+                        ? `${selectedPaymentOption.name} deposit: KES ${mpesaDepositAmountKes}`
+                        : selectedPaymentOption.name
+                      : "Choose in step 4"
+                  }
                 />
               </dl>
 

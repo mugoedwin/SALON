@@ -24,7 +24,8 @@ export async function submitBookingRequest(bookingPayload) {
     ...bookingPayload,
     userId: auth.currentUser?.uid ?? null,
     email: auth.currentUser?.email ?? null,
-    status: "Pending",
+    status: bookingPayload.status ?? "Pending",
+    paymentStatus: bookingPayload.paymentStatus ?? "unpaid",
     createdAt: serverTimestamp(),
     createdAtClient: new Date().toISOString(),
   };
@@ -36,7 +37,12 @@ export async function submitBookingRequest(bookingPayload) {
 
   return {
     status: "success",
-    booking: { ...bookingPayload, status: "Pending", id: docRef.id },
+    booking: {
+      ...bookingPayload,
+      status: payload.status,
+      paymentStatus: payload.paymentStatus,
+      id: docRef.id,
+    },
     id: docRef.id,
   };
 }

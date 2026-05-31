@@ -67,13 +67,15 @@ export const homeStats = [
 export const bookingSteps = [
   "Pick a service and preferred time slot.",
   "Confirm your booking details on mobile.",
-  "Receive a WhatsApp follow-up for fast support.",
+  "Add your contact details for confirmation.",
+  "Choose how you want to handle payment.",
 ];
 
 export const bookingFlowSteps = [
   "Select Service",
   "Select Date & Time",
   "Your Details",
+  "Payment",
 ];
 
 export const bookingTimeSlots = [

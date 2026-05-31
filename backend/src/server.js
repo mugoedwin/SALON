@@ -4,7 +4,11 @@ import { connectMongo } from "./config/mongo.js";
 import { logger } from "./utils/logger.js";
 
 async function startServer() {
-  await connectMongo();
+  if (env.SKIP_MONGO_CONNECT) {
+    logger.info("mongo.connection.skipped");
+  } else {
+    await connectMongo();
+  }
 
   const app = createApp();
   app.listen(env.PORT, () => {

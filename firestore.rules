@@ -36,7 +36,7 @@ service cloud.firestore {
     match /bookings/{bookingId} {
       // Clients can create bookings once signed-in (anonymous sign-in is fine).
       allow create: if signedIn()
-        && request.resource.data.status == "Pending"
+        && request.resource.data.status in ["Pending", "Pending Payment"]
         && request.resource.data.userId == request.auth.uid;
 
       // Clients can read their own bookings.
