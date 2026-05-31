@@ -87,6 +87,24 @@ export const bookingTimeSlots = [
   "5:00 PM",
 ];
 
+export const paymentHighlights = [
+  {
+    title: "Card Payment",
+    detail: "Debit and credit card payment support after booking review.",
+    tone: "slate",
+  },
+  {
+    title: "M-Pesa Send Money",
+    detail: "Send Money accepted on +254705985701 with reference verification.",
+    tone: "green",
+  },
+  {
+    title: "Bank Payment",
+    detail: "Bank transfer or deposit details shared during confirmation.",
+    tone: "gold",
+  },
+];
+
 export const galleryImages = [
   {
     title: "Protective Styles",

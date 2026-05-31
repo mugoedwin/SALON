@@ -10,10 +10,6 @@ import {
 import { useServiceCatalog } from "../services/serviceCatalog";
 import { submitBookingRequest } from "../services/bookingService";
 import {
-  initiateMpesaStkPush,
-  mpesaDepositAmountKes,
-} from "../services/paymentService";
-import {
   formInputClassName,
   primaryButtonClassName,
   secondaryButtonClassName,
@@ -23,26 +19,27 @@ const MPESA_PAYMENT_NUMBER = "+254705985701";
 
 const paymentOptions = [
   {
-    id: "mpesa",
-    name: "M-Pesa",
-    status: "pending_verification",
-    bookingStatus: "Pending Payment",
-    detail: `Send payment to ${MPESA_PAYMENT_NUMBER}. The salon will verify it before confirming.`,
-  },
-  {
-    id: "paypal",
-    name: "PayPal",
-    status: "pending_checkout",
+    id: "card",
+    name: "Card Payment",
+    status: "pending_card_payment",
     bookingStatus: "Pending Payment",
     detail:
-      "Select PayPal now and the salon can send a secure PayPal checkout link for the booking.",
+      "Pay by debit or credit card. The salon will share the secure card payment details after reviewing your booking.",
   },
   {
-    id: "pay_at_salon",
-    name: "Pay at Salon",
-    status: "unpaid",
-    bookingStatus: "Pending",
-    detail: "Reserve first and settle payment directly with the salon team.",
+    id: "mpesa",
+    name: "M-Pesa Send Money",
+    status: "pending_verification",
+    bookingStatus: "Pending Payment",
+    detail: `Send Money to ${MPESA_PAYMENT_NUMBER}. Add your transaction code if you already have it.`,
+  },
+  {
+    id: "bank",
+    name: "Bank Payment",
+    status: "pending_bank_payment",
+    bookingStatus: "Pending Payment",
+    detail:
+      "Use bank transfer or cash deposit. The salon will send the correct bank details for confirmation.",
   },
 ];
 
@@ -166,18 +163,20 @@ function PaymentLogo({ method }) {
     );
   }
 
-  if (method === "paypal") {
+  if (method === "card") {
     return (
-      <span className="inline-flex h-11 min-w-[6.8rem] items-center justify-center rounded-md bg-white px-3 text-lg font-black tracking-[-0.02em] shadow-[0_10px_22px_rgba(0,48,135,0.14)]">
-        <span className="text-[#003087]">Pay</span>
-        <span className="text-[#009CDE]">Pal</span>
+      <span className="inline-flex h-11 min-w-[6.8rem] items-center justify-center gap-1 rounded-md bg-[#111827] px-3 text-xs font-black uppercase tracking-[0.1em] text-white shadow-[0_10px_22px_rgba(17,24,39,0.18)]">
+        <span>Card</span>
+        <span className="rounded bg-white px-1.5 py-0.5 text-[0.6rem] text-[#111827]">
+          Pay
+        </span>
       </span>
     );
   }
 
   return (
-    <span className="inline-flex h-11 min-w-[6.8rem] items-center justify-center rounded-md border border-rose-200 bg-white px-3 text-xs font-bold uppercase tracking-[0.14em] text-salon-copy">
-      Salon Pay
+    <span className="inline-flex h-11 min-w-[6.8rem] items-center justify-center rounded-md border border-[#B8860B]/25 bg-[#FFF7D6] px-3 text-xs font-black uppercase tracking-[0.14em] text-[#6F4B00]">
+      Bank
     </span>
   );
 }
@@ -223,9 +222,8 @@ function Booking() {
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [notes, setNotes] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("mpesa");
+  const [paymentMethod, setPaymentMethod] = useState("card");
   const [paymentReference, setPaymentReference] = useState("");
-  const [paymentPromptMessage, setPaymentPromptMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [confirmedBooking, setConfirmedBooking] = useState(null);
   const [submitError, setSubmitError] = useState("");
@@ -292,34 +290,7 @@ function Booking() {
     }
 
     setSubmitError("");
-    setPaymentPromptMessage("");
     setIsSubmitting(true);
-    let mpesaResult = null;
-
-    try {
-      if (selectedPaymentOption.id === "mpesa") {
-        mpesaResult = await initiateMpesaStkPush({
-          phone: customerPhone.trim(),
-          amount: mpesaDepositAmountKes,
-          accountReference: "IvonneOrch",
-          transactionDesc: "Booking deposit",
-        });
-
-        setPaymentPromptMessage(
-          mpesaResult.customerMessage ||
-            "M-Pesa prompt sent. Check your phone and enter your PIN.",
-        );
-      }
-    } catch (error) {
-      setIsSubmitting(false);
-      const message =
-        error instanceof Error && error.message
-          ? error.message
-          : "Could not send the M-Pesa prompt.";
-      setSubmitError(message);
-      console.error("M-Pesa STK Push failed", error);
-      return;
-    }
 
     const bookingPayload = {
       service: selectedService.name,
@@ -332,18 +303,10 @@ function Booking() {
       notes: notes.trim(),
       paymentMethod: selectedPaymentOption.id,
       paymentMethodLabel: selectedPaymentOption.name,
-      paymentStatus:
-        selectedPaymentOption.id === "mpesa"
-          ? "stk_push_sent"
-          : selectedPaymentOption.status,
-      paymentReference:
-        paymentReference.trim() || mpesaResult?.checkoutRequestId || "",
+      paymentStatus: selectedPaymentOption.status,
+      paymentReference: paymentReference.trim(),
       paymentNumber:
         selectedPaymentOption.id === "mpesa" ? MPESA_PAYMENT_NUMBER : "",
-      mpesaCheckoutRequestId: mpesaResult?.checkoutRequestId ?? "",
-      mpesaMerchantRequestId: mpesaResult?.merchantRequestId ?? "",
-      mpesaAmountKes:
-        selectedPaymentOption.id === "mpesa" ? mpesaDepositAmountKes : "",
       status: selectedPaymentOption.bookingStatus,
     };
 
@@ -373,9 +336,8 @@ function Booking() {
     setCustomerName("");
     setCustomerPhone("");
     setNotes("");
-    setPaymentMethod("mpesa");
+    setPaymentMethod("card");
     setPaymentReference("");
-    setPaymentPromptMessage("");
     setConfirmedBooking(null);
     setIsSubmitting(false);
   }
@@ -636,27 +598,38 @@ function Booking() {
                 {MPESA_PAYMENT_NUMBER}
               </p>
               <p className="mt-3 text-sm leading-7 text-salon-copy">
-                A KES {mpesaDepositAmountKes} booking deposit prompt will be
-                sent to your phone when you confirm. You will enter your M-Pesa
-                PIN on your phone to approve it.
+                Use M-Pesa Send Money to this number, then paste the
+                transaction code below if payment is already done. The salon
+                will verify it before confirming.
               </p>
             </div>
           ) : null}
 
-          {paymentMethod === "paypal" ? (
-            <div className="rounded-[1.25rem] border border-[#009CDE]/25 bg-[#F4FBFF] p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#003087]">
-                PayPal checkout
+          {paymentMethod === "card" ? (
+            <div className="rounded-[1.25rem] border border-slate-200 bg-slate-50 p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-700">
+                Card payment
               </p>
               <p className="mt-3 text-sm leading-7 text-salon-copy">
-                The booking will be marked as pending PayPal checkout so the
-                salon can send the correct secure payment link after reviewing
-                the appointment details.
+                We accept card payment. After the request is received, the team
+                can share the secure card payment details for the appointment.
               </p>
             </div>
           ) : null}
 
-          {paymentMethod !== "pay_at_salon" ? (
+          {paymentMethod === "bank" ? (
+            <div className="rounded-[1.25rem] border border-[#B8860B]/25 bg-[#FFF9E8] p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6F4B00]">
+                Bank payment
+              </p>
+              <p className="mt-3 text-sm leading-7 text-salon-copy">
+                We accept bank payment. The salon will send account details and
+                confirm once the transfer or deposit reference is received.
+              </p>
+            </div>
+          ) : null}
+
+          {paymentMethod !== "card" ? (
             <div>
             <label
               htmlFor="payment-reference"
@@ -672,17 +645,11 @@ function Booking() {
               placeholder={
                 paymentMethod === "mpesa"
                   ? "M-Pesa transaction code"
-                  : "PayPal email or transaction ID"
+                  : "Bank transfer or deposit reference"
               }
               className={formInputClassName}
             />
             </div>
-          ) : null}
-
-          {paymentPromptMessage ? (
-            <p className="rounded-2xl border border-[#20A852]/25 bg-[#F1FFF5] px-5 py-4 text-sm font-semibold text-[#13843E]">
-              {paymentPromptMessage}
-            </p>
           ) : null}
         </div>
 
@@ -691,9 +658,8 @@ function Booking() {
             Payment note
           </p>
           <p className="mt-3 text-sm leading-7 text-salon-copy">
-            Payment is recorded with the booking for admin review. Live PayPal
-            capture and automatic M-Pesa STK Push can be added once merchant
-            credentials are available.
+            Payment preference and any reference are saved with the booking for
+            admin review. The salon will confirm the final payment details.
           </p>
         </div>
       </div>
@@ -794,12 +760,6 @@ function Booking() {
               {confirmedBooking.paymentNumber ? (
                 <SummaryRow label="M-Pesa" value={confirmedBooking.paymentNumber} />
               ) : null}
-              {confirmedBooking.mpesaAmountKes ? (
-                <SummaryRow
-                  label="Deposit"
-                  value={`KES ${confirmedBooking.mpesaAmountKes}`}
-                />
-              ) : null}
               {confirmedBooking.paymentReference ? (
                 <SummaryRow
                   label="Reference"
@@ -826,7 +786,7 @@ function Booking() {
     <PageShell
       eyebrow="Booking"
       title="Book your appointment in four clear, elegant steps."
-      description="Choose the service, lock the timing, add your details, then select M-Pesa, PayPal, or pay-at-salon before confirmation."
+      description="Choose the service, lock the timing, add your details, then select card, M-Pesa Send Money, or bank payment before confirmation."
       actions={
         <ActionLink href={salonInfo.whatsappHref} variant="secondary">
           WhatsApp Support
@@ -896,13 +856,7 @@ function Booking() {
                   disabled={!canContinue || isSubmitting}
                   className={primaryButtonClassName}
                 >
-                  {isSubmitting
-                    ? selectedPaymentOption.id === "mpesa"
-                      ? "Sending M-Pesa Prompt..."
-                      : "Submitting..."
-                    : selectedPaymentOption.id === "mpesa"
-                      ? "Send M-Pesa Prompt & Confirm"
-                      : "Confirm Booking"}
+                  {isSubmitting ? "Submitting..." : "Confirm Booking"}
                 </button>
               )}
             </div>
@@ -948,9 +902,7 @@ function Booking() {
                   label="Payment"
                   value={
                     currentStep >= 3
-                      ? selectedPaymentOption.id === "mpesa"
-                        ? `${selectedPaymentOption.name} deposit: KES ${mpesaDepositAmountKes}`
-                        : selectedPaymentOption.name
+                      ? selectedPaymentOption.name
                       : "Choose in step 4"
                   }
                 />

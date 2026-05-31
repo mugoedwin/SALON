@@ -7,6 +7,7 @@ import {
   galleryImages,
   homeTestimonials,
   homeValueHighlights,
+  paymentHighlights,
   salonInfo,
   salonPhoneNumbers,
   salonInteriorImages,
@@ -18,6 +19,12 @@ const interiorPreview = [
   salonInteriorImages[1],
   salonInteriorImages[2],
 ];
+
+const paymentToneClasses = {
+  slate: "border-slate-200 bg-slate-50 text-slate-800",
+  green: "border-[#20A852]/25 bg-[#F1FFF5] text-[#13843E]",
+  gold: "border-[#B8860B]/25 bg-[#FFF9E8] text-[#6F4B00]",
+};
 
 function Home() {
   const { services } = useServiceCatalog();
@@ -112,6 +119,37 @@ function Home() {
                   </p>
                   <p className="mt-4 text-base font-semibold leading-7 text-[#4f2f38]">
                     {step}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 pb-14">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid gap-6 border-b border-rose-100 pb-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
+            <div>
+              <p className="eyebrow-label">Flexible Payment</p>
+              <h2 className="mt-4 text-3xl font-semibold text-salon-strong sm:text-4xl">
+                Simple ways to settle your appointment.
+              </h2>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-3">
+              {paymentHighlights.map((item) => (
+                <div
+                  key={item.title}
+                  className={`rounded-lg border px-4 py-4 ${
+                    paymentToneClasses[item.tone]
+                  }`}
+                >
+                  <p className="text-sm font-bold uppercase tracking-[0.16em]">
+                    {item.title}
+                  </p>
+                  <p className="mt-3 text-sm font-medium leading-6 text-salon-copy">
+                    {item.detail}
                   </p>
                 </div>
               ))}

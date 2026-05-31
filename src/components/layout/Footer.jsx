@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import {
   footerImage,
   navigationLinks,
+  paymentHighlights,
   salonInfo,
   salonPhoneNumbers,
 } from "../../data/siteData";
@@ -88,6 +89,24 @@ function Footer() {
               Walk-ins welcome where availability allows. Appointments get
               priority seating and stylist prep.
             </p>
+          </div>
+        </div>
+
+        <div className="mt-8 border-t border-rose-100 pt-5">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-rose-700">
+              Payment accepted
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {paymentHighlights.map((item) => (
+                <span
+                  key={item.title}
+                  className="rounded-full border border-rose-100 bg-white/80 px-3 py-1.5 text-xs font-semibold text-[#4f2f38]"
+                >
+                  {item.title}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
