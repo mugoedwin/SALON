@@ -6,14 +6,16 @@ const particles = Array.from({ length: 10 }, (_, index) => index);
 function Hero() {
   return (
     <section className="salon-hero relative isolate flex min-h-svh items-center justify-center overflow-hidden bg-black px-4 pt-24 text-center text-white sm:pt-28">
-      <img
-        src={heroImage.src}
-        srcSet={heroImage.srcSet}
-        sizes={heroImage.sizes}
-        alt={heroImage.alt}
+      <video
+        src="/videos/salon-tour.mp4"
+        poster={heroImage.src}
         className="salon-hero__image absolute inset-0 h-full w-full object-cover brightness-150 contrast-105 saturate-125"
-        loading="eager"
-        fetchPriority="high"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-label={heroImage.alt}
       />
 
       <div className="salon-hero__shade absolute inset-0" aria-hidden="true" />
