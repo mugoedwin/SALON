@@ -1,38 +1,17 @@
 import { useMemo, useState } from "react";
 import PageShell from "../components/common/PageShell";
 import ActionLink from "../components/ui/ActionLink";
-import { servicesData } from "../data/servicesData";
+import { serviceCategoryDescriptions } from "../data/servicesData";
 import { servicePromises } from "../data/siteData";
-
-const categoryDescriptions = {
-  "Most Popular":
-    "A quick look at the salon favorites clients book most often.",
-  "Hair Styling":
-    "Smooth blowouts, silk presses, and polished finishes for everyday confidence or special plans.",
-  "Protective Styling":
-    "Braids, installs, cornrows, and loc care designed to feel neat, light, and intentional.",
-  Nails:
-    "Clean shaping, glossy finishes, and hand-and-foot care with a refined salon feel.",
-  Treatments:
-    "Care-led hair rituals focused on scalp comfort, moisture, shine, and healthier styling results.",
-  "Spa Treatments":
-    "Relaxing body rituals that leave skin feeling smooth, refreshed, and renewed.",
-  "Skin Care":
-    "Gentle facial care for a brighter, hydrated, and healthy-looking complexion.",
-  Waxing:
-    "Clean, careful hair removal with simple prep and a smooth finish.",
-  Lashes:
-    "Soft lash definition for everyday polish, events, and beauty touch-ups.",
-  "Makeup & Bridal":
-    "Soft glam, bridal beauty, and occasion-ready looks with a radiant long-wear finish.",
-};
+import { useServiceCatalog } from "../services/serviceCatalog";
 
 function Services() {
   const [selectedCategory, setSelectedCategory] = useState("Most Popular");
+  const { services, isLoading, loadError } = useServiceCatalog();
 
   const servicesByCategory = useMemo(
     () =>
-      servicesData.reduce((groups, service) => {
+      services.reduce((groups, service) => {
         if (!groups[service.category]) {
           groups[service.category] = [];
         }
@@ -40,7 +19,7 @@ function Services() {
         groups[service.category].push(service);
         return groups;
       }, {}),
-    [],
+    [services],
   );
   const serviceCategories = useMemo(
     () => ["Most Popular", ...Object.keys(servicesByCategory)],
@@ -49,12 +28,12 @@ function Services() {
   const visibleServiceGroups = useMemo(
     () => {
       if (selectedCategory === "Most Popular") {
-        return [["Most Popular", servicesData.filter((service) => service.popular).slice(0, 6)]];
+        return [["Most Popular", services.filter((service) => service.popular).slice(0, 6)]];
       }
 
       return [[selectedCategory, servicesByCategory[selectedCategory] ?? []]];
     },
-    [selectedCategory, servicesByCategory],
+    [selectedCategory, services, servicesByCategory],
   );
 
   return (
@@ -71,6 +50,18 @@ function Services() {
         </>
       }
     >
+      {loadError ? (
+        <div className="mb-6 rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm text-rose-700">
+          {loadError}
+        </div>
+      ) : null}
+
+      {isLoading ? (
+        <div className="mb-6 rounded-2xl border border-rose-100 bg-white px-5 py-4 text-sm font-semibold text-salon-copy">
+          Loading services...
+        </div>
+      ) : null}
+
       <div className="grid gap-8 border-y border-rose-100 py-8 lg:grid-cols-[0.85fr_1.15fr]">
         <div>
           <p className="eyebrow-label">What Stays True</p>
@@ -125,7 +116,7 @@ function Services() {
                 {category}
               </h2>
               <p className="mt-4 text-sm leading-7 text-salon-copy">
-                {categoryDescriptions[category] ??
+                {serviceCategoryDescriptions[category] ??
                   "Salon services presented in a clearer, easier-to-book format."}
               </p>
             </div>

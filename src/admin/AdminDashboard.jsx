@@ -5,10 +5,11 @@ import ActionLink from "../components/ui/ActionLink";
 import PageShell from "../components/common/PageShell";
 import InfoCard from "../components/ui/InfoCard";
 import SectionGrid from "../components/common/SectionGrid";
-import { servicesData } from "../data/servicesData";
+import { useServiceCatalog } from "../services/serviceCatalog";
 import { auth, db } from "../firebase";
 
 function AdminDashboard() {
+  const { services } = useServiceCatalog();
   const [pendingCount, setPendingCount] = useState(0);
   const [todayBookings, setTodayBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -62,11 +63,11 @@ function AdminDashboard() {
 
   const dashboardStats = useMemo(
     () => [
-      { label: "Live Services", value: servicesData.length.toString() },
+      { label: "Live Services", value: services.length.toString() },
       { label: "Pending Bookings", value: pendingCount.toString() },
       { label: "WhatsApp Leads", value: "—" },
     ],
-    [pendingCount],
+    [services.length, pendingCount],
   );
 
   return (

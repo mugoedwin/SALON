@@ -7,7 +7,7 @@ import {
   bookingTimeSlots,
   salonInfo,
 } from "../data/siteData";
-import { servicesData } from "../data/servicesData";
+import { useServiceCatalog } from "../services/serviceCatalog";
 import { submitBookingRequest } from "../services/bookingService";
 import {
   formInputClassName,
@@ -127,6 +127,8 @@ function ServiceOption({ service, isSelected, onSelect, onRemove }) {
 }
 
 function Booking() {
+  const { services, isLoading: isServiceCatalogLoading, loadError: serviceLoadError } =
+    useServiceCatalog();
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedServiceName, setSelectedServiceName] = useState("");
   const [serviceSearch, setServiceSearch] = useState("");
@@ -143,19 +145,19 @@ function Booking() {
   const today = new Date().toISOString().split("T")[0];
 
   const serviceCategories = useMemo(
-    () => ["Most Popular", ...new Set(servicesData.map((service) => service.category))],
-    [],
+    () => ["Most Popular", ...new Set(services.map((service) => service.category))],
+    [services],
   );
   const selectedService = useMemo(
     () =>
-      servicesData.find((service) => service.name === selectedServiceName) ??
+      services.find((service) => service.name === selectedServiceName) ??
       null,
-    [selectedServiceName],
+    [services, selectedServiceName],
   );
   const filteredServices = useMemo(() => {
     const normalizedSearch = serviceSearch.trim().toLowerCase();
 
-    const matches = servicesData.filter((service) => {
+    const matches = services.filter((service) => {
       const matchesCategory =
         serviceCategory === "Most Popular"
           ? service.popular
@@ -173,7 +175,7 @@ function Booking() {
     return serviceCategory === "Most Popular" && !normalizedSearch
       ? matches.slice(0, 6)
       : matches;
-  }, [serviceCategory, serviceSearch]);
+  }, [services, serviceCategory, serviceSearch]);
 
   const canContinue =
     (currentStep === 0 && Boolean(selectedServiceName)) ||
@@ -249,6 +251,18 @@ function Booking() {
       return (
         <div className="space-y-5">
           <div className="rounded-[1.5rem] border border-rose-100 bg-[#F7ECE8] p-3">
+            {serviceLoadError ? (
+              <p className="mb-3 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+                {serviceLoadError}
+              </p>
+            ) : null}
+
+            {isServiceCatalogLoading ? (
+              <p className="mb-3 rounded-2xl border border-rose-100 bg-white px-4 py-3 text-sm font-semibold text-salon-copy">
+                Loading services...
+              </p>
+            ) : null}
+
             <label htmlFor="service-search" className="sr-only">
               Search services
             </label>

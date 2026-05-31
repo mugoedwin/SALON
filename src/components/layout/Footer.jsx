@@ -1,5 +1,10 @@
 import { NavLink } from "react-router-dom";
-import { footerImage, navigationLinks, salonInfo } from "../../data/siteData";
+import {
+  footerImage,
+  navigationLinks,
+  salonInfo,
+  salonPhoneNumbers,
+} from "../../data/siteData";
 import ActionLink from "../ui/ActionLink";
 
 function Footer() {
@@ -57,12 +62,15 @@ function Footer() {
               Reach Us
             </h3>
             <div className="mt-5 space-y-3.5 text-base font-semibold text-[#4f2f38]">
-              <a href={salonInfo.phoneHref} className="block hover:text-rose-700">
-                {salonInfo.phone}
-              </a>
-              <a href={salonInfo.whatsappHref} className="block hover:text-rose-700">
-                {salonInfo.whatsapp}
-              </a>
+              {salonPhoneNumbers.map((number) => (
+                <a
+                  key={number.href}
+                  href={number.href}
+                  className="block hover:text-rose-700"
+                >
+                  {number.value}
+                </a>
+              ))}
               <a href={salonInfo.emailHref} className="block hover:text-rose-700">
                 {salonInfo.email}
               </a>

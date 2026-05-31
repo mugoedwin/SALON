@@ -6,14 +6,19 @@ export const navigationLinks = [
   { label: "Contact", to: "/contact" },
 ];
 
+export const salonPhoneNumbers = [
+  { label: "Phone", value: "+971 589178814", href: "tel:+971589178814" },
+  { label: "Phone", value: "0522202609", href: "tel:+971522202609" },
+];
+
 export const salonInfo = {
   name: "Ivonne Orchard",
   footerDescription:
     "Modern salon care for busy Dubai clients, with elevated hair, nails, makeup, and bridal experiences backed by easy mobile booking and WhatsApp-friendly support.",
-  phone: "+971 589178814",
-  phoneHref: "tel:+971589178814",
-  whatsapp: "+971 589178814",
-  whatsappHref: "https://wa.me/971589178814",
+  phone: salonPhoneNumbers.map((number) => number.value).join(" / "),
+  phoneHref: salonPhoneNumbers[0].href,
+  whatsapp: "0522202609",
+  whatsappHref: "https://wa.me/971522202609",
   email: "aggiea018@gmail.com",
   emailHref: "mailto:aggiea018@gmail.com",
   location: "Dubai, United Arab Emirates",
@@ -338,7 +343,11 @@ export const homeTestimonials = [
 ];
 
 export const contactDetails = [
-  { label: "Phone", value: salonInfo.phone, href: salonInfo.phoneHref },
+  ...salonPhoneNumbers.map((number, index) => ({
+    label: `Phone ${index + 1}`,
+    value: number.value,
+    href: number.href,
+  })),
   { label: "WhatsApp", value: salonInfo.whatsapp, href: salonInfo.whatsappHref },
   { label: "Email", value: salonInfo.email, href: salonInfo.emailHref },
   { label: "Location", value: `${salonInfo.address}, ${salonInfo.location}` },
@@ -362,12 +371,15 @@ export const servicePromises = [
 ];
 
 export const contactSupportChannels = [
-  {
-    title: "Call the front desk",
-    detail: salonInfo.phone,
-    href: salonInfo.phoneHref,
-    description: "Best for same-day availability, timing questions, and direct booking support.",
-  },
+  ...salonPhoneNumbers.map((number, index) => ({
+    title: index === 0 ? "Call the front desk" : "Call the second line",
+    detail: number.value,
+    href: number.href,
+    description:
+      index === 0
+        ? "Best for same-day availability, timing questions, and direct booking support."
+        : "Use this alternate number if the main salon line is busy.",
+  })),
   {
     title: "WhatsApp concierge",
     detail: "Quick replies on mobile",

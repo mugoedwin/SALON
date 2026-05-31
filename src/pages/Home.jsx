@@ -1,17 +1,17 @@
 import ActionLink from "../components/ui/ActionLink";
 import TestimonialCarousel from "../components/ui/TestimonialCarousel";
 import Hero from "../components/home/Hero";
-import { servicesData } from "../data/servicesData";
+import { useServiceCatalog } from "../services/serviceCatalog";
 import {
   bookingSteps,
   galleryImages,
   homeTestimonials,
   homeValueHighlights,
   salonInfo,
+  salonPhoneNumbers,
   salonInteriorImages,
 } from "../data/siteData";
 
-const featuredServices = servicesData.filter((service) => service.popular).slice(0, 4);
 const galleryPreview = galleryImages.slice(0, 3);
 const interiorPreview = [
   salonInteriorImages[7],
@@ -20,6 +20,9 @@ const interiorPreview = [
 ];
 
 function Home() {
+  const { services } = useServiceCatalog();
+  const featuredServices = services.filter((service) => service.popular).slice(0, 4);
+
   return (
     <div className="pb-16 sm:pb-20">
       <Hero />
@@ -296,17 +299,22 @@ function Home() {
 
               <div className="bg-[#fff9f8] p-6 sm:p-8">
                 <div className="grid gap-4">
-                  <a
-                    href={salonInfo.phoneHref}
-                    className="group rounded-lg border border-rose-100 bg-white p-5 transition hover:border-rose-300 hover:shadow-[0_14px_34px_rgba(74,14,23,0.08)]"
-                  >
+                  <div className="rounded-lg border border-rose-100 bg-white p-5">
                     <p className="text-xs font-bold uppercase tracking-[0.22em] text-rose-700">
                       Phone
                     </p>
-                    <p className="mt-2 text-xl font-semibold text-salon-strong group-hover:text-rose-700">
-                      {salonInfo.phone}
-                    </p>
-                  </a>
+                    <div className="mt-2 flex flex-col gap-1">
+                      {salonPhoneNumbers.map((number) => (
+                        <a
+                          key={number.href}
+                          href={number.href}
+                          className="text-xl font-semibold text-salon-strong transition hover:text-rose-700"
+                        >
+                          {number.value}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
                   <a
                     href={salonInfo.whatsappHref}
                     className="group rounded-lg border border-rose-100 bg-white p-5 transition hover:border-rose-300 hover:shadow-[0_14px_34px_rgba(74,14,23,0.08)]"

@@ -1,3 +1,38 @@
+export const serviceCategoryDescriptions = {
+  "Most Popular":
+    "A quick look at the salon favorites clients book most often.",
+  "Hair Styling":
+    "Smooth blowouts, silk presses, and polished finishes for everyday confidence or special plans.",
+  "Protective Styling":
+    "Braids, installs, cornrows, and loc care designed to feel neat, light, and intentional.",
+  Nails:
+    "Clean shaping, glossy finishes, and hand-and-foot care with a refined salon feel.",
+  Treatments:
+    "Care-led hair rituals focused on scalp comfort, moisture, shine, and healthier styling results.",
+  "Spa Treatments":
+    "Relaxing body rituals that leave skin feeling smooth, refreshed, and renewed.",
+  "Skin Care":
+    "Gentle facial care for a brighter, hydrated, and healthy-looking complexion.",
+  Waxing:
+    "Clean, careful hair removal with simple prep and a smooth finish.",
+  Lashes:
+    "Soft lash definition for everyday polish, events, and beauty touch-ups.",
+  "Makeup & Bridal":
+    "Soft glam, bridal beauty, and occasion-ready looks with a radiant long-wear finish.",
+};
+
+export const serviceCategoryOptions = [
+  "Hair Styling",
+  "Protective Styling",
+  "Nails",
+  "Treatments",
+  "Spa Treatments",
+  "Skin Care",
+  "Waxing",
+  "Lashes",
+  "Makeup & Bridal",
+];
+
 export const servicesData = [
   {
     name: "Braids",
