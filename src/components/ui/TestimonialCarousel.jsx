@@ -22,39 +22,41 @@ function TestimonialCarousel({ testimonials }) {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="relative min-h-[300px]" aria-live="polite">
+      <div className="relative sm:min-h-[300px]" aria-live="polite">
         {testimonials.map((item, index) => {
           const isActive = index === activeIndex;
 
           return (
             <article
               key={item.name}
-              className={`absolute inset-0 flex h-full flex-col justify-between border-t-2 pt-6 transition-all duration-500 ${
+              className={`${
+                isActive ? "relative flex sm:absolute" : "hidden sm:absolute sm:flex"
+              } inset-0 h-full min-w-0 flex-col justify-between border-t-2 pt-6 transition-all duration-500 ${
                 isActive
                   ? "translate-y-0 opacity-100"
                   : "pointer-events-none translate-y-4 opacity-0"
               }`}
               aria-hidden={!isActive}
             >
-              <div className="grid gap-5 sm:grid-cols-[56px_1fr]">
-                <div className="inline-flex h-14 w-14 items-center justify-center rounded-full border border-rose-200 text-2xl text-rose-600">
+              <div className="grid min-w-0 gap-4 sm:grid-cols-[56px_1fr] sm:gap-5">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-rose-200 text-2xl text-rose-600 sm:h-14 sm:w-14">
                   "
                 </div>
-                <p className="text-2xl leading-10 text-salon-strong sm:text-[2rem]">
+                <p className="min-w-0 break-words text-xl leading-8 text-salon-strong sm:text-[2rem] sm:leading-10">
                   {item.review}
                 </p>
               </div>
 
-              <div className="mt-8 flex flex-col gap-5 border-t border-rose-100 pt-5 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-center gap-4">
+              <div className="mt-7 flex flex-col gap-5 border-t border-rose-100 pt-5 sm:mt-8 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex min-w-0 items-center gap-4">
                   <img
                     src={item.avatar}
                     alt={item.avatarAlt}
                     loading="lazy"
-                    className="h-14 w-14 rounded-full object-cover"
+                    className="h-12 w-12 shrink-0 rounded-full object-cover sm:h-14 sm:w-14"
                   />
-                  <div>
-                    <p className="text-lg font-semibold text-salon-strong">
+                  <div className="min-w-0">
+                    <p className="break-words text-base font-semibold text-salon-strong sm:text-lg">
                       {item.name}
                     </p>
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-rose-700">

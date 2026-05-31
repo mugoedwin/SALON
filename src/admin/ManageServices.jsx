@@ -29,6 +29,55 @@ const emptyService = {
   sortOrder: 999,
 };
 
+function resizeServiceImage(file) {
+  const maxWidth = 1400;
+  const quality = 0.82;
+
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    const objectUrl = URL.createObjectURL(file);
+
+    image.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+
+      const scale = Math.min(1, maxWidth / image.width);
+      const width = Math.round(image.width * scale);
+      const height = Math.round(image.height * scale);
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      const context = canvas.getContext("2d");
+      context.drawImage(image, 0, 0, width, height);
+
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            reject(new Error("Could not prepare image for upload."));
+            return;
+          }
+
+          const resizedFile = new File(
+            [blob],
+            file.name.replace(/\.[^.]+$/, ".jpg"),
+            { type: "image/jpeg" },
+          );
+          resolve(resizedFile);
+        },
+        "image/jpeg",
+        quality,
+      );
+    };
+
+    image.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error("Could not read the selected image."));
+    };
+
+    image.src = objectUrl;
+  });
+}
+
 function toFormState(service) {
   return {
     ...emptyService,
@@ -52,7 +101,9 @@ function ManageServices() {
   const [editingId, setEditingId] = useState("");
   const [formState, setFormState] = useState(emptyService);
   const [selectedImageFile, setSelectedImageFile] = useState(null);
+  const [selectedImageTask, setSelectedImageTask] = useState(null);
   const [selectedImagePreview, setSelectedImagePreview] = useState("");
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -92,7 +143,9 @@ function ManageServices() {
     setEditingId("");
     setFormState({ ...emptyService, sortOrder: services.length + 1 });
     setSelectedImageFile(null);
+    setSelectedImageTask(null);
     setSelectedImagePreview("");
+    setUploadProgress(0);
     setIsEditorOpen(true);
     setStatusMessage("");
     setErrorMessage("");
@@ -102,7 +155,9 @@ function ManageServices() {
     setEditingId(service.id);
     setFormState(toFormState(service));
     setSelectedImageFile(null);
+    setSelectedImageTask(null);
     setSelectedImagePreview("");
+    setUploadProgress(0);
     setIsEditorOpen(true);
     setStatusMessage("");
     setErrorMessage("");
@@ -113,7 +168,9 @@ function ManageServices() {
     setEditingId("");
     setFormState({ ...emptyService, sortOrder: services.length + 1 });
     setSelectedImageFile(null);
+    setSelectedImageTask(null);
     setSelectedImagePreview("");
+    setUploadProgress(0);
   }
 
   function handleImageFileChange(event) {
@@ -127,8 +184,19 @@ function ManageServices() {
       return;
     }
 
-    setSelectedImageFile(file);
     setSelectedImagePreview(URL.createObjectURL(file));
+    setUploadProgress(0);
+
+    const imageTask = resizeServiceImage(file)
+      .catch((error) => {
+        console.error("Failed to resize service image", error);
+        return file;
+      });
+
+    setSelectedImageTask(imageTask);
+    imageTask.then((resizedFile) => {
+      setSelectedImageFile(resizedFile);
+    });
   }
 
   async function handleSubmit(event) {
@@ -136,6 +204,9 @@ function ManageServices() {
     setStatusMessage("");
     setErrorMessage("");
     setIsSaving(true);
+    if (selectedImagePreview) {
+      setUploadProgress(3);
+    }
 
     try {
       const publishedStarterCatalog = isUsingFallback;
@@ -145,10 +216,16 @@ function ManageServices() {
       }
 
       const nextFormState = { ...formState };
-      if (selectedImageFile) {
+      const imageFileForUpload = selectedImageTask
+        ? await selectedImageTask
+        : selectedImageFile;
+
+      if (imageFileForUpload) {
+        setUploadProgress(8);
         nextFormState.image = await uploadServiceImage(
-          selectedImageFile,
+          imageFileForUpload,
           formState.name,
+          setUploadProgress,
         );
       }
 
@@ -518,7 +595,7 @@ function ManageServices() {
                 className="block w-full rounded-[1.25rem] border border-rose-100 bg-white px-4 py-3 text-sm font-semibold text-salon-strong outline-none transition duration-300 file:mr-4 file:rounded-full file:border-0 file:bg-[#E11D48] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-[#F43F5E] focus:border-rose-300 focus:ring-4 focus:ring-rose-100"
               />
               <p className="mt-2 text-xs leading-6 text-salon-muted">
-                Choose an image from this phone or computer. It uploads when you save.
+                Choose an image from this phone or computer. Large photos are compressed before upload.
               </p>
             </div>
 
@@ -529,6 +606,23 @@ function ManageServices() {
                   alt={formState.imageAlt || formState.name || "Service preview"}
                   className="h-full w-full object-cover"
                 />
+              </div>
+            ) : null}
+
+            {isSaving && selectedImagePreview ? (
+              <div className="rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3">
+                <div className="flex items-center justify-between gap-4 text-xs font-semibold uppercase tracking-[0.16em] text-rose-700">
+                  <span>
+                    {uploadProgress < 8 ? "Preparing image" : "Uploading image"}
+                  </span>
+                  <span>{uploadProgress}%</span>
+                </div>
+                <div className="mt-3 h-2 overflow-hidden rounded-full bg-white">
+                  <div
+                    className="h-full rounded-full bg-[#E11D48] transition-all duration-300"
+                    style={{ width: `${uploadProgress}%` }}
+                  />
+                </div>
               </div>
             ) : null}
 
@@ -570,7 +664,9 @@ function ManageServices() {
               className={`${primaryButtonClassName} w-full`}
             >
               {isSaving
-                ? "Saving..."
+                ? uploadProgress > 0
+                  ? `Uploading ${uploadProgress}%`
+                  : "Saving..."
                 : isEditingExisting
                   ? "Save Changes"
                   : "Create Service"}

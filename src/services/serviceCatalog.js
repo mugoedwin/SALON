@@ -11,7 +11,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../firebase";
 import { servicesData } from "../data/servicesData";
 
@@ -145,7 +145,7 @@ export async function publishStarterCatalog() {
   );
 }
 
-export async function uploadServiceImage(file, serviceName) {
+export function uploadServiceImage(file, serviceName, onProgress) {
   const timestamp = Date.now();
   const extension = file.name.split(".").pop() || "jpg";
   const serviceSlug = slugify(serviceName) || "service";
@@ -154,9 +154,22 @@ export async function uploadServiceImage(file, serviceName) {
     `services/${serviceSlug}-${timestamp}.${extension}`,
   );
 
-  const snapshot = await uploadBytes(storageRef, file, {
+  const uploadTask = uploadBytesResumable(storageRef, file, {
     contentType: file.type || "image/jpeg",
   });
 
-  return getDownloadURL(snapshot.ref);
+  return new Promise((resolve, reject) => {
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        if (typeof onProgress === "function") {
+          onProgress(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100));
+        }
+      },
+      reject,
+      async () => {
+        resolve(await getDownloadURL(uploadTask.snapshot.ref));
+      },
+    );
+  });
 }

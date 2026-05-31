@@ -3,6 +3,19 @@ import PageShell from "../components/common/PageShell";
 import ActionLink from "../components/ui/ActionLink";
 import { galleryImages, salonInteriorImages, staffProfiles } from "../data/siteData";
 
+const salonMediaItems = [
+  {
+    type: "video",
+    title: "Salon Video Tour",
+    caption: "A quick motion preview of the salon experience before the photos.",
+    src: "/videos/salon-tour.mp4",
+  },
+  ...salonInteriorImages.map((image) => ({
+    type: "image",
+    ...image,
+  })),
+];
+
 function getBookingUrl(item) {
   return `/booking?style=${encodeURIComponent(item.title)}`;
 }
@@ -217,21 +230,25 @@ function GalleryPreview({ items, selectedIndex, onClose, onMove, onSelect }) {
 
 function InteriorCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const activeImage = salonInteriorImages[activeIndex];
+  const activeMedia = salonMediaItems[activeIndex];
 
   useEffect(() => {
+    if (activeMedia.type === "video") {
+      return undefined;
+    }
+
     const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % salonInteriorImages.length);
+      setActiveIndex((current) => (current + 1) % salonMediaItems.length);
     }, 4500);
 
     return () => window.clearInterval(timer);
-  }, []);
+  }, [activeMedia.type]);
 
   function moveSlide(direction) {
     setActiveIndex((current) => {
       const next = current + direction;
-      if (next < 0) return salonInteriorImages.length - 1;
-      if (next >= salonInteriorImages.length) return 0;
+      if (next < 0) return salonMediaItems.length - 1;
+      if (next >= salonMediaItems.length) return 0;
       return next;
     });
   }
@@ -295,52 +312,96 @@ function InteriorCarousel() {
 
       <div className="mt-7 overflow-hidden rounded-lg bg-maroon-deep shadow-[0_24px_64px_rgba(74,14,23,0.18)]">
         <div className="relative">
-          <img
-            key={activeImage.image}
-            src={activeImage.image}
-            alt={activeImage.alt}
-            className="gallery-carousel-image h-[18rem] w-full object-cover sm:h-[24rem] lg:h-[28rem]"
-          />
-          <div className="pointer-events-none absolute inset-0 gallery-carousel-shine" />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-maroon-deep via-maroon-deep/68 to-transparent p-5 pt-24 text-white sm:p-7">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-light">
-              {activeIndex + 1} / {salonInteriorImages.length}
-            </p>
-            <h3 className="mt-2 text-3xl font-semibold text-white">
-              {activeImage.title}
-            </h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-white/84">
-              {activeImage.caption}
-            </p>
-          </div>
+          {activeMedia.type === "video" ? (
+            <video
+              key={activeMedia.src}
+              src={activeMedia.src}
+              className="h-[18rem] w-full bg-black object-cover sm:h-[24rem] lg:h-[28rem]"
+              controls
+              muted
+              playsInline
+              preload="metadata"
+            />
+          ) : (
+            <img
+              key={activeMedia.image}
+              src={activeMedia.image}
+              alt={activeMedia.alt}
+              className="gallery-carousel-image h-[18rem] w-full object-cover sm:h-[24rem] lg:h-[28rem]"
+            />
+          )}
+          {activeMedia.type === "image" ? (
+            <div className="pointer-events-none absolute inset-0 gallery-carousel-shine" />
+          ) : null}
+          {activeMedia.type === "video" ? (
+            <div className="pointer-events-none absolute left-4 top-4 rounded-full bg-black/62 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white backdrop-blur">
+              Video 1 / {salonMediaItems.length}
+            </div>
+          ) : (
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-maroon-deep via-maroon-deep/68 to-transparent p-5 pt-24 text-white sm:p-7">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-light">
+                {activeIndex + 1} / {salonMediaItems.length}
+              </p>
+              <h3 className="mt-2 text-3xl font-semibold text-white">
+                {activeMedia.title}
+              </h3>
+              <p className="mt-2 max-w-2xl text-sm leading-7 text-white/84">
+                {activeMedia.caption}
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
       <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-5 lg:grid-cols-9">
-        {salonInteriorImages.map((image, index) => (
+        {salonMediaItems.map((media, index) => (
           <button
-            key={image.image}
+            key={media.src || media.image}
             type="button"
             onClick={() => setActiveIndex(index)}
-            className={`h-16 overflow-hidden rounded-lg border transition duration-300 sm:h-[4.5rem] ${
+            className={`relative h-16 overflow-hidden rounded-lg border transition duration-300 sm:h-[4.5rem] ${
               activeIndex === index
                 ? "border-rose-600 opacity-100 shadow-[0_10px_24px_rgba(74,14,23,0.14)]"
                 : "border-rose-100 opacity-70 hover:opacity-100"
             }`}
-            aria-label={`Show ${image.title}`}
+            aria-label={`Show ${media.title}`}
           >
-            <img
-              src={image.image}
-              alt=""
-              loading="lazy"
-              className="h-full w-full object-cover"
-            />
+            {media.type === "video" ? (
+              <>
+                <video
+                  src={media.src}
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="h-full w-full bg-black object-cover"
+                />
+                <span className="absolute inset-0 flex items-center justify-center bg-black/30 text-white">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-6 w-6"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </span>
+              </>
+            ) : (
+              <img
+                src={media.image}
+                alt=""
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+            )}
           </button>
         ))}
       </div>
 
       <div className="mt-4 h-px overflow-hidden bg-rose-100">
-        <div key={activeIndex} className="gallery-carousel-progress h-full bg-rose-600" />
+        {activeMedia.type === "image" ? (
+          <div key={activeIndex} className="gallery-carousel-progress h-full bg-rose-600" />
+        ) : null}
       </div>
     </section>
   );
