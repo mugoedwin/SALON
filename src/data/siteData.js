@@ -8,7 +8,7 @@ export const navigationLinks = [
 
 export const salonPhoneNumbers = [
   { label: "Phone", value: "+971 589178814", href: "tel:+971589178814" },
-  { label: "Phone", value: "0522202609", href: "tel:+971522202609" },
+  { label: "Phone", value: "+971 52 220 2609", href: "tel:+971522202609" },
 ];
 
 export const salonInfo = {
@@ -17,7 +17,7 @@ export const salonInfo = {
     "Modern salon care for busy Dubai clients, with elevated hair, nails, makeup, and bridal experiences backed by easy mobile booking and WhatsApp-friendly support.",
   phone: salonPhoneNumbers.map((number) => number.value).join(" / "),
   phoneHref: salonPhoneNumbers[0].href,
-  whatsapp: "0522202609",
+  whatsapp: "+971 52 220 2609",
   whatsappHref: "https://wa.me/971522202609",
   email: "aggiea018@gmail.com",
   emailHref: "mailto:aggiea018@gmail.com",

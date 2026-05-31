@@ -10,9 +10,9 @@ export const salonInfo = {
   name: "Ivonne Orchard",
   footerDescription:
     "Modern salon care for busy Dubai clients, with elevated hair, nails, makeup, and bridal experiences backed by easy mobile booking and WhatsApp-friendly support.",
-  phone: "0522202609",
+  phone: "+971 52 220 2609",
   phoneHref: "tel:+971522202609",
-  whatsapp: "0522202609",
+  whatsapp: "+971 52 220 2609",
   whatsappHref: "https://wa.me/971522202609",
   email: "hello@roseglowsalon.co.ke",
   emailHref: "mailto:hello@roseglowsalon.co.ke",

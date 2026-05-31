@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import ActionLink from "../components/ui/ActionLink";
 import TestimonialCarousel from "../components/ui/TestimonialCarousel";
 import Hero from "../components/home/Hero";
@@ -13,11 +14,184 @@ import {
 } from "../data/siteData";
 
 const galleryPreview = galleryImages.slice(0, 3);
-const interiorPreview = [
-  salonInteriorImages[7],
-  salonInteriorImages[1],
-  salonInteriorImages[2],
+const homeSalonMedia = [
+  {
+    type: "video",
+    title: "Salon Video Tour",
+    caption: "Start with a quick video preview, then browse the salon photos.",
+    src: "/videos/salon-tour.mp4",
+  },
+  ...salonInteriorImages.map((image) => ({
+    type: "image",
+    ...image,
+  })),
 ];
+
+function HomeMediaSlideshow() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeMedia = homeSalonMedia[activeIndex];
+
+  useEffect(() => {
+    if (activeMedia.type === "video") {
+      return undefined;
+    }
+
+    const timer = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % homeSalonMedia.length);
+    }, 4500);
+
+    return () => window.clearInterval(timer);
+  }, [activeMedia.type]);
+
+  function moveSlide(direction) {
+    setActiveIndex((current) => {
+      const next = current + direction;
+      if (next < 0) return homeSalonMedia.length - 1;
+      if (next >= homeSalonMedia.length) return 0;
+      return next;
+    });
+  }
+
+  return (
+    <div className="mt-10">
+      <div className="overflow-hidden rounded-lg bg-maroon-deep shadow-[0_24px_64px_rgba(74,14,23,0.18)]">
+        <div className="relative">
+          {activeMedia.type === "video" ? (
+            <video
+              key={activeMedia.src}
+              src={activeMedia.src}
+              className="h-[20rem] w-full bg-black object-cover sm:h-[26rem] lg:h-[32rem]"
+              controls
+              muted
+              playsInline
+              preload="metadata"
+            />
+          ) : (
+            <img
+              key={activeMedia.image}
+              src={activeMedia.image}
+              alt={activeMedia.alt}
+              loading="lazy"
+              className="gallery-carousel-image h-[20rem] w-full object-cover sm:h-[26rem] lg:h-[32rem]"
+            />
+          )}
+
+          {activeMedia.type === "image" ? (
+            <div className="pointer-events-none absolute inset-0 gallery-carousel-shine" />
+          ) : null}
+
+          <button
+            type="button"
+            onClick={() => moveSlide(-1)}
+            className="absolute left-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-maroon-deep shadow-[0_10px_28px_rgba(0,0,0,0.2)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+            aria-label="Previous salon media"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={() => moveSlide(1)}
+            className="absolute right-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-maroon-deep shadow-[0_10px_28px_rgba(0,0,0,0.2)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+            aria-label="Next salon media"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+
+          {activeMedia.type === "video" ? (
+            <div className="pointer-events-none absolute left-4 top-4 rounded-full bg-black/62 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white backdrop-blur">
+              Video 1 / {homeSalonMedia.length}
+            </div>
+          ) : (
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-maroon-deep via-maroon-deep/68 to-transparent p-5 pt-24 text-white sm:p-7">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold-light">
+                {activeIndex + 1} / {homeSalonMedia.length}
+              </p>
+              <h3 className="mt-2 text-3xl font-semibold text-white">
+                {activeMedia.title}
+              </h3>
+              <p className="mt-2 max-w-2xl text-sm leading-7 text-white/84">
+                {activeMedia.caption}
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-5 lg:grid-cols-10">
+        {homeSalonMedia.map((media, index) => (
+          <button
+            key={media.src || media.image}
+            type="button"
+            onClick={() => setActiveIndex(index)}
+            className={`relative h-16 overflow-hidden rounded-lg border transition duration-300 sm:h-[4.5rem] ${
+              activeIndex === index
+                ? "border-rose-600 opacity-100 shadow-[0_10px_24px_rgba(74,14,23,0.14)]"
+                : "border-rose-100 opacity-70 hover:opacity-100"
+            }`}
+            aria-label={`Show ${media.title}`}
+          >
+            {media.type === "video" ? (
+              <>
+                <video
+                  src={media.src}
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="h-full w-full bg-black object-cover"
+                />
+                <span className="absolute inset-0 flex items-center justify-center bg-black/30 text-white">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-6 w-6"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </span>
+              </>
+            ) : (
+              <img
+                src={media.image}
+                alt=""
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+            )}
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-4 h-px overflow-hidden bg-rose-100">
+        {activeMedia.type === "image" ? (
+          <div key={activeIndex} className="gallery-carousel-progress h-full bg-rose-600" />
+        ) : null}
+      </div>
+    </div>
+  );
+}
 
 function Home() {
   const { services } = useServiceCatalog();
@@ -215,31 +389,7 @@ function Home() {
             </ActionLink>
           </div>
 
-          <div className="mt-10 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-            <div className="overflow-hidden rounded-lg border border-rose-100 bg-white shadow-[0_18px_48px_rgba(74,14,23,0.1)]">
-              <img
-                src={interiorPreview[0].image}
-                alt={interiorPreview[0].alt}
-                loading="lazy"
-                className="h-[24rem] w-full object-cover"
-              />
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-              {interiorPreview.slice(1).map((image) => (
-                <div
-                  key={image.title}
-                  className="overflow-hidden rounded-lg border border-rose-100 bg-white shadow-[0_14px_34px_rgba(74,14,23,0.08)]"
-                >
-                  <img
-                    src={image.image}
-                    alt={image.alt}
-                    loading="lazy"
-                    className="h-44 w-full object-cover transition duration-700 hover:scale-105"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+          <HomeMediaSlideshow />
         </div>
       </section>
 
