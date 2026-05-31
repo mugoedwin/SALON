@@ -11,7 +11,8 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { db, storage } from "../firebase";
 import { servicesData } from "../data/servicesData";
 
 const servicesCollection = collection(db, "services");
@@ -142,4 +143,20 @@ export async function publishStarterCatalog() {
       }),
     ),
   );
+}
+
+export async function uploadServiceImage(file, serviceName) {
+  const timestamp = Date.now();
+  const extension = file.name.split(".").pop() || "jpg";
+  const serviceSlug = slugify(serviceName) || "service";
+  const storageRef = ref(
+    storage,
+    `services/${serviceSlug}-${timestamp}.${extension}`,
+  );
+
+  const snapshot = await uploadBytes(storageRef, file, {
+    contentType: file.type || "image/jpeg",
+  });
+
+  return getDownloadURL(snapshot.ref);
 }

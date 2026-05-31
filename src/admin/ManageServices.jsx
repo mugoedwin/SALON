@@ -10,6 +10,7 @@ import {
   publishStarterCatalog,
   removeService,
   saveService,
+  uploadServiceImage,
   useServiceCatalog,
 } from "../services/serviceCatalog";
 import { formInputClassName, primaryButtonClassName } from "../utils/uiClasses";
@@ -50,6 +51,8 @@ function ManageServices() {
   const [searchTerm, setSearchTerm] = useState("");
   const [editingId, setEditingId] = useState("");
   const [formState, setFormState] = useState(emptyService);
+  const [selectedImageFile, setSelectedImageFile] = useState(null);
+  const [selectedImagePreview, setSelectedImagePreview] = useState("");
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -88,6 +91,8 @@ function ManageServices() {
   function startCreate() {
     setEditingId("");
     setFormState({ ...emptyService, sortOrder: services.length + 1 });
+    setSelectedImageFile(null);
+    setSelectedImagePreview("");
     setIsEditorOpen(true);
     setStatusMessage("");
     setErrorMessage("");
@@ -96,6 +101,8 @@ function ManageServices() {
   function startEdit(service) {
     setEditingId(service.id);
     setFormState(toFormState(service));
+    setSelectedImageFile(null);
+    setSelectedImagePreview("");
     setIsEditorOpen(true);
     setStatusMessage("");
     setErrorMessage("");
@@ -105,6 +112,23 @@ function ManageServices() {
     setIsEditorOpen(false);
     setEditingId("");
     setFormState({ ...emptyService, sortOrder: services.length + 1 });
+    setSelectedImageFile(null);
+    setSelectedImagePreview("");
+  }
+
+  function handleImageFileChange(event) {
+    const file = event.target.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      setErrorMessage("Please choose an image file.");
+      return;
+    }
+
+    setSelectedImageFile(file);
+    setSelectedImagePreview(URL.createObjectURL(file));
   }
 
   async function handleSubmit(event) {
@@ -120,15 +144,23 @@ function ManageServices() {
         await publishStarterCatalog();
       }
 
+      const nextFormState = { ...formState };
+      if (selectedImageFile) {
+        nextFormState.image = await uploadServiceImage(
+          selectedImageFile,
+          formState.name,
+        );
+      }
+
       if (isEditingExisting) {
-        await saveService(editingId, formState);
+        await saveService(editingId, nextFormState);
         setStatusMessage(
           publishedStarterCatalog
             ? "Starter catalog published and service updated."
             : "Service updated.",
         );
       } else {
-        await createService(formState);
+        await createService(nextFormState);
         setStatusMessage(
           publishedStarterCatalog
             ? "Starter catalog published and service created."
@@ -475,23 +507,25 @@ function ManageServices() {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-salon-strong" htmlFor="service-image">
-                Image URL
+              <label className="mb-2 block text-sm font-semibold text-salon-strong" htmlFor="service-image-file">
+                Service image
               </label>
               <input
-                id="service-image"
-                type="url"
-                value={formState.image}
-                onChange={(event) => updateField("image", event.target.value)}
-                placeholder="https://..."
-                className={formInputClassName}
+                id="service-image-file"
+                type="file"
+                accept="image/*"
+                onChange={handleImageFileChange}
+                className="block w-full rounded-[1.25rem] border border-rose-100 bg-white px-4 py-3 text-sm font-semibold text-salon-strong outline-none transition duration-300 file:mr-4 file:rounded-full file:border-0 file:bg-[#E11D48] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-[#F43F5E] focus:border-rose-300 focus:ring-4 focus:ring-rose-100"
               />
+              <p className="mt-2 text-xs leading-6 text-salon-muted">
+                Choose an image from this phone or computer. It uploads when you save.
+              </p>
             </div>
 
-            {formState.image ? (
+            {selectedImagePreview || formState.image ? (
               <div className="aspect-[5/3] overflow-hidden rounded-[1rem] bg-rose-50">
                 <img
-                  src={formState.image}
+                  src={selectedImagePreview || formState.image}
                   alt={formState.imageAlt || formState.name || "Service preview"}
                   className="h-full w-full object-cover"
                 />
