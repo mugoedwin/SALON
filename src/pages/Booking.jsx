@@ -15,8 +15,6 @@ import {
   secondaryButtonClassName,
 } from "../utils/uiClasses";
 
-const MPESA_PAYMENT_NUMBER = "+254705985701";
-
 const paymentOptions = [
   {
     id: "card",
@@ -31,7 +29,8 @@ const paymentOptions = [
     name: "M-Pesa Send Money",
     status: "pending_verification",
     bookingStatus: "Pending Payment",
-    detail: `Send Money to ${MPESA_PAYMENT_NUMBER}. Add your transaction code if you already have it.`,
+    detail:
+      "Choose M-Pesa and the salon will share the payment details during confirmation.",
   },
   {
     id: "bank",
@@ -305,8 +304,6 @@ function Booking() {
       paymentMethodLabel: selectedPaymentOption.name,
       paymentStatus: selectedPaymentOption.status,
       paymentReference: paymentReference.trim(),
-      paymentNumber:
-        selectedPaymentOption.id === "mpesa" ? MPESA_PAYMENT_NUMBER : "",
       status: selectedPaymentOption.bookingStatus,
     };
 
@@ -592,15 +589,12 @@ function Booking() {
           {paymentMethod === "mpesa" ? (
             <div className="rounded-[1.25rem] border border-[#20A852]/25 bg-[#F1FFF5] p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#13843E]">
-                M-Pesa payment number
-              </p>
-              <p className="mt-2 text-3xl font-semibold text-salon-strong">
-                {MPESA_PAYMENT_NUMBER}
+                M-Pesa payment
               </p>
               <p className="mt-3 text-sm leading-7 text-salon-copy">
-                Use M-Pesa Send Money to this number, then paste the
-                transaction code below if payment is already done. The salon
-                will verify it before confirming.
+                The salon will share the correct M-Pesa payment details during
+                confirmation. If you already have a transaction code, paste it
+                below so the team can verify it.
               </p>
             </div>
           ) : null}
@@ -757,9 +751,6 @@ function Booking() {
                 label="Payment Status"
                 value={confirmedBooking.paymentStatus || "unpaid"}
               />
-              {confirmedBooking.paymentNumber ? (
-                <SummaryRow label="M-Pesa" value={confirmedBooking.paymentNumber} />
-              ) : null}
               {confirmedBooking.paymentReference ? (
                 <SummaryRow
                   label="Reference"

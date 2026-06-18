@@ -20,7 +20,7 @@ export function normalizeMpesaPhone(phone) {
   }
 
   throw new AppError(
-    "M-Pesa phone must be a Kenyan Safaricom number, for example +254712345678",
+    "M-Pesa phone must be a valid Kenyan Safaricom number.",
     422,
   );
 }

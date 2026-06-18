@@ -95,7 +95,7 @@ export const paymentHighlights = [
   },
   {
     title: "M-Pesa Send Money",
-    detail: "Send Money accepted on +254705985701 with reference verification.",
+    detail: "M-Pesa payment details are shared during booking confirmation.",
     tone: "green",
   },
   {

@@ -31,7 +31,7 @@ client's phone. Keep all Daraja credentials on the backend:
 MPESA_ENVIRONMENT=sandbox
 MPESA_CONSUMER_KEY=your_daraja_consumer_key
 MPESA_CONSUMER_SECRET=your_daraja_consumer_secret
-MPESA_SHORTCODE=174379
+MPESA_SHORTCODE=your_mpesa_shortcode
 MPESA_PASSKEY=your_daraja_passkey
 MPESA_CALLBACK_URL=https://your-public-api.example.com/api/payments/mpesa/callback
 MPESA_TRANSACTION_TYPE=CustomerPayBillOnline
@@ -44,7 +44,7 @@ Example request:
 curl -X POST http://localhost:4000/api/payments/mpesa/stk-push \
   -H "Content-Type: application/json" \
   -d '{
-    "phone": "+254705985701",
+    "phone": "customer_phone_in_international_format",
     "amount": 1,
     "accountReference": "IvonneOrch",
     "transactionDesc": "Booking deposit"
