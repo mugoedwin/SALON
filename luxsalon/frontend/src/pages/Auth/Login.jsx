@@ -29,8 +29,7 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState("");
 
   async function handleLogin(event) {
-    event.preventDefault();
-    setErrorMessage("");
+    alert("NEW LOG IN CODE IS RUNNING");
     setIsSubmitting(true);
 
     try {
@@ -68,8 +67,13 @@ function Login() {
         },
         { merge: true },
       );
-
-      navigate(fromPath, { replace: true });
+      alert("ROLEFOUND:" + previousData?.role);
+      if (previousData.role === "admin"){
+        navigate("/admin",{replace:true});
+      }else{
+        navigate("/dashboard",{replace:true});
+      }
+      
     } catch (error) {
       console.error("Login failed", error);
       setErrorMessage("Login failed. Check your email and password.");
