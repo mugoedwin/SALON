@@ -9,16 +9,17 @@ export const navigationLinks = [
 export const salonInfo = {
   name: "Ivonne Orchard",
   footerDescription:
-    "Modern salon care for busy Dubai clients, with elevated hair, nails, makeup, and bridal experiences backed by easy mobile booking and WhatsApp-friendly support.",
-  phone: "+971 52 220 2609",
-  phoneHref: "tel:+971522202609",
+    "Modern salon care for busy Dubai clients, with elevated hair, nails, makeup, and bridal experiences.",
+ 
+  phone: "+971 589178814",
+  phoneHref: "tel:+971589178814",
   whatsapp: "+971 52 220 2609",
   whatsappHref: "https://wa.me/971522202609",
-  email: "hello@roseglowsalon.co.ke",
-  emailHref: "mailto:hello@roseglowsalon.co.ke",
-  location: "Dubai, United Arab Emirates",
-  neighborhood: "Downtown Dubai Studio",
-  address: "Downtown Dubai",
+  email: "aggiea018@gmail.com",
+  emailHref: "mailto:aggiea018@gmail.com",
+  location: "Diplomat hotel deira almurar",
+  neighborhood: "Diplomat hotel deira almurar",
+  address: "Diplomat hotel deira almurar",
 };
 
 export const heroImage = {
@@ -213,7 +214,7 @@ export const staffProfiles = [
 export const homeTestimonials = [
   {
     name: "Brenda Wanjiku",
-    detail: "Downtown Dubai",
+    detail: "Diplomat hotel deira almurar",
     review:
       "The booking process was quick on my phone and the silk press came out clean, glossy, and lasting through the whole week.",
     avatar:
