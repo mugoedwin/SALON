@@ -10,6 +10,7 @@ import {
   paymentHighlights,
   salonInfo,
   salonPhoneNumbers,
+  salonWhatsAppNumbers,
   salonInteriorImages,
 } from "../data/siteData";
 
@@ -117,7 +118,7 @@ function Home() {
                   <p className="text-sm font-bold uppercase tracking-[0.22em] text-rose-700">
                     0{index + 1}
                   </p>
-                  <p className="mt-4 text-base font-semibold leading-7 text-[#4f2f38]">
+                  <p className="mt-3 text-sm font-semibold leading-6 text-salon-strong">
                     {step}
                   </p>
                 </div>
@@ -353,17 +354,22 @@ function Home() {
                       ))}
                     </div>
                   </div>
-                  <a
-                    href={salonInfo.whatsappHref}
-                    className="group rounded-lg border border-rose-100 bg-white p-5 transition hover:border-rose-300 hover:shadow-[0_14px_34px_rgba(74,14,23,0.08)]"
-                  >
+                  <div className="rounded-lg border border-rose-100 bg-white p-5">
                     <p className="text-xs font-bold uppercase tracking-[0.22em] text-rose-700">
                       WhatsApp
                     </p>
-                    <p className="mt-2 text-xl font-semibold text-salon-strong group-hover:text-rose-700">
-                      {salonInfo.whatsapp}
-                    </p>
-                  </a>
+                    <div className="mt-2 flex flex-col gap-1">
+                      {salonWhatsAppNumbers.map((number) => (
+                        <a
+                          key={number.href}
+                          href={number.href}
+                          className="text-xl font-semibold text-salon-strong transition hover:text-rose-700"
+                        >
+                          {number.value}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
                   <a
                     href={salonInfo.emailHref}
                     className="group rounded-lg border border-rose-100 bg-white p-5 transition hover:border-rose-300 hover:shadow-[0_14px_34px_rgba(74,14,23,0.08)]"

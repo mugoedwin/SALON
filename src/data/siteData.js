@@ -13,6 +13,11 @@ export const salonPhoneNumbers = [
   { label: "Phone", value: "+971 589178814", href: "tel:+971589178814" },
 ];
 
+export const salonWhatsAppNumbers = [
+  { label: "WhatsApp", value: "+971 52 220 2609", href: "https://wa.me/971522202609" },
+  { label: "WhatsApp", value: "+971 589178814", href: "https://wa.me/971589178814" },
+];
+
 export const salonInfo = {
   name: "Ivonne Orchard",
   footerDescription:
@@ -428,7 +433,7 @@ export const contactDetails = [
     value: number.value,
     href: number.href,
   })),
-  { label: "WhatsApp", value: salonInfo.whatsapp, href: salonInfo.whatsappHref },
+  ...salonWhatsAppNumbers,
   { label: "Email", value: salonInfo.email, href: salonInfo.emailHref },
   { label: "Location", value: `${salonInfo.address}, ${salonInfo.location}` },
 ];
