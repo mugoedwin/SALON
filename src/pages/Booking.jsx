@@ -536,7 +536,7 @@ function Booking() {
                 type="tel"
                 value={customerPhone}
                 onChange={(event) => setCustomerPhone(event.target.value)}
-                placeholder="e.g. 0712 345 678"
+                placeholder="971522202609, 971589178814"
                 className={formInputClassName}
               />
             </div>

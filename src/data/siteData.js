@@ -9,6 +9,7 @@ export const navigationLinks = [
 ];
 
 export const salonPhoneNumbers = [
+  { label: "Phone", value: "+971 52 220 2609", href: "tel:+971522202609" },
   { label: "Phone", value: "+971 589178814", href: "tel:+971589178814" },
 ];
 
@@ -16,8 +17,8 @@ export const salonInfo = {
   name: "Ivonne Orchard",
   footerDescription:
     "Modern salon care for busy Dubai clients, with elevated hair, nails, makeup, and bridal experiences backed by easy mobile booking and WhatsApp-friendly support.",
-  phone: "+971 589178814",
-  phoneHref: "tel:+971589178814",
+  phone: "+971 52 220 2609",
+  phoneHref: "tel:+971522202609",
   whatsapp: "+971 52 220 2609",
   whatsappHref: "https://wa.me/971522202609",
   email: "aggiea018@gmail.com",
